@@ -40,7 +40,11 @@ key.set("n", "Y", '"+y', { desc = "Copy to system clipboard" }) -- normal mode
 key.set("v", "Y", '"+y', { desc = "Copy to system clipboard" }) -- visual mode
 
 -- from terminal to normal mode
-key.set("t", "<ESC><ESC>", "<C-\\><C-n>", { noremap = true })
+key.set("t", "<ESC><ESC>", "<C-\\><C-n>", { noremap = true, desc = "Terminal to normal mode" })
+key.set("t", "<ESC>", "<ESC>", { noremap = true, desc = "For lazygit, provisional" }) -- for lazygit, to improve
 
 -- execute terminal command
 key.set("n", "<leader><S-t>", ":Terminal<CR>", { desc = "Execute Terminal command" })
+
+-- open lazygit in a new tmux window
+vim.keymap.set("n", "<leader>lt", "<cmd>!tmux new-window -c " .. vim.fn.getcwd() .. " -- lazygit <CR><CR>", { desc = "Lazy git in new tmux window" }) -- opens lazygit in a new tmux window 
