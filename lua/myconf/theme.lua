@@ -2,10 +2,14 @@
 
 -- set colors to line numbers Above, Current and Below in this order
 -- ! LineNr doesn't currently work even by setting it behind, it's managed by the colorscheme plugin
-
 vim.api.nvim_set_hl(0, 'LineNrAbove', { fg='#484848', bold=false })
 vim.api.nvim_set_hl(0, 'LineNr', { fg='#6DBF26', bold=false })
 vim.api.nvim_set_hl(0, 'LineNrBelow', { fg='#484848', bold=false })
+
+-- Change the color of unstaged git icons to red
+vim.api.nvim_set_hl(0, 'NvimTreeGitDirty', { fg = '#EC6A5E' })
+-- Change the color of staged git icons to green
+vim.api.nvim_set_hl(0, 'NvimTreeGitNew', { fg = '#6DBF26' })
 
 
 --------------------------------------------- NVIM TREE ---------------------------------------------
@@ -36,6 +40,13 @@ vim.cmd([[highlight TelescopeMatching guifg=#6DBF26]])
 -- set the color of the indent line and scope line
 vim.cmd([[highlight Indentlinecolor guifg=#242424]])
 vim.cmd([[highlight Indentscopelinecolor guifg=#3b3b3b]])
+
+
+--------------------------------------------- TOGGLETERM ---------------------------------------------
+
+-- Set the background color for floating terminal windows
+vim.cmd([[highlight NormalFloat guibg=#101010]])
+vim.cmd([[highlight FloatBorder guibg=#101010]])
 
 
 ---------------------------------------------  ---------------------------------------------
