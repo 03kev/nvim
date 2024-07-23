@@ -143,3 +143,5 @@ return {
     })
   end,
 }
+
+-- Configuration for Neovim's built-in LSP client, likely using nvim-lspconfig

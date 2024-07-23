@@ -35,6 +35,13 @@ vim.api.nvim_create_user_command("Cwd", function()
 end, {})
 
 
+-- `Path` command to show the path of the current file
+vim.api.nvim_create_user_command("Path", function()
+    local filePath = vim.fn.expand('%:p') -- Get the full path of the current file
+    print(filePath) -- Print the path to the command line
+end, {})
+
+
 -- `Z` command to use zoxide for changing directories
 vim.api.nvim_create_user_command("Z", function(opts)
     -- Execute zoxide query with the provided arguments to get the path

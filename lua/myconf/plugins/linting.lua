@@ -1,3 +1,5 @@
+-- Configuration for code linters.
+
 return {
   "mfussenegger/nvim-lint",
   event = { "BufReadPre", "BufNewFile" },

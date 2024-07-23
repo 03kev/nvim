@@ -1,3 +1,5 @@
+-- Configuration for nvim-treesitter, providing better syntax highlighting, code navigation, and other features.
+
 return {
   "nvim-treesitter/nvim-treesitter",
   event = { "BufReadPre", "BufNewFile" },

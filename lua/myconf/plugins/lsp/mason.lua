@@ -1,3 +1,5 @@
+-- Plugin for managing and installing LSP servers, DAP servers, linters, and formatters.
+
 return {
     "williamboman/mason.nvim",
     dependencies = {
