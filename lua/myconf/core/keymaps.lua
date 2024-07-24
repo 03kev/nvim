@@ -13,10 +13,10 @@ key.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
 -- window management
 key.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
 key.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
-key.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
-key.set("n", "<leader>sc", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
-key.set("n", "<leader>sH", "<C-w>k<C-w>K", { desc = "Change split view to horizontal" })
-key.set("n", "<leader>sV", "<C-w>k<C-w>H", { desc = "Change split view to vertical" })
+key.set("n", "<leader>se", "<C-w>=", { desc = "Make splitted windows equal size" }) -- make split windows equal width & height
+key.set("n", "<leader>sc", "<cmd>close<CR>", { desc = "Close current splitted window" }) -- close current split window
+key.set("n", "<leader>sH", "<C-w>k<C-w>K", { desc = "Change split window view to horizontal" })
+key.set("n", "<leader>sV", "<C-w>k<C-w>H", { desc = "Change split window view to vertical" })
 
 key.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
 key.set("n", "<leader>tc", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab

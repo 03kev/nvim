@@ -1,3 +1,5 @@
+-- Plugin for easily commenting and uncommenting code
+
 return {
   "numToStr/Comment.nvim",
   event = { "BufReadPre", "BufNewFile" },
