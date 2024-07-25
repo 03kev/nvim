@@ -65,7 +65,8 @@ opt.swapfile = false
 --     augroup END
 -- ]])
 
-opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
+-- cursor settings moved in theme.lua for applying colorscheme
+-- opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
 
 -- opt.formatoptions = {
 --   ["1"] = true,
