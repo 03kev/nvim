@@ -1,4 +1,4 @@
-local keymap = vim.keymap -- for conciseness
+local key = vim.keymap -- for conciseness
 
 -- open command line with current buffer's path
 local function opts(desc)
@@ -11,4 +11,5 @@ local function opts(desc)
   }
 end
 local api = require('nvim-tree.api')
-vim.keymap.set('n', '<leader>:', api.node.run.cmd, opts('Run Command'))
+
+key.set('n', '<leader>:', api.node.run.cmd, opts('Run Command'))

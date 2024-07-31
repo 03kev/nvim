@@ -39,6 +39,15 @@ key.set("n", "<M-9>", "9gt", { desc = "Move to tab 9" })
 key.set("n", "Y", '"+y', { desc = "Copy to system clipboard" }) -- normal mode
 key.set("v", "Y", '"+y', { desc = "Copy to system clipboard" }) -- visual mode
 
+-- text navigation
+key.set("n", "<A-l>", "w", { noremap = true, silent = true, desc = "Move cursor left by word in normal mode" })
+key.set("n", "<A-h>", "b", { noremap = true, silent = true, desc = "Move cursor right by word in normal mode" })
+key.set("n", "9", "$", { noremap = true, silent = true, desc = "Move to the end of the line" })
+key.set("i", "<A-BS>", "<C-w>", { noremap = true, silent = true, desc = "Delete previous word in insert mode" })
+
+-- redo command with shift+u
+key.set("n", "<S-u>", "<C-r>", { desc = "Redo command" })
+
 -- from terminal to normal mode
 key.set("t", "<ESC><ESC>", "<C-\\><C-n>", { noremap = true, desc = "Terminal to normal mode" })
 key.set("t", "<ESC>", "<ESC>", { noremap = true, desc = "For lazygit, provisional" }) -- for lazygit, to improve
@@ -47,4 +56,9 @@ key.set("t", "<ESC>", "<ESC>", { noremap = true, desc = "For lazygit, provisiona
 key.set("n", "<leader><S-t>", ":Terminal<CR>", { desc = "Execute Terminal command" })
 
 -- open lazygit in a new tmux window
-vim.keymap.set("n", "<leader>lt", "<cmd>!tmux new-window -c " .. vim.fn.getcwd() .. " -- lazygit <CR><CR>", { desc = "Lazy git in new tmux window" }) -- opens lazygit in a new tmux window 
+key.set(
+  "n",
+  "<leader>lt",
+  "<cmd>!tmux new-window -c " .. vim.fn.getcwd() .. " -- lazygit <CR><CR>",
+  { desc = "Lazy git in new tmux window" }
+) -- opens lazygit in a new tmux window
