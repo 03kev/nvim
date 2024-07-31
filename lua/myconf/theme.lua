@@ -18,12 +18,21 @@ vim.cmd("highlight IncSearch guifg=#000000 guibg=#FFFFFF") -- incremental search
 vim.cmd("highlight CurSearch guifg=#000000 guibg=#6DBF26") -- current search result highlight
 
 -- Change the color of the cursor
-vim.opt.guicursor = "n-v-c-sm:block-Cursor/lCursor,i-ci-ve:ver25-CursorInsert,r-cr-o:hor20"
+vim.opt.guicursor = {
+  "n-v-c-sm:block-Cursor/lCursor",
+  "i-ci-ve:ver25-CursorInsert",
+  "r-cr-o:hor20"
+}
+
+-- cursor, line cursor, insert cursor, terminal cursor, terminal cursor not focused
 vim.cmd([[
   highlight Cursor guifg=NONE guibg=#c7c7c7 gui=nocombine
   highlight lCursor guifg=NONE guibg=#c7c7c7 gui=nocombine
   highlight CursorInsert guifg=NONE guibg=#c7c7c7 gui=nocombine
+  highlight TermCursor guifg=#c7c7c7 guibg=#1f1f1f
+  highlight TermCursorNC guifg=#1a1a1a guibg=#515151
 ]])
+
 
 --------------------------------------------- NVIM TREE ---------------------------------------------
 

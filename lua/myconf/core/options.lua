@@ -81,3 +81,31 @@ opt.swapfile = false
 --   l = true,
 --   v = true,
 -- }
+
+
+------------------------------------ set scrolloff to 20% of the window height ------------------------------------ 
+
+-- Function to set scrolloff based on a percentage of the window height
+local function set_scrolloff_percentage(percentage)
+  local win_height = vim.api.nvim_win_get_height(0)
+  local scrolloff_value = math.floor(win_height * (percentage / 100))
+  vim.opt.scrolloff = scrolloff_value
+end
+
+-- Set initial scrolloff value (e.g., 10% of the window height)
+set_scrolloff_percentage(20)
+
+-- Update scrolloff value when the window is resized
+vim.api.nvim_create_autocmd("VimResized", {
+  callback = function()
+    set_scrolloff_percentage(20)
+  end,
+})
+
+-- Mapping to temporarily disable scrolloff when using the mouse
+vim.api.nvim_set_keymap(
+  'n',
+  '<LeftMouse>',
+  ':let temp=&scrolloff<CR>:let &scrolloff=0<CR><LeftMouse>:let &scrolloff=temp<CR>',
+  { noremap = true, silent = true }
+)
