@@ -11,5 +11,4 @@ local function opts(desc)
   }
 end
 local api = require('nvim-tree.api')
-
-key.set('n', '<leader>:', api.node.run.cmd, opts('Run Command'))
+-- key.set('n', '<leader>.', api.node.run.cmd, opts('Run Command'))
