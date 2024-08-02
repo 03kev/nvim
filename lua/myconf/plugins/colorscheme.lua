@@ -10,7 +10,7 @@ return {
     local grey1 = "#8D8C78"
     local comment = "#843D3A"
     --local comment = "#89594E"
-    local green = "#6DBF26"
+    local green = "#88BF39" -- "#6DBF26"
     local orange1 = "#BF7F26"
     local blue1 = "#124EED"
     local dark1 = "#6D601B"

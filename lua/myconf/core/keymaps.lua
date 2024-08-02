@@ -62,3 +62,34 @@ key.set(
   "<cmd>!tmux new-window -c " .. vim.fn.getcwd() .. " -- lazygit <CR><CR>",
   { desc = "Lazy git in new tmux window" }
 ) -- opens lazygit in a new tmux window
+
+-- Define the InsertFilePathIntoCmdLine function
+function InsertFilePathIntoCmdLine()
+  local file_path = vim.fn.expand("%:p")
+  -- Insert the file path
+  vim.api.nvim_feedkeys(": " .. file_path, "n", true)
+  -- Move the cursor to the beginning of the inserted file path
+  for _ = 1, #file_path + 2 do
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, false, true), "n", true)
+  end
+end
+-- Set the key mapping
+vim.api.nvim_set_keymap("n", "<leader>:", ":lua InsertFilePathIntoCmdLine()<CR>", { noremap = true, silent = false })
+
+-- Lazy scrolling
+local function lazy(keys)
+  keys = vim.api.nvim_replace_termcodes(keys, true, false, true)
+  return function()
+    local old = vim.o.lazyredraw
+    vim.o.lazyredraw = true
+    vim.api.nvim_feedkeys(keys, "nx", false)
+    vim.o.lazyredraw = old
+  end
+end
+-- Set the key mapping for lazy function
+vim.keymap.set("n", "<c-d>", lazy("<c-d>zz"), { desc = "Scroll down half screen" })
+vim.keymap.set("n", "<c-u>", lazy("<c-u>zz"), { desc = "Scroll up half screen" })
+
+vim.keymap.set("n", "<A-j>", "<c-e>", { desc = "Scroll down screen" })
+vim.keymap.set("n", "<A-k>", "<c-y>", { desc = "Scroll up screen" })
+vim.keymap.set("n", "G", "G<c-e><c-e>", { desc = "Last line" })
