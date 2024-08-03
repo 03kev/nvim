@@ -26,7 +26,7 @@ return {
         key.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
 
         opts.desc = "show LSP definitions"
-        key.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
+        key.set("n", "gT", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
 
         opts.desc = "show LSP implementations"
         key.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations

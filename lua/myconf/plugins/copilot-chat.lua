@@ -12,4 +12,5 @@ return {
   },
 
   vim.api.nvim_set_keymap("n", "<leader>cc", "<cmd>CopilotChatToggle<cr>", { noremap = true, silent = true }),
+  vim.api.nvim_set_keymap("v", "<leader>cc", "<cmd>CopilotChatToggle<cr>", { noremap = true, silent = true }),
 }

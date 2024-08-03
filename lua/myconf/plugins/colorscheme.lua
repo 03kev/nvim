@@ -8,7 +8,7 @@ return {
     local bg_high = "#1D1D19"
     local white = "#EFECDB"
     local grey1 = "#8D8C78"
-    local comment = "#843D3A"
+    local comment = "#996645"
     --local comment = "#89594E"
     local green = "#88BF39" -- "#6DBF26"
     local orange1 = "#BF7F26"
