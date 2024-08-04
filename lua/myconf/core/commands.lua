@@ -99,4 +99,31 @@ vim.cmd("command! Q q")
 vim.cmd("command! Wq wq")
 vim.cmd("command! W w")
 
+-- Function to reload specific parts of the Neovim configuration
+function ReloadConfig(flag)
+  -- Save the file if the flag is 'w'
+  if flag == 'w' then
+    vim.cmd('write')
+  end
 
+  -- Unload specific Lua modules related to your configuration
+  local modules_to_reload = {
+    'myconf.core',
+    'myconf.lazy',
+    'myconf.theme',
+    -- Add other modules you want to reload here
+  }
+
+  for _, module in ipairs(modules_to_reload) do
+    package.loaded[module] = nil
+  end
+
+  -- Reload the modules
+  for _, module in ipairs(modules_to_reload) do
+    require(module)
+  end
+
+  print("Configuration reloaded!")
+end
+-- Create a command to call the ReloadConfig function with an optional flag
+vim.api.nvim_command("command! -nargs=? ReloadConfig lua ReloadConfig(<f-args>)")
