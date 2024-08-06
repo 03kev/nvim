@@ -51,6 +51,7 @@ return {
             ["<C-t>"] = trouble_telescope.open,
             -- ["<C-d>"] = actions.delete_buffer, -- close buffer with Ctrl+d in insert mode
             ["<C-p>"] = require("telescope.actions.layout").toggle_preview, -- toggle preview in telescope
+            ["<c-d>"] = { "<C-u>", type = "command" }, -- delete prompt in insert mode
           },
           n = {
             ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,

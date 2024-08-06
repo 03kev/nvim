@@ -12,6 +12,10 @@ return {
         "prompt",
         "TelescopePrompt",
         "lazygit",
+        "NvimTree",
+      },
+      excluded_buftypes = {
+        "terminal",
       },
     })
   end,

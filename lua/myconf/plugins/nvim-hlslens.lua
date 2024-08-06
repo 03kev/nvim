@@ -47,12 +47,12 @@ return {
       [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
       kopts
     )
-    vim.api.nvim_set_keymap(
-      "n",
-      "N",
-      [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-      kopts
-    )
+    -- vim.api.nvim_set_keymap(
+    --   "n",
+    --   "N",
+    --   [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+    --   kopts
+    -- )
     vim.api.nvim_set_keymap("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
     vim.api.nvim_set_keymap("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
     vim.api.nvim_set_keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
@@ -68,23 +68,33 @@ return {
       augroup END
     ]])
 
-    -- Additional configuration for integrating vim-visual-multi with nvim-hlslens
+
+    -- nvim-hlslens integration with vim-visual-multi
     local hlslens = require("hlslens")
     if hlslens then
       local overrideLens = function(render, posList, nearest, idx, relIdx)
-        local _ = relIdx
-        local lnum, col = unpack(posList[idx])
-
-        local text, chunks
-        if nearest then
-          text = ("[%d/%d]"):format(idx, #posList)
-          chunks = { { " ", "Ignore" }, { text, "VM_Extend" } }
+        local sfw = vim.v.searchforward == 1
+        local indicator, text, chunks
+        local absRelIdx = math.abs(relIdx)
+        if absRelIdx > 1 then
+          indicator = ("%d%s"):format(absRelIdx, sfw ~= (relIdx > 1) and "N" or "n")
+        elseif absRelIdx == 1 then
+          indicator = sfw ~= (relIdx == 1) and "N" or "n"
         else
-          text = ("[%d]"):format(idx)
-          chunks = { { " ", "Ignore" }, { text, "HlSearchLens" } }
+          indicator = ""
+        end
+
+        local lnum, col = unpack(posList[idx])
+        if nearest then
+          text = (" %d/%d "):format(idx, #posList)
+          chunks = { { "  ", "Ignore" }, { text, "HlSearchLensNear" } }
+        else
+          text = (" %s %d "):format(indicator, idx)
+          chunks = { { "  ", "Ignore" }, { text, "HlSearchLens" } }
         end
         render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
       end
+
       local lensBak
       local config = require("hlslens.config")
       local gid = vim.api.nvim_create_augroup("VMlens", {})
