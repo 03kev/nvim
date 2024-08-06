@@ -1,6 +1,7 @@
 local hl = vim.api.nvim_set_hl
 
 local color_utils = require('myconf.color_utils')
+local bright = color_utils.adjust_brightness
 
 -- colors
 local black1 = '#10100F'
@@ -11,8 +12,6 @@ local purewhite = '#FFFFFF'
 local grey1 = '#484848'
 local grey2 = "#5f5e56"
 local grey3 = "#3F3F39"
-
-local green2 = "#9D1D19"
 
 local green1 = "#88BF39"
 local orange1 = "#BF7F26"
@@ -25,6 +24,7 @@ local yellow1 = "#C2AA22"
 
 local test1 = "#FF00FF"
 local test2 = "#00FFFF"
+local test3 = "#FFFF00"
 
 local line = "#1D1D19"
 local visual = "#37362f"
@@ -47,10 +47,15 @@ hl(0, "Search", { fg = white1, bg = grey2 }) -- search highlight
 hl(0, "IncSearch", { fg = black1, bg = purewhite }) -- incremental search highlight
 hl(0, "CurSearch", { fg = black1, bg = purewhite }) -- current search result highlight
 -- nvim-hlslens
-hl(0, "HlSearchLens", { fg = white1, bg = color_utils.adjust_brightness(grey2, 0.3) })
-hl(0, "HlSearchNear", { fg = black1, bg = purewhite }) -- this ovverrides the default current search highlight
-hl(0, "HlSearchLensNear", { fg = black1, bg = color_utils.adjust_brightness(purewhite, 0.95) })
-
+hl(0, "HlSearchLens", { fg = white1, bg = bright(grey2, 0.3) })
+vim.cmd([[highlight link HlSearchNear CurSearch]]) -- this ovverrides the default current search highlight
+hl(0, "HlSearchLensNear", { fg = black1, bg = bright(purewhite, 0.95) })
+-- vim-visual-multi
+hl(0, 'VM_Extend', { fg = black1, bg = purewhite }) -- selection when extending
+hl(0, 'VM_Mono', { fg = black1, bg = bright(cursor, 0.72) }) -- multiple cursors when selecting
+hl(0, 'VM_Cursor', { fg = black1, bg = bright(cursor, 0.82)  }) -- multiple cursors normal mode
+hl(0, 'VM_Insert', { fg = black1, bg = cursor }) -- multiple cursors insert mode
+vim.cmd([[highlight link PmenuSel Search]])
 
 vim.opt.guicursor = {
   "n-v-c-sm:block-Cursor/lCursor",
@@ -61,7 +66,7 @@ hl(0, 'Cursor', { fg = 'NONE', bg = cursor }) -- cursor
 hl(0, 'lCursor', { fg = 'NONE', bg = cursor }) -- line cursor
 hl(0, 'CursorInsert', { fg = 'NONE', bg = cursor }) -- insert cursor
 hl(0, 'TermCursor', { fg = black1, bg = cursor }) -- terminal cursor
-hl(0, 'TermCursorNC', { fg = white1, bg = color_utils.adjust_brightness(cursor, 0.4) }) -- terminal cursor not focused
+hl(0, 'TermCursorNC', { fg = white1, bg = bright(cursor, 0.4) }) -- terminal cursor not focused
 
 
 -- nvim-tree --
@@ -71,6 +76,7 @@ local folder = "#6f6f6f"
 hl(0, 'NvimTreeIndentMarker', { fg = grey1 })
 hl(0, 'NvimTreeFolderIcon', { fg = folder })
 hl(0, 'NvimTreeFolderName', { fg = folder, bold = true })
+hl(0, 'NvimTreeEmptyFolderName', { fg = '#503d2b', bold = true })
 hl(0, 'NvimTreeOpenedFolderIcon', { fg = folder })
 hl(0, 'NvimTreeOpenedFolderName', { fg = folder, bold = true })
 
@@ -92,14 +98,14 @@ hl(0, "TelescopeMatching", { fg = green1 })
 
 -- indent-blankline --
 
-hl(0, "Indentlinecolor", { fg = color_utils.adjust_brightness(grey1, 0.5) }) -- indent line color highlight
+hl(0, "Indentlinecolor", { fg = bright(grey1, 0.5) }) -- indent line color highlight
 hl(0, "Indentscopelinecolor", { fg = grey1 }) -- indent scope line color highlight
 
 
 -- diagnostic --
 
 local err = "#B4837F"
-local warn = "#957f32"
+local warn = "#978936"
 local info = "#8f8f9f"
 local hint = "#7f9f8f"
 
@@ -143,23 +149,23 @@ hl(0, "Type", { fg = grey1 })
 
 -- show color previews in this file
 
-local function show_color_previews()
-  vim.api.nvim_buf_clear_namespace(0, -1, 0, -1)
-  local ns_id = vim.api.nvim_create_namespace("color_previews")
-  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-  local color_pattern = "local%s+(%w+)%s*=%s*['\"](#%x%x%x%x%x%x)['\"]"
-  for line_num, line in ipairs(lines) do
-    local name, value = line:match(color_pattern)
-    if name and value then
-      vim.api.nvim_buf_set_virtual_text(0, ns_id, line_num - 1, {
-        { "███", "ColorPreview" .. name }
-      }, {})
-      vim.api.nvim_set_hl(0, "ColorPreview" .. name, { fg = value })
-    end
-  end
-end
-vim.api.nvim_create_autocmd({"BufWritePost", "TextChanged", "TextChangedI", "BufReadPost"}, {
-  pattern = "*.lua",
-  callback = show_color_previews,
-})
-show_color_previews()
+-- local function show_color_previews()
+--   vim.api.nvim_buf_clear_namespace(0, -1, 0, -1)
+--   local ns_id = vim.api.nvim_create_namespace("color_previews")
+--   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+--   local color_pattern = "local%s+(%w+)%s*=%s*['\"](#%x%x%x%x%x%x)['\"]"
+--   for line_num, line in ipairs(lines) do
+--     local name, value = line:match(color_pattern)
+--     if name and value then
+--       vim.api.nvim_buf_set_virtual_text(0, ns_id, line_num - 1, {
+--         { "███", "ColorPreview" .. name }
+--       }, {})
+--       vim.api.nvim_set_hl(0, "ColorPreview" .. name, { fg = value })
+--     end
+--   end
+-- end
+-- vim.api.nvim_create_autocmd({"BufWritePost", "TextChanged", "TextChangedI", "BufReadPost"}, {
+--   pattern = "*.lua",
+--   callback = show_color_previews,
+-- })
+-- show_color_previews()
