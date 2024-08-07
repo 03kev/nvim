@@ -1,4 +1,5 @@
 local hl = vim.api.nvim_set_hl
+local cmd = vim.cmd
 
 local color_utils = require('myconf.color_utils')
 local bright = color_utils.adjust_brightness
@@ -40,22 +41,22 @@ hl(0, "LineNr", { fg = green1, bold = false }) -- current line number
 hl(0, "LineNrBelow", { fg = grey1, bold = false }) -- line number below the current line
 
 hl(0, "CursorLine", { bg = line }) -- current line
-hl(0, "Visual", { bg = visual, fg = "none" }) -- visual mode highlight
+hl(0, "Visual", { bg = visual, fg = "none" }) -- visual mode
 hl(0, "Comment", { fg = comment, italic = true })
 
-hl(0, "Search", { fg = white1, bg = grey2 }) -- search highlight
-hl(0, "IncSearch", { fg = black1, bg = purewhite }) -- incremental search highlight
-hl(0, "CurSearch", { fg = black1, bg = purewhite }) -- current search result highlight
+hl(0, "Search", { fg = white1, bg = grey2 }) -- search
+hl(0, "IncSearch", { fg = black1, bg = purewhite }) -- incremental current search result
+cmd([[highlight link CurSearch IncSearch]]) -- current search
 -- nvim-hlslens
-hl(0, "HlSearchLens", { fg = white1, bg = bright(grey2, 0.3) })
-vim.cmd([[highlight link HlSearchNear CurSearch]]) -- this ovverrides the default current search highlight
-hl(0, "HlSearchLensNear", { fg = black1, bg = bright(purewhite, 0.95) })
+hl(0, "HlSearchLens", { fg = white1, bg = bright(grey2, 0.3) }) -- search lens
+cmd([[highlight link HlSearchNear CurSearch]]) -- this ovverrides the default current search
+cmd([[highlight link HlSearchLensNear CurSearch]]) -- current search lens
 -- vim-visual-multi
 hl(0, 'VM_Extend', { fg = black1, bg = purewhite }) -- selection when extending
 hl(0, 'VM_Mono', { fg = black1, bg = bright(cursor, 0.72) }) -- multiple cursors when selecting
 hl(0, 'VM_Cursor', { fg = black1, bg = bright(cursor, 0.82)  }) -- multiple cursors normal mode
 hl(0, 'VM_Insert', { fg = black1, bg = cursor }) -- multiple cursors insert mode
-vim.cmd([[highlight link PmenuSel Search]])
+hl(0, 'VM_Match', { fg = white1, bg = bright(grey3, 0.9) }) -- multiple cursors matches
 
 vim.opt.guicursor = {
   "n-v-c-sm:block-Cursor/lCursor",
@@ -68,6 +69,7 @@ hl(0, 'CursorInsert', { fg = 'NONE', bg = cursor }) -- insert cursor
 hl(0, 'TermCursor', { fg = black1, bg = cursor }) -- terminal cursor
 hl(0, 'TermCursorNC', { fg = white1, bg = bright(cursor, 0.4) }) -- terminal cursor not focused
 
+hl(0, 'MatchParen', { fg = black1, bg = green1 }) -- matching parenthesis
 
 -- nvim-tree --
 
