@@ -18,12 +18,21 @@ opt.expandtab = true -- expand tab to spaces
 opt.autoindent = true -- copy indent from current line when starting new one
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "lua", "json" },
-  callback = function()
-    vim.bo.expandtab = true
-    vim.bo.shiftwidth = 2
-    vim.bo.tabstop = 2
-  end,
+   pattern = { "json" },
+   callback = function()
+      vim.bo.expandtab = true
+      vim.bo.shiftwidth = 2
+      vim.bo.tabstop = 2
+   end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+   pattern = { "lua" },
+   callback = function()
+      vim.bo.expandtab = true
+      vim.bo.shiftwidth = 3
+      vim.bo.tabstop = 3
+   end,
 })
 
 -- opt.smartindent = true
@@ -84,9 +93,9 @@ opt.swapfile = false
 
 -- Function to set scrolloff based on a percentage of the window height
 local function set_scrolloff_percentage(percentage)
-  local win_height = vim.api.nvim_win_get_height(0)
-  local scrolloff_value = math.floor(win_height * (percentage / 100))
-  vim.opt.scrolloff = scrolloff_value
+   local win_height = vim.api.nvim_win_get_height(0)
+   local scrolloff_value = math.floor(win_height * (percentage / 100))
+   vim.opt.scrolloff = scrolloff_value
 end
 
 -- Set initial scrolloff value (e.g., 10% of the window height)
@@ -94,17 +103,17 @@ set_scrolloff_percentage(15)
 
 -- Update scrolloff value when the window is resized
 vim.api.nvim_create_autocmd("VimResized", {
-  callback = function()
-    set_scrolloff_percentage(15)
-  end,
+   callback = function()
+      set_scrolloff_percentage(15)
+   end,
 })
 
 -- Mapping to temporarily disable scrolloff when using the mouse
 vim.api.nvim_set_keymap(
-  "n",
-  "<LeftMouse>",
-  ":let temp=&scrolloff<CR>:let &scrolloff=0<CR><LeftMouse>:let &scrolloff=temp<CR>",
-  { noremap = true, silent = true }
+   "n",
+   "<LeftMouse>",
+   ":let temp=&scrolloff<CR>:let &scrolloff=0<CR><LeftMouse>:let &scrolloff=temp<CR>",
+   { noremap = true, silent = true }
 )
 
 -------------------------------------------------------------------------------------------------------------------
