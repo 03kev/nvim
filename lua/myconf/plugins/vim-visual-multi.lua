@@ -3,7 +3,7 @@ return {
    init = function()
       vim.g.VM_silent_exit = 1
       vim.g.VM_theme = ""
-
+      vim.g.VM_show_warnings = 0 -- disable warnings
       vim.g.VM_highlight_matches = "hi! link Search VM_Match" -- VM_Match defined in theme.lua
 
       vim.g.VM_mouse_mappings = 1 -- enable mouse mappings
