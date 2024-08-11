@@ -2,16 +2,14 @@ vim.g.mapleader = " "
 
 local key = vim.keymap -- for conciseness
 
-key.set("i", "jj", "<ESC>", { desc = "Exit insert mode with jj" })
+-- key.set("i", "jj", "<ESC>", { desc = "Exit insert mode with jj" })
 
 key.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
 key.set("n", "<c-a>", "ggVG", { desc = "Select all" })
 key.set("i", "<c-a>", "<Esc>ggVG", { desc = "Select all" })
 
--- increment/decrement numbers
-key.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
-key.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
+key.set("n", "<Tab>", "a<Tab><Esc>", { noremap = true, silent = true })
 
 -- window management
 key.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
@@ -50,8 +48,8 @@ key.set("n", "<S-p>", '"+p"', { desc = "Paste from sys clipboard" })
 key.set("n", "gp", "`[v`]", { noremap = true, desc = "Select last pasted text" })
 
 -- text navigation
-key.set("n", "<A-l>", "w", { noremap = true, silent = true, desc = "Move cursor left by word in normal mode" })
-key.set("n", "<A-h>", "b", { noremap = true, silent = true, desc = "Move cursor right by word in normal mode" })
+-- key.set("n", "<A-l>", "w", { noremap = true, silent = true, desc = "Move cursor left by word in normal mode" })
+-- key.set("n", "<A-h>", "b", { noremap = true, silent = true, desc = "Move cursor right by word in normal mode" })
 -- key.set("n", "9", "$", { noremap = true, silent = true, desc = "Move to the end of the line" })
 key.set("i", "<A-BS>", "<C-w>", { noremap = true, silent = true, desc = "Delete previous word in insert mode" })
 
@@ -76,10 +74,8 @@ vim.api.nvim_create_autocmd("TermOpen", {
    end,
 })
 
--- execute terminal command
 key.set("n", "<leader><S-t>", ":Terminal<CR>", { desc = "Execute Terminal command" })
 
--- open lazygit in a new tmux window
 key.set(
    "n",
    "<leader>lt",
@@ -87,9 +83,6 @@ key.set(
    { desc = "Lazy git in new tmux window" }
 ) -- opens lazygit in a new tmux window
 
---
-
--- Define the InsertFilePathIntoCmdLine function
 function InsertFilePathIntoCmdLine()
    local file_path = vim.fn.expand("%:p")
    -- Insert the file path
@@ -99,10 +92,7 @@ function InsertFilePathIntoCmdLine()
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, false, true), "n", true)
    end
 end
--- Set the key mapping
 vim.api.nvim_set_keymap("n", "<leader>:", ":lua InsertFilePathIntoCmdLine()<CR>", { noremap = true, silent = false })
-
---
 
 -- Lazy scrolling
 local function lazy(keys)
@@ -114,12 +104,8 @@ local function lazy(keys)
       vim.o.lazyredraw = old
    end
 end
--- Set the key mapping for lazy function
-vim.keymap.set("n", "<c-d>", lazy("<c-d>zz"), { desc = "Scroll down half screen" })
-vim.keymap.set("n", "<c-u>", lazy("<c-u>zz"), { desc = "Scroll up half screen" })
-
--- vim.keymap.set("n", "<A-j>", "<c-e>", { desc = "Scroll down screen" })
--- vim.keymap.set("n", "<A-k>", "<c-y>", { desc = "Scroll up screen" })
+-- vim.keymap.set("n", "<c-d>", lazy("<c-d>zz"), { desc = "Scroll down half screen" })
+-- vim.keymap.set("n", "<c-u>", lazy("<c-u>zz"), { desc = "Scroll up half screen" })
 
 --
 

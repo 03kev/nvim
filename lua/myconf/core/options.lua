@@ -5,6 +5,35 @@ vim.cmd("let &stc='%=%{v:relnum?v:relnum:v:lnum} '") -- to right aline current r
 
 local opt = vim.opt
 
+local opts = { noremap = true, silent = true }
+
+vim.api.nvim_set_keymap('n', '<ScrollWheelUp>', '', opts)
+vim.api.nvim_set_keymap('n', '<S-ScrollWheelUp>', '', opts)
+vim.api.nvim_set_keymap('n', '<C-ScrollWheelUp>', '', opts)
+vim.api.nvim_set_keymap('n', '<ScrollWheelDown>', '', opts)
+vim.api.nvim_set_keymap('n', '<S-ScrollWheelDown>', '', opts)
+vim.api.nvim_set_keymap('n', '<C-ScrollWheelDown>', '', opts)
+vim.api.nvim_set_keymap('n', '<ScrollWheelLeft>', '', opts)
+vim.api.nvim_set_keymap('n', '<S-ScrollWheelLeft>', '', opts)
+vim.api.nvim_set_keymap('n', '<C-ScrollWheelLeft>', '', opts)
+vim.api.nvim_set_keymap('n', '<ScrollWheelRight>', '', opts)
+vim.api.nvim_set_keymap('n', '<S-ScrollWheelRight>', '', opts)
+vim.api.nvim_set_keymap('n', '<C-ScrollWheelRight>', '', opts)
+vim.opt.mouse = ''
+vim.api.nvim_set_keymap('n', '<Up>', '', opts)
+vim.api.nvim_set_keymap('n', '<Down>', '', opts)
+vim.api.nvim_set_keymap('n', '<Left>', '', opts)
+vim.api.nvim_set_keymap('n', '<Right>', '', opts)
+vim.api.nvim_set_keymap('v', '<Up>', '', opts)
+vim.api.nvim_set_keymap('v', '<Down>', '', opts)
+vim.api.nvim_set_keymap('v', '<Left>', '', opts)
+vim.api.nvim_set_keymap('v', '<Right>', '', opts)
+vim.api.nvim_set_keymap('i', '<Up>', '', opts)
+vim.api.nvim_set_keymap('i', '<Down>', '', opts)
+vim.api.nvim_set_keymap('i', '<Left>', '', opts)
+vim.api.nvim_set_keymap('i', '<Right>', '', opts)
+
+
 opt.relativenumber = true
 opt.number = true
 opt.numberwidth = 4 -- set the width of the number column; default=4
@@ -33,6 +62,14 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.bo.shiftwidth = 3
       vim.bo.tabstop = 3
    end,
+})
+
+-- set conceallevel=1 for markdown
+vim.api.nvim_create_augroup("markdown_conceal", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  group = "markdown_conceal",
+  pattern = "markdown",
+  command = "setlocal conceallevel=1",
 })
 
 -- opt.smartindent = true
