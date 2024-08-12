@@ -43,6 +43,7 @@ key.set("n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>"
 -- system clipboard
 key.set({ "n", "v" }, "Y", '"+y', { desc = "Yank to sys clipboard" })
 key.set("n", "<S-p>", '"+p"', { desc = "Paste from sys clipboard" })
+key.set("v", "<S-p>", '"+p"', { desc = "Paste from sys clipboard" })
 
 -- select last pasted text
 key.set("n", "gp", "`[v`]", { noremap = true, desc = "Select last pasted text" })
