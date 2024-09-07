@@ -28,6 +28,7 @@ return {
       telescope.setup({
          defaults = {
             path_display = { "smart" },
+            color_devicons = true, -- colored icons
             mappings = {
                i = {
                   ["<C-k>"] = actions.move_selection_previous, -- move to prev result

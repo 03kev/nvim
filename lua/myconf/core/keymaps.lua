@@ -9,7 +9,13 @@ key.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 key.set("n", "<c-a>", "ggVG", { desc = "Select all" })
 key.set("i", "<c-a>", "<Esc>ggVG", { desc = "Select all" })
 
-key.set("n", "<Tab>", "a<Tab><Esc>", { noremap = true, silent = true })
+key.set("n", "<Tab>", "a<Tab><Esc>", { noremap = true, silent = true }) -- tab in normal mode - same as <c-i>
+
+-- move lines
+key.set("n", "<M-u>", ":m .+1<CR>==", { desc = "Move line down" })
+key.set("n", "<M-i>", ":m .-2<CR>==", { desc = "Move line up" })
+key.set("v", "<M-f>", ":m '>+1<CR>gv=gv", { desc = "Move slection down" })
+key.set("v", "<M-d>", ":m '<-2<CR>gv=gv", { desc = "Move slection up" })
 
 -- window management
 key.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
@@ -42,8 +48,11 @@ key.set("n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>"
 
 -- system clipboard
 key.set({ "n", "v" }, "Y", '"+y', { desc = "Yank to sys clipboard" })
-key.set("n", "<S-p>", '"+p"', { desc = "Paste from sys clipboard" })
-key.set("v", "<S-p>", '"+p"', { desc = "Paste from sys clipboard" })
+key.set({ "n", "v" }, "<S-p>", '"+p"', { desc = "Paste from sys clipboard" })
+
+key.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yank" })
+key.set("x", "<leader>p", '"_dP', { desc = "Paste without yank" })
+key.set("x", "<leader>P", '"_d"+P', { desc = "Paste replace from sys" })
 
 -- select last pasted text
 key.set("n", "gp", "`[v`]", { noremap = true, desc = "Select last pasted text" })
@@ -55,7 +64,7 @@ key.set("n", "gp", "`[v`]", { noremap = true, desc = "Select last pasted text" }
 key.set("i", "<A-BS>", "<C-w>", { noremap = true, silent = true, desc = "Delete previous word in insert mode" })
 
 -- redo command with shift+u
-key.set("n", "<S-u>", "<C-r>", { desc = "Redo command" })
+key.set("n", "<S-u>", "<C-r>", { desc = "Redo" })
 
 --
 

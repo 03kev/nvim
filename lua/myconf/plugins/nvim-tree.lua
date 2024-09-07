@@ -101,11 +101,6 @@ return {
       key.set("n", "<leader>ef", "<cmd>NvimTreeFocus<CR>", { desc = "Focus file explorer" }) -- toggle file explorer on current file
       -- key.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
       key.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) -- refresh file explorer
-      key.set(
-         "n",
-         "<leader>et",
-         "<cmd>NvimTreeFindFile<CR>",
-         { noremap = true, silent = true, desc = "Find file in file explorer" }
-      )
+      key.set("n", "<leader>et", "<cmd>NvimTreeFindFile<CR>", { desc = "Find file in file explorer" })
    end,
 }

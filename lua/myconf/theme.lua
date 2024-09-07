@@ -35,6 +35,9 @@ local cursor = "#c7c7c7"
 
 -- default --
 
+hl(0, "WinbarColor", { fg = grey2 }) -- winbar text
+hl(0, "WinSeparator", { fg = grey2 }) -- winbar separator
+
 hl(0, "LineNrAbove", { fg = grey1, bold = false }) -- line number above the current line
 hl(0, "LineNr", { fg = green1, bold = false }) -- current line number
 hl(0, "LineNrBelow", { fg = grey1, bold = false }) -- line number below the current line
@@ -70,6 +73,8 @@ hl(0, "TermCursorNC", { fg = white1, bg = bright(cursor, 0.4) }) -- terminal cur
 
 hl(0, "MatchParen", { fg = white1, bg = blue1 }) -- matching parenthesis
 
+hl(0, "TabLineFill", { bg = black1 })
+
 -- nvim-tree --
 
 local folder = "#6f6f6f"
@@ -89,11 +94,27 @@ hl(0, "NvimTreeGitNewIcon", { fg = blue2 })
 hl(0, "NvimTreeGitDeletedIcon", { fg = red1 })
 hl(0, "NvimTreeGitIgnoredIcon", { fg = blue2 })
 
+-- hl(0, "NvimTreeWinSeparator", { fg = grey1 })
+
 -- telescope --
 
 hl(0, "TelescopeBorder", { fg = green1 })
 hl(0, "TelescopeMatching", { fg = green1 })
 -- hl(0, "TelescopeSelection", { fg = '#EFEBDB', bg = '#6DBF26' })
+
+vim.cmd([[
+   " highlight TelescopePromptBorder guifg=#A7A691
+   highlight TelescopeResultsBorder guifg=#A7A691
+   highlight TelescopePreviewBorder guifg=#A7A691
+   highlight TelescopePromptNormal guifg=#EFECDB
+   highlight TelescopeResultsNormal guifg=#A7A691
+   highlight TelescopePreviewNormal guifg=#A7A691
+   " highlight TelescopePromptTitle guifg=#A7A691 gui=bold
+   highlight TelescopeResultsTitle guifg=#A7A691 gui=bold
+   highlight TelescopePreviewTitle guifg=#A7A691 gui=bold
+   highlight TelescopeSelection guifg=#EFECDB guibg=#1A1A16 
+   " highlight TelescopeMatching guifg=#EFECDB guibg=#1639E6
+]])
 
 -- indent-blankline --
 

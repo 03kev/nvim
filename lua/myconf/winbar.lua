@@ -19,6 +19,7 @@ local icons = require("icons").misc
 M.filename = function()
    local filename = vim.fn.expand("%:t")
    local file_path = vim.fn.expand("%:p")
+   local relative_path = vim.fn.expand("%:~:.")
    local parent_dir = string.match(file_path, ".*/([^/]+)/[^/]+$")
    local extension = ""
    local file_icon = ""
@@ -48,12 +49,20 @@ M.filename = function()
       end
 
       -- Return filename if parent dir doesn't exist
-      if parent_dir == nil or parent_dir == "" then
-         return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#LineNr#" .. filename .. "%*"
-      end
+      -- if parent_dir == nil or parent_dir == "" then
+      --    return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. filename .. "%*"
+      -- end
 
       -- Return parent dir
-      return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#LineNr#" .. parent_dir .. "%*"
+      -- return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. parent_dir .. "%*"
+
+      -- Return filename if relative path doesn't exist
+      if relative_path == nil or relative_path == "" then
+         return " " .. "%#WinbarColor#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. filename .. "%*"
+      end
+      -- Return relative path
+      return " " .. "%#WinbarColor#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. relative_path .. "%*"
+
    end
 end
 
@@ -73,7 +82,7 @@ M.gps = function()
       return ""
    else
       if not isempty(navic_location) then
-         local hl_group = "LineNr"
+         local hl_group = "WinbarColor"
          return retval .. " " .. "%#" .. hl_group .. "#" .. icons.caretRight .. "%*" .. " " .. navic_location
       else
          return retval
@@ -81,7 +90,7 @@ M.gps = function()
    end
 end
 
-vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
+vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "WinEnter", "WinNew" }, {
    callback = function()
       local winbar_filetype_exclude = {
          "help",
@@ -100,6 +109,13 @@ vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
          "DressingSelect",
          "neotest-summary",
          "toggleterm",
+      }
+
+      local winbar_buftype_exclude = {
+         "nofile",
+         "terminal",
+         "quickfix",
+         "prompt",
       }
 
       if vim.api.nvim_win_get_config(0).relative ~= "" then
@@ -143,6 +159,11 @@ vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
       end
 
       if vim.tbl_contains(winbar_filetype_exclude, vim.bo.filetype) then
+         vim.opt_local.winbar = nil
+         return
+      end
+
+      if vim.tbl_contains(winbar_buftype_exclude, vim.bo.buftype) then
          vim.opt_local.winbar = nil
          return
       end
