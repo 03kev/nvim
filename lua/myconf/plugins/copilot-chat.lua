@@ -109,9 +109,10 @@ return {
             selection = select.visual,
             window = {
                layout = "float",
-               relative = "cursor",
-               width = 2,
-               height = 1.4,
+               title = " Copilot Chat ",
+               relative = "editor",
+               width = 0.5,
+               height = 0.5,
                row = 2,
             },
          })
@@ -145,14 +146,13 @@ return {
          end,
       })
 
-      -- local wk = require("which-key")
-      -- wk.add({
-      --     { "<leader>g", group = "+Copilot Chat" }, -- group
-      --     { "<leader>gd", desc = "Show diff" },
-      --     { "<leader>gp", desc = "System prompt" },
-      --     { "<leader>gs", desc = "Show selection" },
-      --     { "<leader>gy", desc = "Yank diff" },
-      -- })
+      -- Set the statusline to show the current line number in the Copilot chat buffer
+      vim.cmd([[
+        augroup SpecificFileSettings
+          autocmd!
+          autocmd BufEnter * if expand('%:t') == 'copilot-chat' | let &stc='%=%{v:relnum?v:relnum:v:lnum} ' | endif
+        augroup END
+      ]])
    end,
 
    keys = {
@@ -213,7 +213,6 @@ return {
          end,
          desc = "CopilotChat - Ask input",
       },
-      -- Generate commit message based on the git diff
       {
          "<leader>ccc",
          "<cmd>CopilotChatToggle<cr>",

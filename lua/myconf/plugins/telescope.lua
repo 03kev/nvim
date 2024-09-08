@@ -5,6 +5,8 @@ return {
       "nvim-lua/plenary.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "folke/todo-comments.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
+      "jvgrootveld/telescope-zoxide",
    },
 
    config = function()
@@ -28,7 +30,7 @@ return {
       telescope.setup({
          defaults = {
             path_display = { "smart" },
-            color_devicons = true, -- colored icons
+            color_devicons = false, -- colored icons
             mappings = {
                i = {
                   ["<C-k>"] = actions.move_selection_previous, -- move to prev result
@@ -77,7 +79,7 @@ return {
          pickers = {
             live_grep = {
                -- disable_devicons = true, -- disable file icons
-               file_ignore_patterns = { "node_modules", ".git" }, -- ignore these directories
+               file_ignore_patterns = { "node_modules/", ".git/" },
                additional_args = function(_)
                   return { "--hidden" } -- include hidden files
                end,
@@ -85,18 +87,18 @@ return {
 
             find_files = {
                -- disable_devicons = true, -- disable file icons
-               file_ignore_patterns = { "node_modules", ".git" },
+               file_ignore_patterns = { "node_modules/", ".git/" },
                find_command = { "fd", "--type", "f", "--hidden", "--exclude", ".DS_Store" }, -- use fd instead of find
             },
 
             oldfiles = {
                -- disable_devicons = true, -- disable file icons
-               file_ignore_patterns = { "node_modules", ".git" },
+               file_ignore_patterns = { "node_modules/", ".git/" },
             },
 
             grep_string = {
                -- disable_devicons = true, -- disable file icons
-               file_ignore_patterns = { "node_modules", ".git" },
+               file_ignore_patterns = { "node_modules/", ".git/" },
             },
 
             buffers = {
@@ -137,7 +139,7 @@ return {
          extensions = {
             file_browser = {
                -- disable_devicons = true, -- disable file icons
-               file_ignore_patterns = { "node_modules", ".git", ".DS_Store" },
+               file_ignore_patterns = { "node_modules/", ".git/" },
                hidden = { file_browser = false, folder_browser = false },
                prompt_path = true,
                mappings = {
@@ -149,7 +151,7 @@ return {
             },
 
             zoxide = {
-               prompt_title = "[ Walking on the shoulders of TJ ]",
+               prompt_title = "Zoxide Paths",
                mappings = {
                   default = {
                      after_action = function(selection)
@@ -183,6 +185,9 @@ return {
       keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
       keymap.set("n", "<leader>fg", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
       keymap.set("n", "<leader>fh", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
+
+      keymap.set("n", "<space>ft", ":Telescope file_browser<CR>", { desc = "File browser" })
+      keymap.set("n", "<leader>fz", require("telescope").extensions.zoxide.list, { desc = "Zoxide Paths" })
 
       -- my custom commands and keymaps
 
