@@ -1,8 +1,5 @@
 vim.cmd("let g:netrw_liststyle = 3")
 
-vim.cmd("let &stc='%=%{v:relnum?v:relnum:v:lnum} '") -- to right aline current relative number
--- disable the top command if you want to use absolute numbers and not relative
-
 local opt = vim.opt
 
 local opts = { noremap = true, silent = true }
@@ -36,34 +33,8 @@ vim.api.nvim_set_keymap("i", "<Right>", "", opts)
 
 vim.o.laststatus = 3
 
--- _G.get_winbar = function()
---    local file_path = vim.fn.expand("%:p")
---    if file_path == "" or vim.bo.buftype ~= "" then
---       return ""
---    end
---
---    local file_window_count = 0
---    for _, win in ipairs(vim.api.nvim_list_wins()) do
---       local buf = vim.api.nvim_win_get_buf(win)
---       local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
---       if buftype == "" then
---          file_window_count = file_window_count + 1
---       end
---    end
---
---    if file_window_count <= 1 then
---       return ""
---    else
---       return file_path
---    end
--- end
---
--- vim.o.winbar = "%{%v:lua.get_winbar()%}"
-
---
-
 opt.relativenumber = true
-opt.number = true
+opt.number = false
 opt.numberwidth = 4 -- set the width of the number column; default=4
 
 -- opt.autochdir = true -- set the working directory to the parent folder of the buffer file
@@ -129,6 +100,8 @@ opt.splitbelow = true -- split horizontal window to the bottom
 -- turn off swapfile
 opt.swapfile = false
 
+opt.diffopt:append("vertical")
+
 -- restore terminal cursor when quitting neovim
 -- vim.cmd([[
 --     augroup RestoreCursorShapeOnExit
@@ -137,22 +110,56 @@ opt.swapfile = false
 --     augroup END
 -- ]])
 
--- cursor settings moved in theme.lua for applying colorscheme
--- opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
 
--- opt.formatoptions = {
---   ["1"] = true,
---   ["2"] = true,
---   q = true,
---   c = true,
---   r = true,
---   o = true,
---   n = true,
---   t = false,
---   j = true,
---   l = true,
---   v = true,
--- }
+-- Custom tabline configuration
+vim.o.tabline = '%!MyTabLine()'
+
+-- Define the MyTabLine function in Vimscript
+vim.cmd([[
+function! MyTabLine()
+  " Loop over pages and define labels for them, then get label for each tab
+  " page use MyTabLabel(). See :h 'statusline' for formatting, e.g., T, %, #, etc.
+  let s = ''
+  for i in range(tabpagenr('$'))
+    if i + 1 == tabpagenr()
+      " use hl-TabLineSel for current tabpage
+      let s .= '%#TabLineSel#'
+    else
+      let s .= '%#TabLine#'
+    endif
+
+    " set the tab page number, for mouse clicks
+    let s .= '%' . (i + 1) . 'T'
+
+    " call MyTabLabel() to make the label
+    let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
+  endfor
+
+  " After last tab fill with hl-TabLineFill and reset tab page nr with %T
+  let s .= '%#TabLineFill#%T'
+
+  " Right-align (%=) hl-TabLine (%#TabLine#) style and use %999X for a close
+  " current tab mark, with 'X' as the character
+  if tabpagenr('$') > 1
+    let s .= '%=%#TabLine#%999XX'
+  endif
+
+  return s
+endfunction
+
+function! MyTabLabel(n)
+  " Give tabpage number n create a string to display on tabline
+  let buflist = tabpagebuflist(a:n)
+  let winnr = tabpagewinnr(a:n)
+  " Get the file name only
+  let bufname = bufname(buflist[winnr - 1])
+  if empty(bufname)
+    return '[No Name]'
+  else
+    return fnamemodify(bufname, ':t')
+  endif
+endfunction
+]])
 
 ------------------------------------ set scrolloff to 20% of the window height ------------------------------------
 

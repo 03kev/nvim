@@ -34,7 +34,7 @@ return {
 
          view = {
             width = 35,
-            relativenumber = true,
+            relativenumber = false,
          },
 
          update_cwd = true, -- update nvim-tree root to cwd
@@ -89,7 +89,7 @@ return {
             },
          },
          filters = {
-            custom = { ".DS_Store", "node_modules", ".git" },
+            custom = { ".DS_Store", "node_modules/", ".git/" },
          },
          git = {
             ignore = false,

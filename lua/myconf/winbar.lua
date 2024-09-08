@@ -40,6 +40,8 @@ M.filename = function()
       file_icon, file_icon_color =
          require("nvim-web-devicons").get_icon_color(filename, extension, { default = default })
 
+      extension = extension:gsub("[^%w]", "_") -- sanitize extension for hl_group
+
       local hl_group = "FileIconColor" .. extension
 
       vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
