@@ -13,5 +13,3 @@ return {
     keymap.set("n", "<leader>wr", "<cmd>SessionRestore<CR>", { desc = "Restore session for cwd" }) -- restore workspace
   end,
 }
-
--- Plugin for managing Neovim sessions automatically

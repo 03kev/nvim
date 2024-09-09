@@ -36,7 +36,7 @@ local cursor = "#c7c7c7"
 -- default --
 
 hl(0, "WinbarColor", { fg = grey2 }) -- winbar text
-hl(0, "WinSeparator", { fg = grey2 }) -- winbar separator
+hl(0, "WinSeparator", { fg = grey1 }) -- winbar separator
 
 hl(0, "LineNrAbove", { fg = grey1, bold = false }) -- line number above the current line
 hl(0, "LineNr", { fg = green1, bold = false }) -- current line number
@@ -45,6 +45,7 @@ hl(0, "LineNrBelow", { fg = grey1, bold = false }) -- line number below the curr
 hl(0, "CursorLine", { bg = line }) -- current line
 hl(0, "Visual", { bg = visual, fg = "none" }) -- visual mode
 hl(0, "Comment", { fg = comment, italic = true })
+hl(0, "YankHighlight", { bg = bright(visual, 1.5), fg = white1 })
 
 hl(0, "Search", { fg = white1, bg = grey2 }) -- search
 hl(0, "IncSearch", { fg = black1, bg = purewhite }) -- incremental current search result
@@ -143,6 +144,15 @@ hl(0, "DiagnosticVirtualTextInfo", { fg = info, bg = "NONE" })
 hl(0, "DiagnosticVirtualTextHint", { fg = hint, bg = "NONE" })
 hl(0, "DiagnosticUnused", { fg = err, bg = "NONE" })
 
+-- gitsigns --
+
+-- hl(0, "GitSignsAdd", { fg = green1 })
+hl(0, "GitSignsChange", { fg = hint })
+hl(0, "GitSignsDelete", { fg = red1 })
+hl(0, "GitSignsChangeDelete", { fg = red1 })
+hl(0, "GitSignsTopdelete", { fg = red1 })
+hl(0, "GitSignsUntracked", { fg = info })
+
 -- lazygit --
 
 hl(0, "LazyGitFloat", { fg = grey2 })
@@ -164,26 +174,3 @@ hl(0, "Repeat", { fg = grey1, bold = false })
 hl(0, "Label", { fg = grey1, bold = false })
 hl(0, "Identifier", { fg = white1 })
 hl(0, "Type", { fg = grey1 })
-
--- show color previews in this file
-
--- local function show_color_previews()
---   vim.api.nvim_buf_clear_namespace(0, -1, 0, -1)
---   local ns_id = vim.api.nvim_create_namespace("color_previews")
---   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
---   local color_pattern = "local%s+(%w+)%s*=%s*['\"](#%x%x%x%x%x%x)['\"]"
---   for line_num, line in ipairs(lines) do
---     local name, value = line:match(color_pattern)
---     if name and value then
---       vim.api.nvim_buf_set_virtual_text(0, ns_id, line_num - 1, {
---         { "███", "ColorPreview" .. name }
---       }, {})
---       vim.api.nvim_set_hl(0, "ColorPreview" .. name, { fg = value })
---     end
---   end
--- end
--- vim.api.nvim_create_autocmd({"BufWritePost", "TextChanged", "TextChangedI", "BufReadPost"}, {
---   pattern = "*.lua",
---   callback = show_color_previews,
--- })
--- show_color_previews()

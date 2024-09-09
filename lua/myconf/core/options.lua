@@ -4,103 +4,73 @@ local opt = vim.opt
 
 local opts = { noremap = true, silent = true }
 
--- disable arrow keys and mouse
-vim.api.nvim_set_keymap("n", "<ScrollWheelUp>", "", opts)
-vim.api.nvim_set_keymap("n", "<S-ScrollWheelUp>", "", opts)
-vim.api.nvim_set_keymap("n", "<C-ScrollWheelUp>", "", opts)
-vim.api.nvim_set_keymap("n", "<ScrollWheelDown>", "", opts)
-vim.api.nvim_set_keymap("n", "<S-ScrollWheelDown>", "", opts)
-vim.api.nvim_set_keymap("n", "<C-ScrollWheelDown>", "", opts)
-vim.api.nvim_set_keymap("n", "<ScrollWheelLeft>", "", opts)
-vim.api.nvim_set_keymap("n", "<S-ScrollWheelLeft>", "", opts)
-vim.api.nvim_set_keymap("n", "<C-ScrollWheelLeft>", "", opts)
-vim.api.nvim_set_keymap("n", "<ScrollWheelRight>", "", opts)
-vim.api.nvim_set_keymap("n", "<S-ScrollWheelRight>", "", opts)
-vim.api.nvim_set_keymap("n", "<C-ScrollWheelRight>", "", opts)
-vim.opt.mouse = ""
-vim.api.nvim_set_keymap("n", "<Up>", "", opts)
-vim.api.nvim_set_keymap("n", "<Down>", "", opts)
-vim.api.nvim_set_keymap("n", "<Left>", "", opts)
-vim.api.nvim_set_keymap("n", "<Right>", "", opts)
-vim.api.nvim_set_keymap("v", "<Up>", "", opts)
-vim.api.nvim_set_keymap("v", "<Down>", "", opts)
-vim.api.nvim_set_keymap("v", "<Left>", "", opts)
-vim.api.nvim_set_keymap("v", "<Right>", "", opts)
-vim.api.nvim_set_keymap("i", "<Up>", "", opts)
-vim.api.nvim_set_keymap("i", "<Down>", "", opts)
-vim.api.nvim_set_keymap("i", "<Left>", "", opts)
-vim.api.nvim_set_keymap("i", "<Right>", "", opts)
-
 vim.o.laststatus = 3
 
 opt.relativenumber = true
 opt.number = false
-opt.numberwidth = 4 -- set the width of the number column; default=4
-
--- opt.autochdir = true -- set the working directory to the parent folder of the buffer file
+opt.numberwidth = 4
 
 -- tabs & indentation
-opt.tabstop = 4 -- 4 spaces for tabs (prettier default)
-opt.shiftwidth = 4 -- 4 spaces for indent width
-opt.expandtab = true -- expand tab to spaces
-opt.autoindent = true -- copy indent from current line when starting new one
-
-vim.api.nvim_create_autocmd("FileType", {
-   pattern = { "json" },
-   callback = function()
-      vim.bo.expandtab = true
-      vim.bo.shiftwidth = 2
-      vim.bo.tabstop = 2
-   end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-   pattern = { "lua" },
-   callback = function()
-      vim.bo.expandtab = true
-      vim.bo.shiftwidth = 3
-      vim.bo.tabstop = 3
-   end,
-})
-
--- set conceallevel=1 for markdown
-vim.api.nvim_create_augroup("markdown_conceal", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-   group = "markdown_conceal",
-   pattern = "markdown",
-   command = "setlocal conceallevel=1",
-})
-
--- opt.smartindent = true
-
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.expandtab = true
+opt.autoindent = true
 opt.wrap = false
 
+local function set_indentation(filetype, tabstop, shiftwidth, expandtab, conceallevel)
+   vim.api.nvim_create_autocmd("FileType", {
+      pattern = filetype,
+      callback = function()
+         vim.bo.tabstop = tabstop
+         vim.bo.shiftwidth = shiftwidth
+         vim.bo.expandtab = expandtab
+         if conceallevel then
+            vim.wo.conceallevel = conceallevel
+         end
+      end,
+   })
+end
+set_indentation("lua", 3, 3, true)
+set_indentation("json", 2, 2, true)
+set_indentation("markdown", 4, 4, true, 1)
+
 -- search settings
-opt.ignorecase = true -- ignore case when searching
-opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
+opt.ignorecase = true
+opt.smartcase = true
 
 opt.cursorline = true
 
--- turn on termguicolors for tokyonight colorscheme to work
--- (have to use iterm2 or any other true color terminal)
 opt.termguicolors = true
-opt.background = "dark" -- colorschemes that can be light or dark will be made dark
+opt.background = "dark"
 opt.signcolumn = "yes" -- show sign column so that text doesn't shift
 
--- backspace
-opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
-
--- clipboard
--- opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+opt.backspace = "indent,eol,start"
 
 -- split windows
-opt.splitright = true -- split vertical window to the right
-opt.splitbelow = true -- split horizontal window to the bottom
-
--- turn off swapfile
-opt.swapfile = false
+opt.splitright = true
+opt.splitbelow = true
 
 opt.diffopt:append("vertical")
+
+opt.swapfile = false
+
+opt.fillchars = {
+  vert = "│",
+  horiz = "─",
+  horizup = "┴",
+  horizdown = "┬",
+  vertleft = "┤",
+  vertright = "├",
+  verthoriz = "┼",
+}
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlight yanked text",
+  group = vim.api.nvim_create_augroup("YankHighlight", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank({ higroup = "YankHighlight" })
+  end,
+})
 
 -- restore terminal cursor when quitting neovim
 -- vim.cmd([[
@@ -111,8 +81,8 @@ opt.diffopt:append("vertical")
 -- ]])
 
 
--- Custom tabline configuration
-vim.o.tabline = '%!MyTabLine()'
+----------------------------- Custom tabline configuration -----------------------------
+vim.o.tabline = "%!MyTabLine()"
 
 -- Define the MyTabLine function in Vimscript
 vim.cmd([[
@@ -161,7 +131,7 @@ function! MyTabLabel(n)
 endfunction
 ]])
 
------------------------------------- set scrolloff to 20% of the window height ------------------------------------
+--------------------------- set scrolloff to 20% of the window height ------------------------------
 
 -- Function to set scrolloff based on a percentage of the window height
 local function set_scrolloff_percentage(percentage)
