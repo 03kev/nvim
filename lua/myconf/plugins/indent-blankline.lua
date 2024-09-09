@@ -1,5 +1,3 @@
--- indent blankline: this plugin adds indentation guides to Neovim
-
 return {
    "lukas-reineke/indent-blankline.nvim",
    event = { "BufReadPre", "BufNewFile" },

@@ -1,15 +1,13 @@
 vim.g.mapleader = " "
 
-local key = vim.keymap -- for conciseness
-
--- key.set("i", "jj", "<ESC>", { desc = "Exit insert mode with jj" })
+local key = vim.keymap
 
 key.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
 key.set("n", "<c-a>", "ggVG", { desc = "Select all" })
 key.set("i", "<c-a>", "<Esc>ggVG", { desc = "Select all" })
 
-key.set("n", "<Tab>", "a<Tab><Esc>", { noremap = true, silent = true }) -- tab in normal mode - same as <c-i>
+key.set("n", "<Tab>", "a<Tab><Esc>", { noremap = true, silent = true }) -- same as <c-i>
 
 -- move lines
 key.set("n", "<M-u>", ":m .+1<CR>==", { desc = "Move line down" })
@@ -18,18 +16,18 @@ key.set("v", "<M-f>", ":m '>+1<CR>gv=gv", { desc = "Move slection down" })
 key.set("v", "<M-d>", ":m '<-2<CR>gv=gv", { desc = "Move slection up" })
 
 -- window management
-key.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
-key.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
-key.set("n", "<leader>se", "<C-w>=", { desc = "Make splitted windows equal size" }) -- make split windows equal width & height
-key.set("n", "<leader>sc", "<cmd>close<CR>", { desc = "Close current splitted window" }) -- close current split window
+key.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
+key.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
+key.set("n", "<leader>se", "<C-w>=", { desc = "Make splitted windows equal size" })
+key.set("n", "<leader>sc", "<cmd>close<CR>", { desc = "Close current splitted window" })
 key.set("n", "<leader>sH", "<C-w>k<C-w>K", { desc = "Change split window view to horizontal" })
 key.set("n", "<leader>sV", "<C-w>k<C-w>H", { desc = "Change split window view to vertical" })
 
-key.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
-key.set("n", "<leader>tc", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
-key.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
-key.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
-key.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
+key.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" })
+key.set("n", "<leader>tc", "<cmd>tabclose<CR>", { desc = "Close current tab" })
+key.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" })
+key.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
+key.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
 
 -- Move to tab by number with Option + number
 key.set("n", "<M-1>", "1gt", { desc = "Move to tab 1" })
@@ -58,9 +56,6 @@ key.set("x", "<leader>P", '"_d"+P', { desc = "Paste replace from sys" })
 key.set("n", "gp", "`[v`]", { noremap = true, desc = "Select last pasted text" })
 
 -- text navigation
--- key.set("n", "<A-l>", "w", { noremap = true, silent = true, desc = "Move cursor left by word in normal mode" })
--- key.set("n", "<A-h>", "b", { noremap = true, silent = true, desc = "Move cursor right by word in normal mode" })
--- key.set("n", "9", "$", { noremap = true, silent = true, desc = "Move to the end of the line" })
 key.set("i", "<A-BS>", "<C-w>", { noremap = true, silent = true, desc = "Delete previous word in insert mode" })
 
 -- redo command with shift+u
@@ -102,7 +97,7 @@ function InsertFilePathIntoCmdLine()
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, false, true), "n", true)
    end
 end
-vim.api.nvim_set_keymap("n", "<leader>:", ":lua InsertFilePathIntoCmdLine()<CR>", { noremap = true, silent = false })
+key.set("n", "<leader>:", ":lua InsertFilePathIntoCmdLine()<CR>", { noremap = true, silent = false })
 
 -- Lazy scrolling
 local function lazy(keys)
@@ -168,3 +163,30 @@ vim.api.nvim_create_autocmd("WinLeave", {
       pcall(vim.api.nvim_buf_del_keymap, 0, "n", "G")
    end,
 })
+
+-- disable arrow keys and mouse
+key.set("n", "<ScrollWheelUp>", "")
+key.set("n", "<S-ScrollWheelUp>", "")
+key.set("n", "<C-ScrollWheelUp>", "")
+key.set("n", "<ScrollWheelDown>", "")
+key.set("n", "<S-ScrollWheelDown>", "")
+key.set("n", "<C-ScrollWheelDown>", "")
+key.set("n", "<ScrollWheelLeft>", "")
+key.set("n", "<S-ScrollWheelLeft>", "")
+key.set("n", "<C-ScrollWheelLeft>", "")
+key.set("n", "<ScrollWheelRight>", "")
+key.set("n", "<S-ScrollWheelRight>", "")
+key.set("n", "<C-ScrollWheelRight>", "")
+vim.opt.mouse = ""
+key.set("n", "<Up>", "")
+key.set("n", "<Down>", "")
+key.set("n", "<Left>", "")
+key.set("n", "<Right>", "")
+key.set("v", "<Up>", "")
+key.set("v", "<Down>", "")
+key.set("v", "<Left>", "")
+key.set("v", "<Right>", "")
+key.set("i", "<Up>", "")
+key.set("i", "<Down>", "")
+key.set("i", "<Left>", "")
+key.set("i", "<Right>", "")
