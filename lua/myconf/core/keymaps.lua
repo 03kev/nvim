@@ -12,8 +12,8 @@ key.set("n", "<Tab>", "a<Tab><Esc>", { noremap = true, silent = true }) -- same 
 -- move lines
 key.set("n", "<M-u>", ":m .+1<CR>==", { desc = "Move line down" })
 key.set("n", "<M-i>", ":m .-2<CR>==", { desc = "Move line up" })
-key.set("v", "<M-f>", ":m '>+1<CR>gv=gv", { desc = "Move slection down" })
-key.set("v", "<M-d>", ":m '<-2<CR>gv=gv", { desc = "Move slection up" })
+key.set("v", "<C-M-u>", ":m '>+1<CR>gv=gv", { desc = "Move slection down" })
+key.set("v", "<C-M-i>", ":m '<-2<CR>gv=gv", { desc = "Move slection up" })
 
 -- window management
 key.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
@@ -46,6 +46,8 @@ key.set("n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>"
 
 -- system clipboard
 key.set({ "n", "v" }, "Y", '"+y', { desc = "Yank to sys clipboard" })
+key.set({ "n", "v" }, "<M-S-y>", '"+y$', { desc = "Yank to sys clipboard to end of line" })
+key.set({ "n", "v" }, "<M-y>", "y$", { desc = "Yank to end of line" })
 key.set({ "n", "v" }, "<S-p>", '"+p"', { desc = "Paste from sys clipboard" })
 
 key.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yank" })
@@ -57,6 +59,8 @@ key.set("n", "gp", "`[v`]", { noremap = true, desc = "Select last pasted text" }
 
 -- text navigation
 key.set("i", "<A-BS>", "<C-w>", { noremap = true, silent = true, desc = "Delete previous word in insert mode" })
+key.set("n", "J", "jj", { noremap = true, silent = true, desc = "Move down" }) -- this replaces the default join line
+key.set("n", "K", "kk", { noremap = true, silent = true, desc = "Move up" })
 
 -- redo command with shift+u
 key.set("n", "<S-u>", "<C-r>", { desc = "Redo" })

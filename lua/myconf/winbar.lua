@@ -50,14 +50,6 @@ M.filename = function()
          file_icon_color = default_file_icon_color
       end
 
-      -- Return filename if parent dir doesn't exist
-      -- if parent_dir == nil or parent_dir == "" then
-      --    return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. filename .. "%*"
-      -- end
-
-      -- Return parent dir
-      -- return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. parent_dir .. "%*"
-
       -- Return filename if relative path doesn't exist
       if relative_path == nil or relative_path == "" then
          return " " .. "%#WinbarColor#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. filename .. "%*"

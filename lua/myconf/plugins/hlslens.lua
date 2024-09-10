@@ -6,11 +6,6 @@ return {
       hlslens.setup({
          calm_down = true, -- disable when moving the cursor out of the match
 
-         -- needed to enable the search handler for scrollbar - nvim-scrollbar
-         -- build_position_cb = function(plist, _, _, _)
-         --    require("scrollbar.handlers.search").handler.show(plist.start_pos)
-         -- end,
-
          override_lens = function(render, posList, nearest, idx, relIdx)
             local sfw = vim.v.searchforward == 1
             local indicator, text, chunks
