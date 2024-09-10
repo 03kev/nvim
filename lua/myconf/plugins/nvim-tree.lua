@@ -5,7 +5,6 @@ return {
       local nvimtree = require("nvim-tree")
       local key = vim.keymap
 
-      -- recommended settings from nvim-tree documentation
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
 
@@ -20,7 +19,7 @@ return {
                nowait = true,
             }
          end
-         api.config.mappings.default_on_attach(bufnr) -- load default mappings
+         api.config.mappings.default_on_attach(bufnr)
 
          key.del("n", "<C-]>", { buffer = bufnr })
          key.set("n", "<S-CR>", api.tree.change_root_to_node, opts("CD"))
@@ -40,15 +39,14 @@ return {
          update_cwd = true, -- update nvim-tree root to cwd
          update_focused_file = { -- update the focused file on `nvim-tree`
             enable = true,
-            -- update_cwd = true, -- if the file is not under the root, update the cwd and nvim-tree to the root
          },
 
          renderer = {
             add_trailing = true,
             indent_width = 2,
             full_name = true,
-            root_folder_label = function()
-               return "../"
+            root_folder_label = function(path)
+               return vim.fn.fnamemodify(path, ":t")
             end,
             indent_markers = {
                enable = true,

@@ -12,15 +12,13 @@ return {
    config = function()
       local telescope = require("telescope")
       local actions = require("telescope.actions")
+      local transform_mod = require("telescope.actions.mt").transform_mod
 
       local fb_actions = require("telescope").extensions.file_browser.actions
-      local transform_mod = require("telescope.actions.mt").transform_mod
       local z_utils = require("telescope._extensions.zoxide.utils")
-
       local trouble = require("trouble")
       local trouble_telescope = require("trouble.sources.telescope")
 
-      -- or create your custom action
       local custom_actions = transform_mod({
          open_trouble_qflist = function(prompt_bufnr)
             trouble.toggle("quickfix")
@@ -33,28 +31,25 @@ return {
             color_devicons = false, -- colored icons
             mappings = {
                i = {
-                  ["<C-k>"] = actions.move_selection_previous, -- move to prev result
-                  ["<C-j>"] = actions.move_selection_next, -- move to next result
+                  ["<C-k>"] = actions.move_selection_previous,
+                  ["<C-j>"] = actions.move_selection_next,
 
                   -- preview scrolling
                   ["<C-i>"] = actions.preview_scrolling_up,
-                  ["<C-u>"] = actions.preview_scrolling_down, -- disable this to clear the input box
+                  ["<C-u>"] = actions.preview_scrolling_down,
 
                   -- select multiple
                   ["<C-a>"] = actions.toggle_all,
                   ["<C-BS>"] = actions.toggle_selection,
-                  -- ["<C-w>h"] = actions.select_horizontal,
-                  -- ["<C-w>v"] = actions.select_vertical,
-                  -- ["<C-w>t"] = actions.select_tab,
-
-                  ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+                  ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse, -- doesn't work well
                   ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+
+                  ["<C-o>"] = actions.select_tab,
+                  ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
+                  ["<c-d>"] = { "<C-u>", type = "command" },
 
                   ["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
                   ["<C-t>"] = trouble_telescope.open,
-                  -- ["<C-d>"] = actions.delete_buffer, -- close buffer with Ctrl+d in insert mode
-                  ["<C-p>"] = require("telescope.actions.layout").toggle_preview, -- toggle preview in telescope
-                  ["<c-d>"] = { "<C-u>", type = "command" }, -- delete prompt in insert mode
                },
                n = {
                   ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
@@ -64,7 +59,6 @@ return {
                },
             },
 
-            -- Telescope vertical view
             layout_strategy = "vertical",
             layout_config = {
                vertical = {
@@ -109,13 +103,11 @@ return {
                         local current_picker = action_state.get_current_picker(prompt_bufnr)
                         local selected_entry = action_state.get_selected_entry()
                         local bufnr_to_delete = selected_entry.bufnr
-                        -- Close the selected buffer
                         vim.api.nvim_buf_delete(bufnr_to_delete, { force = true })
-                        -- Remove the entry from the Telescope picker
                         current_picker:delete_selection(function(selection)
                            return selection.bufnr == bufnr_to_delete
                         end)
-                     end, -- Custom mapping to delete buffer
+                     end,
                   },
 
                   n = {
@@ -124,13 +116,11 @@ return {
                         local current_picker = action_state.get_current_picker(prompt_bufnr)
                         local selected_entry = action_state.get_selected_entry()
                         local bufnr_to_delete = selected_entry.bufnr
-                        -- Close the selected buffer
                         vim.api.nvim_buf_delete(bufnr_to_delete, { force = true })
-                        -- Remove the entry from the Telescope picker
                         current_picker:delete_selection(function(selection)
                            return selection.bufnr == bufnr_to_delete
                         end)
-                     end, -- Custom mapping to delete buffer
+                     end,
                   },
                },
             },
@@ -144,7 +134,7 @@ return {
                prompt_path = true,
                mappings = {
                   i = {
-                     ["<C-h>"] = fb_actions.goto_home_dir, -- go to home directory in file browsing
+                     ["<C-h>"] = fb_actions.goto_home_dir,
                      ["<C-S-h>"] = fb_actions.toggle_hidden, -- toggle hidden files in file browsing
                   },
                },
@@ -170,6 +160,13 @@ return {
                   ["<C-q>"] = { action = z_utils.create_basic_command("split") },
                },
             },
+
+            fzf = {
+               fuzzy = true,
+               override_generic_sorter = true,
+               override_file_sorter = true,
+               case_mode = "smart_case",
+            },
          },
       })
 
@@ -178,29 +175,28 @@ return {
       telescope.load_extension("zoxide")
 
       -- set keymaps
-      local keymap = vim.keymap -- for conciseness
+      local keymap = vim.keymap
 
       keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
       keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
       keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
       keymap.set("n", "<leader>fg", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
-      keymap.set("n", "<leader>fh", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
+      keymap.set("n", "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "Fuzzy find in current buffer" })
+      keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Show open buffers" })
 
+      keymap.set("n", "<leader>fh", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
       keymap.set("n", "<space>ft", ":Telescope file_browser<CR>", { desc = "File browser" })
       keymap.set("n", "<leader>fz", require("telescope").extensions.zoxide.list, { desc = "Zoxide Paths" })
-
-      -- my custom commands and keymaps
 
       vim.api.nvim_create_user_command("GrepOpenFiles", function()
          require("telescope.builtin").live_grep({ grep_open_files = true })
       end, {}) -- search with telecope in opened files
 
-      keymap.set( -- search with telescope in current file
+      keymap.set(
          "n",
-         "<leader>fc",
+         "<leader>fv",
          "<cmd>lua require('telescope.builtin').live_grep({search_dirs={vim.fn.expand('%:p')}})<CR>",
          { desc = "Find string in current file" }
       )
-      keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Show open buffers" })
    end,
 }

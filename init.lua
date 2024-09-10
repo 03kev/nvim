@@ -1,13 +1,8 @@
 require("myconf.core") -- init.lua
 require("myconf.lazy") -- plugins
 require("myconf.theme")
-require("myconf.plugins-keymaps")
 require("myconf.winbar")
 
-vim.opt.fillchars = { vert = '│' }
-vim.cmd [[
-  highlight VertSplit guifg=#ff0000 guibg=NONE
-]]
 -- Change configuration variables 
 
 -- local config_file_path = "/Users/kevinmuka/.config/nvim/lua/configuration.lua"
