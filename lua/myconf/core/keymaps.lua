@@ -103,23 +103,6 @@ function InsertFilePathIntoCmdLine()
 end
 key.set("n", "<leader>:", ":lua InsertFilePathIntoCmdLine()<CR>", { noremap = true, silent = false })
 
--- Lazy scrolling
-local function lazy(keys)
-   keys = vim.api.nvim_replace_termcodes(keys, true, false, true)
-   return function()
-      local old = vim.o.lazyredraw
-      vim.o.lazyredraw = true
-      vim.api.nvim_feedkeys(keys, "nx", false)
-      vim.o.lazyredraw = old
-   end
-end
--- vim.keymap.set("n", "<c-d>", lazy("<c-d>zz"), { desc = "Scroll down half screen" })
--- vim.keymap.set("n", "<c-u>", lazy("<c-u>zz"), { desc = "Scroll up half screen" })
-
---
-
---
-
 -- Special G keymap
 
 -- Function to check if there is a gap between the last line of the file and the bottom of the screen
