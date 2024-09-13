@@ -1,3 +1,14 @@
+local themes = {
+   horizontal = {
+      theme = "horizontal",
+      border = true,
+      prompt_title = false,
+      -- results_title = false,
+      sorting_strategy = "ascending",
+      layout_strategy = "horizontal",
+   },
+}
+
 return {
    "nvim-telescope/telescope.nvim",
    branch = "0.1.x",
@@ -50,6 +61,7 @@ return {
 
                   ["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
                   ["<C-t>"] = trouble_telescope.open,
+                  ["<Esc>"] = actions.close,
                },
                n = {
                   ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
@@ -174,15 +186,26 @@ return {
       telescope.load_extension("file_browser")
       telescope.load_extension("zoxide")
 
+      local telescope_builtin = require("telescope.builtin")
+      local use_layout = function(picker, layout)
+         return function()
+            picker(themes[layout])
+         end
+      end
+
       -- set keymaps
       local keymap = vim.keymap
 
+      keymap.set(
+         "n",
+         "<leader>fc",
+         use_layout(telescope_builtin.current_buffer_fuzzy_find, "horizontal"),
+         { desc = "Fuzzy find in current buffer" }
+      )
       keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
       keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
       keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
       keymap.set("n", "<leader>fg", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
-      keymap.set("n", "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "Fuzzy find in current buffer" })
-      keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Show open buffers" })
 
       keymap.set("n", "<leader>fh", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
       keymap.set("n", "<space>ft", ":Telescope file_browser<CR>", { desc = "File browser" })

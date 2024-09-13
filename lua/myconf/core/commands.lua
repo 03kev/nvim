@@ -1,10 +1,3 @@
--- Commands to handle mistyping
-vim.cmd("command! Qa qa")
-vim.cmd("command! Qaa qa!")
-vim.cmd("command! Q q")
-vim.cmd("command! Wq wq")
-vim.cmd("command! W w")
-
 -- `Open` command
 vim.api.nvim_create_user_command("Open", function(opts)
    vim.fn.system("zsh -c 'source ~/.zshrc; op " .. opts.args .. "'")
