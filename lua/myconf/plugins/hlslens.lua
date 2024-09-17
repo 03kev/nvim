@@ -55,14 +55,6 @@ return {
       vim.api.nvim_set_keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
 
-      -- hide scrollbar search when leaving command line mode - nvim-scrollbar
-      -- vim.cmd([[
-      --    augroup scrollbar_search_hide
-      --       autocmd!
-      --       autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
-      --    augroup END
-      -- ]])
-
       -- nvim-hlslens integration with vim-visual-multi
       if hlslens then
          local overrideLens = function(render, posList, nearest, idx, relIdx)
