@@ -9,6 +9,19 @@ local themes = {
    },
 }
 
+function get_layout(layout, opts)
+   opts = opts or {}
+   local theme_opts = themes[layout]
+   return vim.tbl_deep_extend("force", theme_opts, opts)
+end
+
+function use_layout(picker, layout)
+   return function()
+      local lay = get_layout(layout)
+      picker(lay)
+   end
+end
+
 return {
    "nvim-telescope/telescope.nvim",
    branch = "0.1.x",
@@ -187,35 +200,31 @@ return {
       telescope.load_extension("zoxide")
 
       local telescope_builtin = require("telescope.builtin")
-      local use_layout = function(picker, layout)
-         return function()
-            picker(themes[layout])
-         end
-      end
 
       -- set keymaps
-      local keymap = vim.keymap
+      local key = vim.keymap
 
-      keymap.set(
+      key.set(
          "n",
          "<leader>fc",
          use_layout(telescope_builtin.current_buffer_fuzzy_find, "horizontal"),
          { desc = "Fuzzy find in current buffer" }
       )
-      keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
-      keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
-      keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
-      keymap.set("n", "<leader>fg", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
+      key.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
+      key.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
+      key.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
+      key.set("n", "<leader>fg", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
+      key.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Show open buffers" })
 
-      keymap.set("n", "<leader>fh", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
-      keymap.set("n", "<space>ft", ":Telescope file_browser<CR>", { desc = "File browser" })
-      keymap.set("n", "<leader>fz", require("telescope").extensions.zoxide.list, { desc = "Zoxide Paths" })
+      key.set("n", "<leader>fh", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
+      key.set("n", "<space>ft", ":Telescope file_browser<CR>", { desc = "File browser" })
+      key.set("n", "<leader>fz", require("telescope").extensions.zoxide.list, { desc = "Zoxide Paths" })
 
       vim.api.nvim_create_user_command("GrepOpenFiles", function()
          require("telescope.builtin").live_grep({ grep_open_files = true })
       end, {}) -- search with telecope in opened files
 
-      keymap.set(
+      key.set(
          "n",
          "<leader>fv",
          "<cmd>lua require('telescope.builtin').live_grep({search_dirs={vim.fn.expand('%:p')}})<CR>",

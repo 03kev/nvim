@@ -116,7 +116,7 @@ vim.cmd([[
    highlight TelescopeResultsTitle guifg=#A7A691 gui=bold
    highlight TelescopePreviewTitle guifg=#A7A691 gui=bold
    highlight TelescopeSelection guifg=#EFECDB guibg=#1A1A16 
-   " highlight TelescopeMatching guifg=#EFECDB guibg=#1639E6
+   highlight TelescopeMatching guifg=#EFECDB guibg=#1639E6
 ]])
 
 -- indent-blankline --
