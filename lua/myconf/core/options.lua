@@ -17,22 +17,27 @@ opt.expandtab = true
 opt.autoindent = true
 opt.wrap = false
 
-local function set_indentation(filetype, tabstop, shiftwidth, expandtab, conceallevel)
+local function set_indentation(filetype, tabstop, shiftwidth, expandtab)
    vim.api.nvim_create_autocmd("FileType", {
       pattern = filetype,
       callback = function()
          vim.bo.tabstop = tabstop
          vim.bo.shiftwidth = shiftwidth
          vim.bo.expandtab = expandtab
-         if conceallevel then
-            vim.wo.conceallevel = conceallevel
-         end
       end,
    })
 end
 set_indentation("lua", 3, 3, true)
 set_indentation("json", 2, 2, true)
-set_indentation("markdown", 4, 4, true, 1)
+set_indentation("markdown", 4, 4, true)
+
+vim.api.nvim_create_autocmd("FileType", {
+   pattern = "markdown",
+   callback = function()
+      vim.opt_local.wrap = true
+      vim.wo.conceallevel = 1
+   end,
+})
 
 -- search settings
 opt.ignorecase = true
@@ -55,13 +60,13 @@ opt.diffopt:append("vertical")
 opt.swapfile = false
 
 opt.fillchars = {
-  vert = "│",
-  horiz = "─",
-  horizup = "┴",
-  horizdown = "┬",
-  vertleft = "┤",
-  vertright = "├",
-  verthoriz = "┼",
+   vert = "│",
+   horiz = "─",
+   horizup = "┴",
+   horizdown = "┬",
+   vertleft = "┤",
+   vertright = "├",
+   verthoriz = "┼",
 }
 
 ----------------------------- Custom tabline configuration -----------------------------
