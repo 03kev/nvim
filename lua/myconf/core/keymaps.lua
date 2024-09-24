@@ -2,56 +2,6 @@ vim.g.mapleader = " "
 
 local key = vim.keymap
 
--- local ignored_filetypes = {
---    "NvimTree",
--- }
--- local ignored_buftypes = {
---    "nofile",
---    "quickfix",
---    "prompt",
---    "terminal",
--- }
---
--- -- Function to handle split navigation and creation
--- local function navigate_or_create_split(direction)
---    local current_win = vim.api.nvim_get_current_win()
---    local current_buf = vim.api.nvim_get_current_buf()
---    local filetype = vim.api.nvim_buf_get_option(current_buf, "filetype")
---    local buftype = vim.api.nvim_buf_get_option(current_buf, "buftype")
---
---    -- Check if the current buffer's filetype or buftype is in the ignored list
---    local is_ignored = vim.tbl_contains(ignored_filetypes, filetype) or vim.tbl_contains(ignored_buftypes, buftype)
---
---    vim.cmd("wincmd " .. direction)
---    if vim.api.nvim_get_current_win() == current_win and not is_ignored then
---       if direction == "h" then
---          vim.cmd("leftabove vsplit")
---       elseif direction == "j" then
---          vim.cmd("belowright split")
---       elseif direction == "k" then
---          vim.cmd("aboveleft split")
---       elseif direction == "l" then
---          vim.cmd("rightbelow vsplit")
---       end
---       vim.cmd("wincmd " .. direction)
---    end
--- end
---
--- -- Key mappings for split navigation and creation
--- key.set("n", "<A-h>", function()
---    navigate_or_create_split("h")
--- end, { noremap = true, silent = true, desc = "Move to left split or create one" })
--- key.set("n", "<A-j>", function()
---    navigate_or_create_split("j")
--- end, { noremap = true, silent = true, desc = "Move to down split or create one" })
--- key.set("n", "<A-k>", function()
---    navigate_or_create_split("k")
--- end, { noremap = true, silent = true, desc = "Move to up split or create one" })
--- key.set("n", "<A-l>", function()
---    navigate_or_create_split("l")
--- end, { noremap = true, silent = true, desc = "Move to right split or create one" })
-
-
 key.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
 key.set("n", "<c-a>", "ggVG", { desc = "Select all" })
@@ -231,3 +181,56 @@ key.set("i", "<Up>", "")
 key.set("i", "<Down>", "")
 key.set("i", "<Left>", "")
 key.set("i", "<Right>", "")
+
+
+-- Split navigation and creation
+local ignored_filetypes = {
+   "NvimTree",
+}
+local ignored_buftypes = {
+   "nofile",
+   "quickfix",
+   "prompt",
+   "terminal",
+}
+
+-- Function to handle split navigation and creation
+local function navigate_or_create_split(direction)
+   local current_win = vim.api.nvim_get_current_win()
+   local current_buf = vim.api.nvim_get_current_buf()
+   local filetype = vim.api.nvim_buf_get_option(current_buf, "filetype")
+   local buftype = vim.api.nvim_buf_get_option(current_buf, "buftype")
+
+   -- Check if the current buffer's filetype or buftype is in the ignored list
+   local is_ignored = vim.tbl_contains(ignored_filetypes, filetype) or vim.tbl_contains(ignored_buftypes, buftype)
+
+   vim.cmd("wincmd " .. direction)
+   if vim.api.nvim_get_current_win() == current_win and not is_ignored then
+      if direction == "h" then
+         vim.cmd("leftabove vsplit")
+      elseif direction == "j" then
+         vim.cmd("belowright split")
+      elseif direction == "k" then
+         vim.cmd("aboveleft split")
+      elseif direction == "l" then
+         vim.cmd("rightbelow vsplit")
+      end
+      vim.cmd("wincmd " .. direction)
+   end
+end
+
+-- Key mappings for split navigation and creation
+key.set("n", "<C-h>", function()
+   navigate_or_create_split("h")
+end, { noremap = true, silent = true, desc = "Move to left split or create one" })
+key.set("n", "<C-j>", function()
+   navigate_or_create_split("j")
+end, { noremap = true, silent = true, desc = "Move to down split or create one" })
+key.set("n", "<C-k>", function()
+   navigate_or_create_split("k")
+end, { noremap = true, silent = true, desc = "Move to up split or create one" })
+key.set("n", "<C-l>", function()
+   navigate_or_create_split("l")
+end, { noremap = true, silent = true, desc = "Move to right split or create one" })
+key.set("n", "<C-c>", "<C-w>c")
+

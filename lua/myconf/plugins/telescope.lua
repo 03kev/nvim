@@ -187,7 +187,7 @@ return {
             },
 
             fzf = {
-               fuzzy = true,
+               fuzzy = false,
                override_generic_sorter = true,
                override_file_sorter = true,
                case_mode = "smart_case",
@@ -208,10 +208,10 @@ return {
          "n",
          "<leader>fc",
          use_layout(telescope_builtin.current_buffer_fuzzy_find, "horizontal"),
-         { desc = "Fuzzy find in current buffer" }
+         { desc = "Find in current buffer" }
       )
-      key.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
-      key.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
+      key.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files in cwd" })
+      key.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Find recent files" })
       key.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
       key.set("n", "<leader>fg", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
       key.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Show open buffers" })

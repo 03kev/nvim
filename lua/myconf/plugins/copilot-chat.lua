@@ -43,8 +43,8 @@ return {
          },
          -- Reset the chat buffer
          reset = {
-            normal = "<C-l>",
-            insert = "<C-l>",
+            normal = "<C-r>",
+            insert = "<C-r>",
          },
          -- Submit the prompt to Copilot
          submit_prompt = {
