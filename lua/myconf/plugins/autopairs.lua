@@ -26,5 +26,23 @@ return {
 
       -- make autopairs and completion work together
       cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
+      -- global variable to track autopairs state
+      _G.autopairs_enabled = true
+
+      -- function to toggle autopairs
+      function _G.toggle_autopairs()
+         if _G.autopairs_enabled then
+            autopairs.disable()
+            print("Auto-pairs disabled")
+         else
+            autopairs.enable()
+            print("Auto-pairs enabled")
+         end
+         _G.autopairs_enabled = not _G.autopairs_enabled
+      end
+
+      -- map keybinding to toggle autopairs
+      vim.api.nvim_set_keymap('n', '<leader>at', ':lua toggle_autopairs()<CR>', { desc = "Toggle autopairs" })
    end,
 }
