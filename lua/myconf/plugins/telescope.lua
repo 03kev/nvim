@@ -9,13 +9,13 @@ local themes = {
    },
 }
 
-function get_layout(layout, opts)
+local function get_layout(layout, opts)
    opts = opts or {}
    local theme_opts = themes[layout]
    return vim.tbl_deep_extend("force", theme_opts, opts)
 end
 
-function use_layout(picker, layout)
+local function use_layout(picker, layout)
    return function()
       local lay = get_layout(layout)
       picker(lay)
@@ -76,12 +76,12 @@ return {
                   ["<C-t>"] = trouble_telescope.open,
                   ["<Esc>"] = actions.close,
                },
-               n = {
-                  ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-                  ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
-                  ["<C-a>"] = actions.toggle_all,
-                  ["<C-BS>"] = actions.toggle_selection,
-               },
+               -- n = {
+               --    ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+               --    ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+               --    ["<C-a>"] = actions.toggle_all,
+               --    ["<C-BS>"] = actions.toggle_selection,
+               -- },
             },
 
             layout_strategy = "vertical",

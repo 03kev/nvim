@@ -24,8 +24,25 @@ return {
          key.del("n", "<C-]>", { buffer = bufnr })
          key.set("n", "<S-CR>", api.tree.change_root_to_node, opts("CD"))
          key.set("n", "<S-BS>", api.tree.change_root_to_parent, opts("Up"))
-         key.set("n", "h", api.node.navigate.parent_close, opts("Up"))
-         key.set("n", "l", api.node.open.edit, opts("Up"))
+         key.set("n", "h", api.node.navigate.parent_close, opts("Close Directory"))
+         key.set("n", "l", api.node.open.edit, opts("Open"))
+
+         local function open_with_default_app()
+            local node = api.tree.get_node_under_cursor()
+            if node and node.absolute_path then
+               os.execute("open " .. vim.fn.shellescape(node.absolute_path))
+            end
+         end
+
+         local function reveal_in_finder()
+            local node = api.tree.get_node_under_cursor()
+            if node and node.absolute_path then
+               os.execute("open -R " .. vim.fn.shellescape(node.absolute_path))
+            end
+         end
+
+         key.set("n", "o", open_with_default_app, opts("Open with default app"))
+         key.set("n", "O", reveal_in_finder, opts("Reveal in Finder"))
       end
 
       nvimtree.setup({
@@ -62,6 +79,8 @@ return {
                   git = true,
                   hidden = false,
                },
+
+               git_placement = "after",
                glyphs = {
                   folder = {
                      arrow_closed = "\u{2013}", -- closed folder

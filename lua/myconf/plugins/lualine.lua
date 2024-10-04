@@ -53,6 +53,15 @@ return {
          return str
       end
 
+      local function current_mode()
+         local mode = require("lualine.utils.mode").get_mode()
+         local vm_info = vim.fn.VMInfos()
+         if vm_info and vm_info.status ~= nil then
+            mode = "VM " .. mode
+         end
+         return mode
+      end
+
       lualine.setup({ -- configure lualine with modified theme
          options = {
             theme = my_lualine_theme,
@@ -62,13 +71,14 @@ return {
          sections = {
             lualine_a = {
                {
-                  "mode",
+                  current_mode,
                   fmt = function(str)
                      if vim.bo.filetype == "NvimTree" then
-                        return "nvim"
+                        return ""
                      end
                      return str
                   end,
+                  gui = "bold",
                },
             },
             lualine_b = {
