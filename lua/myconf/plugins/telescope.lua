@@ -98,16 +98,18 @@ return {
          pickers = {
             live_grep = {
                -- disable_devicons = true, -- disable file icons
-               file_ignore_patterns = { "node_modules/", ".git/" },
-               additional_args = function(_)
-                  return { "--hidden" } -- include hidden files
-               end,
+               -- file_ignore_patterns = { "node_modules/", ".git/" },
+               -- hidden = true,
+               -- additional_args = function(_)
+               --    return { "--hidden" } -- include hidden files
+               -- end,
             },
 
             find_files = {
                -- disable_devicons = true, -- disable file icons
                file_ignore_patterns = { "node_modules/", ".git/" },
-               find_command = { "fd", "--type", "f", "--hidden", "--exclude", ".DS_Store" }, -- use fd instead of find
+               hidden = true,
+               -- find_command = { "fd", "--type", "f", "--hidden", "--exclude", ".DS_Store" }, -- use fd instead of find
             },
 
             oldfiles = {

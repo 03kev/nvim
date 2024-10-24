@@ -1,5 +1,6 @@
 return {
    "luukvbaal/statuscol.nvim",
+   commit = "d1fca36dbe47cb43e4650c3609c440ce6212aec7",
    config = function()
       local builtin = require("statuscol.builtin")
       require("statuscol").setup({
