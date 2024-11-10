@@ -232,5 +232,3 @@ return {
       { "<leader>ccd", "<cmd>CopilotChatDebugInfo<cr>", desc = "CopilotChat - Debug Info" },
    },
 }
-
--- https://github.com/CopilotC-Nvim/CopilotChat.nvim/tree/canary
