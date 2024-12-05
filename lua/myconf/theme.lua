@@ -68,6 +68,13 @@ hl(0, "FloatNormal", { fg = black1 })
 hl(0, "FloatBorder", { fg = grey2 })
 hl(0, "FloatTitle", { fg = grey2 })
 hl(0, "FloatFooter", { fg = grey2 })
+-- popup menu
+hl(0, "Pmenu", { fg = white1, bg = line })
+hl(0, "PmenuSbar", { bg = line })
+hl(0, "PmenuSel", { fg = white1, bg = blue1 })
+hl(0, "PmenuKind", { fg = white1, bg = line })
+hl(0, "PmenuKindSel", { fg = black1, bg = grey1 })
+hl(0, "PmenuExtra", { fg = white1, bg = line })
 
 vim.opt.guicursor = {
    "n-v-c-sm:block-Cursor/lCursor",
@@ -183,6 +190,8 @@ hl(0, "Repeat", { fg = grey1, bold = false })
 hl(0, "Label", { fg = grey1, bold = false })
 hl(0, "Identifier", { fg = white1 })
 hl(0, "Type", { fg = grey1 })
+
+hl(0, "@markup.raw.markdown_inline", { bg = bright(black1, 4) })
 
 -- custom language highlights
 api.nvim_create_augroup("CustomHighlights", { clear = true })
