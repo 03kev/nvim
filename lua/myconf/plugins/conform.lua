@@ -8,32 +8,29 @@ return {
 
     conform.setup({
       formatters_by_ft = {
-        -- javascript = { "prettier" },
-        javascript = { "prettier --config ~/.config/prettier/.prettierrc" },
+        javascript = {
+          "prettier",
+          -- options = {
+          --   config = 'Users/kevinmuka/.config/nvim/.prettierrc.json'
+          --   -- tabWidth = 4,
+          --   -- semi = false,
+          --   -- useTabs = false,
+          --   -- singleQuote = true,
+          --   -- trailingComma = "es5",
+          -- },
+        },
         typescript = { "prettier" },
         javascriptreact = { "prettier" },
         typescriptreact = { "prettier" },
         svelte = { "prettier" },
         css = { "prettier" },
         html = { "prettier" },
-        json = {
-          "prettier",
-          options = {
-            tabWidth = 2,
-            useTabs = false,
-          },
-        },
+        json = { "prettier" },
         yaml = { "prettier" },
         markdown = { "prettier" },
         graphql = { "prettier" },
         liquid = { "prettier" },
-        lua = {
-          "stylua",
-          options = {
-            tabWidth = 2,
-            useTabs = false,
-          },
-        },
+        lua = { "stylua" },
         python = { "isort", "black" },
       },
 

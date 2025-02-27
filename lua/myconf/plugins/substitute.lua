@@ -6,8 +6,7 @@ return {
 
     subs.setup()
 
-    -- set keymaps
-    local key = vim.keymap -- for conciseness
+    local key = vim.keymap
 
     key.set("n", "s", subs.operator, { desc = "Substitute with motion" })
     key.set("n", "ss", subs.line, { desc = "Substitute line" })
