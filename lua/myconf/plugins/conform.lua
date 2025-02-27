@@ -16,12 +16,24 @@ return {
         svelte = { "prettier" },
         css = { "prettier" },
         html = { "prettier" },
-        json = { "prettier" },
+        json = {
+          "prettier",
+          options = {
+            tabWidth = 2,
+            useTabs = false,
+          },
+        },
         yaml = { "prettier" },
         markdown = { "prettier" },
         graphql = { "prettier" },
         liquid = { "prettier" },
-        lua = { "stylua" },
+        lua = {
+          "stylua",
+          options = {
+            tabWidth = 2,
+            useTabs = false,
+          },
+        },
         python = { "isort", "black" },
       },
 
