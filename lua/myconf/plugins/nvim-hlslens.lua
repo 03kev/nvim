@@ -7,9 +7,9 @@ return {
          calm_down = true, -- disable when moving the cursor out of the match
 
          -- needed to enable the search handler for scrollbar - nvim-scrollbar
-         build_position_cb = function(plist, _, _, _)
-            require("scrollbar.handlers.search").handler.show(plist.start_pos)
-         end,
+         -- build_position_cb = function(plist, _, _, _)
+         --    require("scrollbar.handlers.search").handler.show(plist.start_pos)
+         -- end,
 
          override_lens = function(render, posList, nearest, idx, relIdx)
             local sfw = vim.v.searchforward == 1
@@ -61,12 +61,12 @@ return {
       vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
 
       -- hide scrollbar search when leaving command line mode - nvim-scrollbar
-      vim.cmd([[
-         augroup scrollbar_search_hide
-            autocmd!
-            autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
-         augroup END
-      ]])
+      -- vim.cmd([[
+      --    augroup scrollbar_search_hide
+      --       autocmd!
+      --       autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
+      --    augroup END
+      -- ]])
 
       -- nvim-hlslens integration with vim-visual-multi
       if hlslens then
