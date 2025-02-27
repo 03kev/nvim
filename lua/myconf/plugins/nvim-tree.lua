@@ -35,6 +35,7 @@ return {
             file = false,
             folder = false,
             git = true,
+            hidden = false,
           },
           glyphs = {
             folder = {
@@ -42,6 +43,15 @@ return {
               arrow_open = "\u{00B7}", -- opened folder
               default = "", -- icon for closed folders
               open = "", -- icon for opened folders
+            },
+            git = {
+              unstaged = "✗",
+              staged = "✓",
+              unmerged = "",
+              renamed = "➜",
+              untracked = "★",
+              deleted = "",
+              ignored = "◌",
             },
           },
         },
@@ -84,7 +94,7 @@ return {
     key.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file
     key.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
     key.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) -- refresh file explorer
-    key.set('n', '<Leader>t', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
+    key.set('n', '<leader>et', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
     
   end,
 }
