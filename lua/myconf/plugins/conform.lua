@@ -8,7 +8,8 @@ return {
 
     conform.setup({
       formatters_by_ft = {
-        javascript = { "prettier" },
+        -- javascript = { "prettier" },
+        javascript = { "prettier --config ~/.config/prettier/.prettierrc" },
         typescript = { "prettier" },
         javascriptreact = { "prettier" },
         typescriptreact = { "prettier" },
@@ -23,11 +24,12 @@ return {
         lua = { "stylua" },
         python = { "isort", "black" },
       },
-      format_on_save = {
-        lsp_fallback = false,
-        async = false,
-        timeout_ms = 1000,
-      },
+
+      -- format_on_save = {
+      --   lsp_fallback = false,
+      --   async = false,
+      --   timeout_ms = 1000,
+      -- },
     })
 
     vim.keymap.set({ "n", "v" }, "<leader>fi", function()

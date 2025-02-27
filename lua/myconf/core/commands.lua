@@ -92,10 +92,10 @@ end, {})
 --     vim.cmd('file zsh - ' .. file_dir)
 -- end, {})
 
-
 -- commands to handle mistyping
 vim.cmd("command! Qa qa")
 vim.cmd("command! Qaa qa!")
 vim.cmd("command! Q q")
 vim.cmd("command! Wq wq")
 vim.cmd("command! W w")
+
