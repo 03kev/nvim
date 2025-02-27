@@ -13,8 +13,8 @@ vim.cmd([[highlight Visual guibg=#2a2727 gui=none]])
 vim.api.nvim_set_hl(0, "Comment", { fg = "#843D3A", italic = true })
 
 -- Change the color of search results
-vim.cmd("highlight Search guifg=#000000 guibg=#C7C7C7") -- search highlight
-vim.cmd("highlight IncSearch guifg=#000000 guibg=#FFFFFF") -- incremental search highlight
+vim.cmd("highlight Search guifg=#DDDDDD guibg=#575757") -- search highlight
+vim.cmd("highlight IncSearch guifg=#000000 guibg=#F1F1F1") -- incremental search highlight
 vim.cmd("highlight CurSearch guifg=#000000 guibg=#6DBF26") -- current search result highlight
 
 -- Change the color of the cursor
@@ -46,10 +46,16 @@ vim.cmd([[highlight NvimTreeFolderName guifg=#6f6f6f gui=bold]])
 vim.cmd([[highlight NvimTreeOpenedFolderIcon guifg=#6f6f6f]])
 vim.cmd([[highlight NvimTreeOpenedFolderName guifg=#6f6f6f gui=bold]])
 
--- Change the color of unstaged git icons to red
-vim.api.nvim_set_hl(0, "NvimTreeGitDirty", { fg = "#EC6A5E" })
--- Change the color of staged git icons to green
-vim.api.nvim_set_hl(0, "NvimTreeGitNew", { fg = "#6DBF26" })
+-- set the color of the git icons
+    vim.cmd [[
+      highlight NvimTreeGitDirty guifg=#6183BB
+      highlight NvimTreeGitStaged guifg=#6183BB
+      highlight NvimTreeGitMerge guifg=#6183BB
+      highlight NvimTreeGitRenamed guifg=#6183BB
+      highlight NvimTreeGitNew guifg=#6183BB
+      highlight NvimTreeGitDeleted guifg=#6183BB
+      highlight NvimTreeGitIgnored guifg=#6183BB
+    ]]
 
 --------------------------------------------- TELESCOPE ---------------------------------------------
 
