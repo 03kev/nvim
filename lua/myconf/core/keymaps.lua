@@ -48,9 +48,21 @@ key.set("i", "<A-BS>", "<C-w>", { noremap = true, silent = true, desc = "Delete 
 -- redo command with shift+u
 key.set("n", "<S-u>", "<C-r>", { desc = "Redo command" })
 
--- from terminal to normal mode
-key.set("t", "<ESC><ESC>", "<C-\\><C-n>", { noremap = true, desc = "Terminal to normal mode" })
-key.set("t", "<ESC>", "<ESC>", { noremap = true, desc = "For lazygit, provisional" }) -- for lazygit, to improve
+-- from terminal to normal mode (not in lazygit)
+vim.api.nvim_create_autocmd("TermOpen", {
+  pattern = "*",
+  callback = function()
+    if vim.fn.expand("%:t") ~= "lazygit" and vim.bo.buftype == "terminal" and vim.bo.filetype ~= "lazygit" then
+      vim.api.nvim_buf_set_keymap(
+        0,
+        "t",
+        "<ESC><ESC>",
+        "<C-\\><C-n>",
+        { noremap = true, desc = "Terminal to normal mode" }
+      )
+    end
+  end,
+})
 
 -- execute terminal command
 key.set("n", "<leader><S-t>", ":Terminal<CR>", { desc = "Execute Terminal command" })
