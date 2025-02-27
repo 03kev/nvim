@@ -2,21 +2,28 @@
 
 -- set colors to line numbers Above, Current and Below in this order
 -- ! LineNr doesn't currently work even by setting it behind, it's managed by the colorscheme plugin
-vim.api.nvim_set_hl(0, 'LineNrAbove', { fg='#484848', bold=false })
-vim.api.nvim_set_hl(0, 'LineNr', { fg='#6DBF26', bold=false })
-vim.api.nvim_set_hl(0, 'LineNrBelow', { fg='#484848', bold=false })
+vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#484848", bold = false })
+vim.api.nvim_set_hl(0, "LineNr", { fg = "#6DBF26", bold = false })
+vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#484848", bold = false })
 
 -- Set the visual mode background color
 vim.cmd([[highlight Visual guibg=#2a2727 gui=none]])
 
--- Change the color of comments 
-vim.api.nvim_set_hl(0, 'Comment', { fg = '#843D3A', italic = true })
+-- Change the color of comments
+vim.api.nvim_set_hl(0, "Comment", { fg = "#843D3A", italic = true })
 
 -- Change the color of search results
-vim.cmd('highlight Search guifg=#000000 guibg=#C7C7C7') -- search highlight
-vim.cmd('highlight IncSearch guifg=#000000 guibg=#FFFFFF') -- incremental search highlight 
-vim.cmd('highlight CurSearch guifg=#000000 guibg=#6DBF26') -- current search result highlight
+vim.cmd("highlight Search guifg=#000000 guibg=#C7C7C7") -- search highlight
+vim.cmd("highlight IncSearch guifg=#000000 guibg=#FFFFFF") -- incremental search highlight
+vim.cmd("highlight CurSearch guifg=#000000 guibg=#6DBF26") -- current search result highlight
 
+-- Change the color of the cursor
+vim.opt.guicursor = "n-v-c-sm:block-Cursor/lCursor,i-ci-ve:ver25-CursorInsert,r-cr-o:hor20"
+vim.cmd([[
+  highlight Cursor guifg=NONE guibg=#c7c7c7 gui=nocombine
+  highlight lCursor guifg=NONE guibg=#c7c7c7 gui=nocombine
+  highlight CursorInsert guifg=NONE guibg=#c7c7c7 gui=nocombine
+]])
 
 --------------------------------------------- NVIM TREE ---------------------------------------------
 
@@ -31,10 +38,9 @@ vim.cmd([[highlight NvimTreeOpenedFolderIcon guifg=#6f6f6f]])
 vim.cmd([[highlight NvimTreeOpenedFolderName guifg=#6f6f6f gui=bold]])
 
 -- Change the color of unstaged git icons to red
-vim.api.nvim_set_hl(0, 'NvimTreeGitDirty', { fg = '#EC6A5E' })
+vim.api.nvim_set_hl(0, "NvimTreeGitDirty", { fg = "#EC6A5E" })
 -- Change the color of staged git icons to green
-vim.api.nvim_set_hl(0, 'NvimTreeGitNew', { fg = '#6DBF26' })
-
+vim.api.nvim_set_hl(0, "NvimTreeGitNew", { fg = "#6DBF26" })
 
 --------------------------------------------- TELESCOPE ---------------------------------------------
 
@@ -45,19 +51,16 @@ vim.cmd([[highlight TelescopeMatching guifg=#6DBF26]])
 -- set Telescope selection colors to ensure readability
 -- vim.cmd([[highlight TelescopeSelection guifg=##EFEBDB guibg=#6DBF26]])
 
-
 --------------------------------------------- INDENT BLANKLINE ---------------------------------------------
 
 -- set the color of the indent line and scope line
 vim.cmd([[highlight Indentlinecolor guifg=#242424]])
 vim.cmd([[highlight Indentscopelinecolor guifg=#3b3b3b]])
 
-
 --------------------------------------------- TOGGLETERM ---------------------------------------------
 
 -- Set the background color for floating terminal windows (doesn't work)
 vim.cmd([[highlight NormalFloat guibg=#101010]])
 vim.cmd([[highlight FloatBorder guibg=#101010]])
-
 
 ---------------------------------------------  ---------------------------------------------

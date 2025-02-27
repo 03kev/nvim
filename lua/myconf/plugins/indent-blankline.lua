@@ -5,10 +5,10 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   main = "ibl",
   opts = {
-    indent = { 
-      char = "│", -- char = "\u{250A}", 
+    indent = {
+      char = "│", -- char = "\u{250A}",
       highlight = { "indentlinecolor" },
-    }, 
+    },
     scope = { -- marked indent line for scope
       enabled = true,
       char = "│", -- ▏
@@ -17,5 +17,4 @@ return {
       highlight = { "indentscopelinecolor" },
     },
   },
-
 }
