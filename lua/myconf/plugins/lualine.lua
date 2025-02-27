@@ -1,3 +1,5 @@
+-- Configuration for the statusline (the bar at the bottom) plugin lualine.nvim
+
 return {
   "nvim-lualine/lualine.nvim",
   --dependencies = { "nvim-tree/nvim-web-devicons" },
