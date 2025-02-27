@@ -74,6 +74,8 @@ hl(0, "TermCursorNC", { fg = white1, bg = bright(cursor, 0.4) }) -- terminal cur
 hl(0, "MatchParen", { fg = white1, bg = blue1 }) -- matching parenthesis
 
 hl(0, "TabLineFill", { bg = black1 })
+hl(0, "TabLine", { bg = black1, fg = grey2 })
+hl(0, "TabLineSel", { bg = black1, fg = white1 })
 
 -- nvim-tree --
 

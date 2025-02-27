@@ -39,6 +39,12 @@ vim.api.nvim_create_user_command("Path", function()
    print(filePath)
 end, {})
 
+vim.api.nvim_create_user_command("Cpath", function()
+    local path = vim.fn.expand("%:p")
+    vim.fn.setreg("+", path)
+    vim.notify('Copied "' .. path .. '" to the clipboard')
+end, {}) 
+
 -- `Z` command to use zoxide for changing directories
 vim.api.nvim_create_user_command("Z", function(opts)
    local path = vim.fn.system("/opt/homebrew/bin/zoxide query " .. vim.fn.shellescape(opts.args))
