@@ -65,6 +65,9 @@ key.set("n", "K", "kk", { noremap = true, silent = true, desc = "Move up" })
 -- redo command with shift+u
 key.set("n", "<S-u>", "<C-r>", { desc = "Redo" })
 
+key.set("n", "\\s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+-- key.set("n", "\\s", [[:set hlsearch<CR>/<C-r><C-w><CR>:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+
 --
 
 -- from terminal to normal mode (not in lazygit)
@@ -106,6 +109,8 @@ function InsertFilePathIntoCmdLine()
    end
 end
 key.set("n", "<leader>:", ":lua InsertFilePathIntoCmdLine()<CR>", { noremap = true, silent = false })
+
+--
 
 -- Special G keymap
 
@@ -155,6 +160,8 @@ vim.api.nvim_create_autocmd("WinLeave", {
    end,
 })
 
+--
+
 -- disable arrow keys and mouse
 key.set("n", "<ScrollWheelUp>", "")
 key.set("n", "<S-ScrollWheelUp>", "")
@@ -182,6 +189,7 @@ key.set("i", "<Down>", "")
 key.set("i", "<Left>", "")
 key.set("i", "<Right>", "")
 
+--
 
 -- Split navigation and creation
 local ignored_filetypes = {
@@ -206,16 +214,24 @@ local function navigate_or_create_split(direction)
 
    vim.cmd("wincmd " .. direction)
    if vim.api.nvim_get_current_win() == current_win and not is_ignored then
-      if direction == "h" then
-         vim.cmd("leftabove vsplit")
-      elseif direction == "j" then
-         vim.cmd("belowright split")
-      elseif direction == "k" then
-         vim.cmd("aboveleft split")
-      elseif direction == "l" then
-         vim.cmd("rightbelow vsplit")
+      local win_count = #vim.api.nvim_list_wins()
+      if win_count < 10 then
+         if direction == "h" then
+            vim.cmd("leftabove vsplit")
+         elseif direction == "j" then
+            vim.cmd("belowright split")
+         elseif direction == "k" then
+            vim.cmd("aboveleft split")
+         elseif direction == "l" then
+            vim.cmd("rightbelow vsplit")
+         end
+         vim.cmd("wincmd " .. direction)
+      else
+         vim.api.nvim_echo({ { "Maximum number of splits (10) reached", "WarningMsg" } }, false, {})
+         vim.defer_fn(function()
+            vim.cmd("echo ''")
+         end, 1000)
       end
-      vim.cmd("wincmd " .. direction)
    end
 end
 
@@ -233,4 +249,3 @@ key.set("n", "<C-l>", function()
    navigate_or_create_split("l")
 end, { noremap = true, silent = true, desc = "Move to right split or create one" })
 key.set("n", "<C-c>", "<C-w>c")
-

@@ -54,5 +54,14 @@ return {
             },
          },
       })
+
+      vim.api.nvim_create_augroup("MatchBrackets", { clear = true })
+      vim.api.nvim_create_autocmd("FileType", {
+         group = "MatchBrackets",
+         pattern = { "cpp", "html", "xml" },
+         callback = function()
+            vim.opt_local.matchpairs:append("<:>")
+         end,
+      })
    end,
 }

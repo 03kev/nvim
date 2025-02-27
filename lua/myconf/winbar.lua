@@ -46,17 +46,24 @@ M.filename = function()
 
       vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
       if file_icon == nil then
-         file_icon = default_file_icon
-         file_icon_color = default_file_icon_color
+         file_icon = ""
+         file_icon_color = ""
       end
 
       -- Return filename if relative path doesn't exist
       if relative_path == nil or relative_path == "" then
-         return " " .. "%#WinbarColor#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. filename .. "%*"
+         if isempty(file_icon) then
+            return " " .. "%#WinbarColor#" .. filename .. "%*"
+         else
+            return " " .. "%#WinbarColor#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. filename .. "%*"
+         end
       end
       -- Return relative path
-      return " " .. "%#WinbarColor#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. relative_path .. "%*"
-
+      if isempty(file_icon) then
+         return " " .. "%#WinbarColor#" .. relative_path .. "%*"
+      else
+         return " " .. "%#WinbarColor#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. relative_path .. "%*"
+      end
    end
 end
 

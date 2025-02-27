@@ -18,6 +18,8 @@ return {
          },
       })
 
-      vim.keymap.set("n", "<c-P>", require("fzf-lua").files, { desc = "Fzf Files" })
+      vim.keymap.set("n", "<leader>zf", require("fzf-lua").files, { desc = "Fzf Files", noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>zs", require("fzf-lua").live_grep, { desc = "Fzf Live Grep", noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>zb", require("fzf-lua").builtin, { desc = "Fzf Builtin", noremap = true, silent = true })
    end,
 }

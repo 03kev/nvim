@@ -1,5 +1,6 @@
-local hl = vim.api.nvim_set_hl
 local cmd = vim.cmd
+local api = vim.api
+local hl = api.nvim_set_hl
 
 local color_utils = require("myconf.color_utils")
 local bright = color_utils.adjust_brightness
@@ -46,6 +47,8 @@ hl(0, "Visual", { bg = visual, fg = "none" }) -- visual mode
 hl(0, "Comment", { fg = comment, italic = true })
 hl(0, "YankHighlight", { bg = bright(visual, 1.5), fg = white1 })
 
+hl(0, "Substitute", { fg = black1, bg = purewhite })
+
 hl(0, "Search", { fg = white1, bg = grey2 }) -- search
 hl(0, "IncSearch", { fg = black1, bg = purewhite }) -- incremental current search result
 cmd([[highlight link CurSearch IncSearch]]) -- current search
@@ -59,6 +62,12 @@ hl(0, "VM_Mono", { fg = black1, bg = bright(cursor, 0.72) }) -- multiple cursors
 hl(0, "VM_Cursor", { fg = black1, bg = bright(cursor, 0.82) }) -- multiple cursors normal mode
 hl(0, "VM_Insert", { fg = black1, bg = cursor }) -- multiple cursors insert mode
 hl(0, "VM_Match", { fg = white1, bg = bright(grey3, 0.9) }) -- multiple cursors matches
+
+-- floating menu
+hl(0, "FloatNormal", { fg = black1 })
+hl(0, "FloatBorder", { fg = grey2 })
+hl(0, "FloatTitle", { fg = grey2 })
+hl(0, "FloatFooter", { fg = grey2 })
 
 vim.opt.guicursor = {
    "n-v-c-sm:block-Cursor/lCursor",
@@ -105,7 +114,7 @@ hl(0, "TelescopeBorder", { fg = green1 })
 hl(0, "TelescopeMatching", { fg = green1 })
 -- hl(0, "TelescopeSelection", { fg = '#EFEBDB', bg = '#6DBF26' })
 
-vim.cmd([[
+cmd([[
    " highlight TelescopePromptBorder guifg=#A7A691
    highlight TelescopeResultsBorder guifg=#A7A691
    highlight TelescopePreviewBorder guifg=#A7A691
@@ -161,7 +170,7 @@ hl(0, "LazyGitBorder", { fg = grey3 })
 -- other --
 
 hl(0, "Whitespace", { fg = orange1 })
-hl(0, "NonText", { fg = orange1 })
+hl(0, "NonText", { fg = grey2 })
 hl(0, "SpecialKey", { fg = orange1 })
 hl(0, "SpecialChar", { fg = orange1 })
 hl(0, "Special", { fg = orange1 })
@@ -176,15 +185,15 @@ hl(0, "Identifier", { fg = white1 })
 hl(0, "Type", { fg = grey1 })
 
 -- custom language highlights
-vim.api.nvim_create_augroup("CustomHighlights", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
+api.nvim_create_augroup("CustomHighlights", { clear = true })
+api.nvim_create_autocmd("FileType", {
   group = "CustomHighlights",
   pattern = "c",
   callback = function()
     hl(0, "Label", { fg = test1 })
   end,
 })
-vim.api.nvim_create_autocmd("FileType", {
+api.nvim_create_autocmd("FileType", {
   group = "CustomHighlights",
   pattern = "cpp",
   callback = function()
@@ -192,7 +201,7 @@ vim.api.nvim_create_autocmd("FileType", {
     hl(0, "Special", { fg = grey1 })
   end,
 })
-vim.api.nvim_create_autocmd("FileType", {
+api.nvim_create_autocmd("FileType", {
   group = "CustomHighlights",
   pattern = "go",
   callback = function()
