@@ -6,8 +6,8 @@ key.set("i", "jj", "<ESC>", { desc = "Exit insert mode with jj" })
 
 key.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
-key.set('n', '<c-a>', 'ggVG', { desc = "Select all" })
-key.set('i', '<c-a>', 'ggVG', { desc = "Select all" })
+key.set("n", "<c-a>", "ggVG", { desc = "Select all" })
+key.set("i", "<c-a>", "<Esc>ggVG", { desc = "Select all" })
 
 -- increment/decrement numbers
 key.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
@@ -39,8 +39,8 @@ key.set("n", "<M-8>", "8gt", { desc = "Move to tab 8" })
 key.set("n", "<M-9>", "9gt", { desc = "Move to tab 9" })
 
 -- add line in normal mode
-key.set('n', 'gO', "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { desc = "Add line above" })
-key.set('n', 'go', "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { desc = "Add line below" })
+key.set("n", "gO", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { desc = "Add line above" })
+key.set("n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { desc = "Add line below" })
 
 -- system clipboard
 key.set({ "n", "v" }, "Y", '"+y', { desc = "Yank to sys clipboard" })
@@ -62,18 +62,18 @@ key.set("n", "<S-u>", "<C-r>", { desc = "Redo command" })
 
 -- from terminal to normal mode (not in lazygit)
 vim.api.nvim_create_autocmd("TermOpen", {
-  pattern = "*",
-  callback = function()
-    if vim.fn.expand("%:t") ~= "lazygit" and vim.bo.buftype == "terminal" and vim.bo.filetype ~= "lazygit" then
-      vim.api.nvim_buf_set_keymap(
-        0,
-        "t",
-        "<ESC><ESC>",
-        "<C-\\><C-n>",
-        { noremap = true, desc = "Terminal to normal mode" }
-      )
-    end
-  end,
+   pattern = "*",
+   callback = function()
+      if vim.fn.expand("%:t") ~= "lazygit" and vim.bo.buftype == "terminal" and vim.bo.filetype ~= "lazygit" then
+         vim.api.nvim_buf_set_keymap(
+            0,
+            "t",
+            "<ESC><ESC>",
+            "<C-\\><C-n>",
+            { noremap = true, desc = "Terminal to normal mode" }
+         )
+      end
+   end,
 })
 
 -- execute terminal command
@@ -81,23 +81,23 @@ key.set("n", "<leader><S-t>", ":Terminal<CR>", { desc = "Execute Terminal comman
 
 -- open lazygit in a new tmux window
 key.set(
-  "n",
-  "<leader>lt",
-  "<cmd>!tmux new-window -c " .. vim.fn.getcwd() .. " -- lazygit <CR><CR>",
-  { desc = "Lazy git in new tmux window" }
+   "n",
+   "<leader>lt",
+   "<cmd>!tmux new-window -c " .. vim.fn.getcwd() .. " -- lazygit <CR><CR>",
+   { desc = "Lazy git in new tmux window" }
 ) -- opens lazygit in a new tmux window
 
 --
 
 -- Define the InsertFilePathIntoCmdLine function
 function InsertFilePathIntoCmdLine()
-  local file_path = vim.fn.expand("%:p")
-  -- Insert the file path
-  vim.api.nvim_feedkeys(": " .. file_path, "n", true)
-  -- Move the cursor to the beginning of the inserted file path
-  for _ = 1, #file_path + 2 do
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, false, true), "n", true)
-  end
+   local file_path = vim.fn.expand("%:p")
+   -- Insert the file path
+   vim.api.nvim_feedkeys(": " .. file_path, "n", true)
+   -- Move the cursor to the beginning of the inserted file path
+   for _ = 1, #file_path + 2 do
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Left>", true, false, true), "n", true)
+   end
 end
 -- Set the key mapping
 vim.api.nvim_set_keymap("n", "<leader>:", ":lua InsertFilePathIntoCmdLine()<CR>", { noremap = true, silent = false })
@@ -106,13 +106,13 @@ vim.api.nvim_set_keymap("n", "<leader>:", ":lua InsertFilePathIntoCmdLine()<CR>"
 
 -- Lazy scrolling
 local function lazy(keys)
-  keys = vim.api.nvim_replace_termcodes(keys, true, false, true)
-  return function()
-    local old = vim.o.lazyredraw
-    vim.o.lazyredraw = true
-    vim.api.nvim_feedkeys(keys, "nx", false)
-    vim.o.lazyredraw = old
-  end
+   keys = vim.api.nvim_replace_termcodes(keys, true, false, true)
+   return function()
+      local old = vim.o.lazyredraw
+      vim.o.lazyredraw = true
+      vim.api.nvim_feedkeys(keys, "nx", false)
+      vim.o.lazyredraw = old
+   end
 end
 -- Set the key mapping for lazy function
 vim.keymap.set("n", "<c-d>", lazy("<c-d>zz"), { desc = "Scroll down half screen" })
@@ -129,46 +129,46 @@ vim.keymap.set("n", "<c-u>", lazy("<c-u>zz"), { desc = "Scroll up half screen" }
 
 -- Function to check if there is a gap between the last line of the file and the bottom of the screen
 local function has_gap()
-  local last_line = vim.fn.line("$")
-  local screen_height = vim.fn.winheight(0)
-  local cursor_line = vim.fn.line(".")
-  return (last_line - cursor_line) < screen_height
+   local last_line = vim.fn.line("$")
+   local screen_height = vim.fn.winheight(0)
+   local cursor_line = vim.fn.line(".")
+   return (last_line - cursor_line) < screen_height
 end
 
 -- Function to update the keymap based on the gap
 local function update_keymap()
-  local buftype = vim.bo.buftype
-  local filetype = vim.bo.filetype
-  if buftype == "" and not has_gap() then
-    vim.api.nvim_buf_set_keymap(0, "n", "G", "G<c-e><c-e>", { noremap = true, silent = true, desc = "Last line" })
-  else
-    pcall(vim.api.nvim_buf_del_keymap, 0, "n", "G") -- normal mode G in special buffer or if there is a gap
-  end
+   local buftype = vim.bo.buftype
+   local filetype = vim.bo.filetype
+   if buftype == "" and not has_gap() then
+      vim.api.nvim_buf_set_keymap(0, "n", "G", "G<c-e><c-e>", { noremap = true, silent = true, desc = "Last line" })
+   else
+      pcall(vim.api.nvim_buf_del_keymap, 0, "n", "G") -- normal mode G in special buffer or if there is a gap
+   end
 end
 
 -- Special G keymap for normal files
 vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "CursorMoved" }, {
-  pattern = "*",
-  callback = update_keymap,
+   pattern = "*",
+   callback = update_keymap,
 })
 
 vim.api.nvim_create_autocmd("TermOpen", { -- normal mode G in terminal
-  pattern = "*",
-  callback = function()
-    vim.api.nvim_buf_set_keymap(0, "n", "G", "G", { noremap = true, silent = true, desc = "Last line" })
-  end,
+   pattern = "*",
+   callback = function()
+      vim.api.nvim_buf_set_keymap(0, "n", "G", "G", { noremap = true, silent = true, desc = "Last line" })
+   end,
 })
 
 -- Handle the case when Neovim is first opened with NvimTree or other special buffers
 vim.api.nvim_create_autocmd("VimEnter", {
-  pattern = "*",
-  callback = update_keymap,
+   pattern = "*",
+   callback = update_keymap,
 })
 
 -- Remove the special keymap when leaving the window
 vim.api.nvim_create_autocmd("WinLeave", {
-  pattern = "*",
-  callback = function()
-    pcall(vim.api.nvim_buf_del_keymap, 0, "n", "G")
-  end,
+   pattern = "*",
+   callback = function()
+      pcall(vim.api.nvim_buf_del_keymap, 0, "n", "G")
+   end,
 })
