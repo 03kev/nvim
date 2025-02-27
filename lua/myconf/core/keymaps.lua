@@ -7,7 +7,7 @@ key.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 key.set("n", "<c-a>", "ggVG", { desc = "Select all" })
 key.set("i", "<c-a>", "<Esc>ggVG", { desc = "Select all" })
 
-key.set("n", "<Tab>", "a<Tab><Esc>", { noremap = true, silent = true }) -- same as <c-i>
+-- key.set("n", "<Tab>", "a<Tab><Esc>", { noremap = true, silent = true }) -- same as <c-i>
 
 -- move lines
 key.set("n", "<M-u>", ":m .+1<CR>==", { desc = "Move line down" })
@@ -65,7 +65,7 @@ key.set("n", "K", "kk", { noremap = true, silent = true, desc = "Move up" })
 -- redo command with shift+u
 key.set("n", "<S-u>", "<C-r>", { desc = "Redo" })
 
-key.set("n", "\\s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+key.set("n", "\\s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor" })
 -- key.set("n", "\\s", [[:set hlsearch<CR>/<C-r><C-w><CR>:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 --

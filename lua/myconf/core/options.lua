@@ -75,49 +75,49 @@ vim.o.tabline = "%!MyTabLine()"
 
 -- Define the MyTabLine function in Vimscript
 vim.cmd([[
-function! MyTabLine()
-  " Loop over pages and define labels for them, then get label for each tab
-  " page use MyTabLabel(). See :h 'statusline' for formatting, e.g., T, %, #, etc.
-  let s = ''
-  for i in range(tabpagenr('$'))
-    if i + 1 == tabpagenr()
-      " use hl-TabLineSel for current tabpage
-      let s .= '%#TabLineSel#'
-    else
-      let s .= '%#TabLine#'
-    endif
+   function! MyTabLine()
+      " Loop over pages and define labels for them, then get label for each tab
+      " page use MyTabLabel(). See :h 'statusline' for formatting, e.g., T, %, #, etc.
+      let s = ''
+      for i in range(tabpagenr('$'))
+         if i + 1 == tabpagenr()
+            " use hl-TabLineSel for current tabpage
+            let s .= '%#TabLineSel#'
+         else
+            let s .= '%#TabLine#'
+         endif
 
-    " set the tab page number, for mouse clicks
-    let s .= '%' . (i + 1) . 'T'
+         " set the tab page number, for mouse clicks
+         let s .= '%' . (i + 1) . 'T'
 
-    " call MyTabLabel() to make the label
-    let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
-  endfor
+         " call MyTabLabel() to make the label
+         let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
+      endfor
 
-  " After last tab fill with hl-TabLineFill and reset tab page nr with %T
-  let s .= '%#TabLineFill#%T'
+      " After last tab fill with hl-TabLineFill and reset tab page nr with %T
+      let s .= '%#TabLineFill#%T'
 
-  " Right-align (%=) hl-TabLine (%#TabLine#) style and use %999X for a close
-  " current tab mark, with 'X' as the character
-  if tabpagenr('$') > 1
-    let s .= '%=%#TabLine#%999XX'
-  endif
+      " Right-align (%=) hl-TabLine (%#TabLine#) style and use %999X for a close
+      " current tab mark, with 'X' as the character
+      if tabpagenr('$') > 1
+         let s .= '%=%#TabLine#%999XX'
+      endif
 
-  return s
-endfunction
+      return s
+   endfunction
 
-function! MyTabLabel(n)
-  " Give tabpage number n create a string to display on tabline
-  let buflist = tabpagebuflist(a:n)
-  let winnr = tabpagewinnr(a:n)
-  " Get the file name only
-  let bufname = bufname(buflist[winnr - 1])
-  if empty(bufname)
-    return '[No Name]'
-  else
-    return fnamemodify(bufname, ':t')
-  endif
-endfunction
+   function! MyTabLabel(n)
+      " Give tabpage number n create a string to display on tabline
+      let buflist = tabpagebuflist(a:n)
+      let winnr = tabpagewinnr(a:n)
+      " Get the file name only
+      let bufname = bufname(buflist[winnr - 1])
+      if empty(bufname)
+         return '[No Name]'
+      else
+         return fnamemodify(bufname, ':t')
+      endif
+   endfunction
 ]])
 
 --------------------------- set scrolloff to 20% of the window height ------------------------------

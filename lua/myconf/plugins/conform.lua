@@ -1,5 +1,3 @@
--- Lightweight yet powerful formatter plugin for Neovim
-
 return {
    "stevearc/conform.nvim",
    event = { "BufReadPre", "BufNewFile" },
@@ -8,17 +6,7 @@ return {
 
       conform.setup({
          formatters_by_ft = {
-            javascript = {
-               "prettier",
-               -- options = {
-               --   config = 'Users/kevinmuka/.config/nvim/.prettierrc.json'
-               --   -- tabWidth = 4,
-               --   -- semi = false,
-               --   -- useTabs = false,
-               --   -- singleQuote = true,
-               --   -- trailingComma = "es5",
-               -- },
-            },
+            javascript = { "prettier" },
             typescript = { "prettier" },
             javascriptreact = { "prettier" },
             typescriptreact = { "prettier" },
@@ -32,6 +20,7 @@ return {
             liquid = { "prettier" },
             lua = { "stylua" },
             python = { "isort", "black" },
+            java = { "clang-format", options = {} },
          },
 
          -- format_on_save = {

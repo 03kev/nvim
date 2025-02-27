@@ -43,6 +43,7 @@ return {
             "gitignore",
             "query",
             "vimdoc",
+            "java"
          },
          incremental_selection = {
             enable = true,

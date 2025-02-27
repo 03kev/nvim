@@ -161,6 +161,16 @@ return {
                },
             })
          end,
+         ["jdtls"] = function()
+            lspconfig["jdtls"].setup({
+               capabilities = capabilities,
+               file_types = {
+                  "java",
+               },
+               root_dir = util.root_pattern(".git", "build.gradle", "settings.gradle"),
+               -- settings = {},
+            })
+         end,
       })
 
       -- diagnostics managing

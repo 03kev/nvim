@@ -1,0 +1,81 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+
+ColumnLimit: 100
+
+BreakAfterReturnType: Automatic
+PenaltyReturnTypeOnItsOwnLine: 1000
+PenaltyExcessCharacter: 80
+
+# PenaltyBreakBeforeFirstCallParameter: 100
+# PenaltyBreakAssignment: 100
+# PenaltyBreakComment: 100
+# PenaltyBreakString: 100
+# PenaltyBreakOpenParenthesis: 100
+
+# KeepEmptyLinesAtTheStartOfBlocks: false
+# BreakBeforeInlineASMColon: Never
+# BreakConstructorInitializersBeforeComma: false
+BreakStringLiterals: false
+
+AlignConsecutiveMacros: Consecutive
+BreakConstructorInitializers: BeforeColon
+PackConstructorInitializers: NextLine
+# IndentPPDirectives: BeforeHash
+AllowBreakBeforeNoexceptSpecifier: Never
+AlignConsecutiveTableGenDefinitionColons: AcrossEmptyLines
+# AlignFunctionDeclarations: true
+AlignConsecutiveDeclarations: Consecutive
+
+# BreakAfterAttributes: Never
+BreakTemplateDeclarations: No
+RequiresClausePosition: SingleLine
+SpaceAfterTemplateKeyword: false
+
+IndentAccessModifiers: false
+AccessModifierOffset: -4
+PointerAlignment: Middle
+ReferenceAlignment: Middle
+
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: All
+AllowShortEnumsOnASingleLine: false
+AllowShortLambdasOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+
+BracedInitializerIndentWidth: 4
+ContinuationIndentWidth: 4
+AlignAfterOpenBracket: Align
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackArguments: false
+BinPackParameters: false
+# AlignConsecutiveAssignments: AcrossEmptyLines
+
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: false
+  AfterClass: false
+  AfterStruct: false
+  AfterControlStatement: Never
+  AfterNamespace: false
+  AfterObjCDeclaration: false
+  AfterUnion: false
+  AfterExternBlock: false
+  BeforeCatch: false
+  BeforeElse: false
+  BeforeLambdaBody: false
+  BeforeWhile: false
+
+AlignTrailingComments:
+  Kind: Always
+  OverEmptyLines: 4
+
+AlignEscapedNewlines: LeftWithLastLine
