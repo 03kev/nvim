@@ -29,7 +29,6 @@ local test3 = "#FFFF00"
 
 local line = "#1D1D19"
 local visual = "#37362f"
--- local comment = "#996645"
 local comment = "#825c44"
 local cursor = "#c7c7c7"
 
@@ -83,6 +82,7 @@ hl(0, "TabLineSel", { bg = black1, fg = white1 })
 local folder = "#6f6f6f"
 
 hl(0, "NvimTreeIndentMarker", { fg = grey1 })
+hl(0, "NvimTreeRootFolder", { fg = folder, bold = true, italic = true })
 hl(0, "NvimTreeFolderIcon", { fg = folder })
 hl(0, "NvimTreeFolderName", { fg = folder, bold = true })
 hl(0, "NvimTreeEmptyFolderName", { fg = "#503d2b", bold = true })
@@ -127,7 +127,7 @@ hl(0, "Indentscopelinecolor", { fg = grey1 }) -- indent scope line color highlig
 -- diagnostic --
 
 local err = "#B4837F"
-local warn = "#978936"
+local warn = "#bc873a"
 local info = "#8f8f9f"
 local hint = "#7f9f8f"
 

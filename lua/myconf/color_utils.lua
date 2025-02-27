@@ -1,5 +1,3 @@
--- color_utils.lua
-
 -- Function to convert hex color to RGB
 local function hex_to_rgb(hex)
    hex = hex:gsub("#", "")
