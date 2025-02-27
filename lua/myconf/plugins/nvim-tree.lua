@@ -25,6 +25,8 @@ return {
          key.del("n", "<C-]>", { buffer = bufnr })
          key.set("n", "<S-CR>", api.tree.change_root_to_node, opts("CD"))
          key.set("n", "<S-BS>", api.tree.change_root_to_parent, opts("Up"))
+         key.set("n", "h", api.node.navigate.parent_close, opts("Up"))
+         key.set("n", "l", api.node.open.edit, opts("Up"))
       end
 
       nvimtree.setup({
