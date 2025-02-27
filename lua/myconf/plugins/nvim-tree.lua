@@ -34,6 +34,7 @@ return {
          view = {
             width = 35,
             relativenumber = false,
+            number = false,
          },
 
          update_cwd = true, -- update nvim-tree root to cwd
@@ -50,6 +51,9 @@ return {
             end,
             indent_markers = {
                enable = true,
+               icons = {
+                  item = "├",
+               },
             },
             icons = {
                show = {

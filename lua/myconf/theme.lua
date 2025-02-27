@@ -11,7 +11,7 @@ local white1 = "#EFECDB"
 local white2 = "#DFDFDF"
 local purewhite = "#FFFFFF"
 local grey1 = "#484848"
-local grey2 = "#5f5e56"
+local grey2 = "#5F5E56"
 local grey3 = "#3F3F39"
 
 local green1 = "#88BF39"
@@ -28,9 +28,9 @@ local test2 = "#00FFFF"
 local test3 = "#FFFF00"
 
 local line = "#1D1D19"
-local visual = "#37362f"
+local visual = "#37362F"
 local comment = "#825c44"
-local cursor = "#c7c7c7"
+local cursor = "#C7C7C7"
 
 -- default --
 
@@ -79,7 +79,7 @@ hl(0, "TabLineSel", { bg = black1, fg = white1 })
 
 -- nvim-tree --
 
-local folder = "#6f6f6f"
+local folder = "#6F6F6F"
 
 hl(0, "NvimTreeIndentMarker", { fg = grey1 })
 hl(0, "NvimTreeRootFolder", { fg = folder, bold = true, italic = true })
@@ -127,9 +127,9 @@ hl(0, "Indentscopelinecolor", { fg = grey1 }) -- indent scope line color highlig
 -- diagnostic --
 
 local err = "#B4837F"
-local warn = "#bc873a"
-local info = "#8f8f9f"
-local hint = "#7f9f8f"
+local warn = "#BC873A"
+local info = "#8F8F9F"
+local hint = "#7F9F8F"
 
 hl(0, "Error", { fg = err })
 
@@ -174,3 +174,28 @@ hl(0, "Repeat", { fg = grey1, bold = false })
 hl(0, "Label", { fg = grey1, bold = false })
 hl(0, "Identifier", { fg = white1 })
 hl(0, "Type", { fg = grey1 })
+
+-- custom language highlights
+vim.api.nvim_create_augroup("CustomHighlights", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  group = "CustomHighlights",
+  pattern = "c",
+  callback = function()
+    hl(0, "Label", { fg = test1 })
+  end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+  group = "CustomHighlights",
+  pattern = "cpp",
+  callback = function()
+    hl(0, "SpecialChar", { fg = green1 })
+    hl(0, "Special", { fg = grey1 })
+  end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+  group = "CustomHighlights",
+  pattern = "go",
+  callback = function()
+    hl(0, "Special", { fg = green1 })
+  end,
+})
