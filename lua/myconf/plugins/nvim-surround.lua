@@ -1,5 +1,3 @@
--- Plugin for dealing with surrounding characters like parentheses, quotes, etc.
-
 return {
   "kylechui/nvim-surround",
   event = { "BufReadPre", "BufNewFile" },

@@ -100,6 +100,5 @@ function ReloadConfig(flag)
    end
    print("Configuration reloaded!")
 end
-
 -- Create a command to call the ReloadConfig function with an optional flag
 vim.api.nvim_command("command! -nargs=? ReloadConfig lua ReloadConfig(<f-args>)")
