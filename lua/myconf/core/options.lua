@@ -7,6 +7,7 @@ local opt = vim.opt
 
 local opts = { noremap = true, silent = true }
 
+-- disable arrow keys and mouse
 vim.api.nvim_set_keymap("n", "<ScrollWheelUp>", "", opts)
 vim.api.nvim_set_keymap("n", "<S-ScrollWheelUp>", "", opts)
 vim.api.nvim_set_keymap("n", "<C-ScrollWheelUp>", "", opts)

@@ -40,11 +40,11 @@ return {
         opts.desc = "smart rename"
         key.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 
-        opts.desc = "show buffer diagnostics"
-        key.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+        -- opts.desc = "show buffer diagnostics"
+        -- key.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
 
-        opts.desc = "show line diagnostics"
-        key.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+        -- opts.desc = "show line diagnostics"
+        -- key.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
         opts.desc = "go to previous diagnostic"
         key.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
