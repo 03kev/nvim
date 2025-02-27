@@ -1,3 +1,9 @@
+local conf = require("configuration")
+
+if not conf.ui.enable_winbar then
+   return
+end
+
 local M = {}
 
 local status_navic_ok, navic = pcall(require, "nvim-navic")

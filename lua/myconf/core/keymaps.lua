@@ -1,11 +1,13 @@
+local conf = require("configuration")
+
 vim.g.mapleader = " "
 
 local key = vim.keymap
 
 key.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
-key.set("n", "<c-a>", "ggVG", { desc = "Select all" })
-key.set("i", "<c-a>", "<Esc>ggVG", { desc = "Select all" })
+key.set("n", "<c-a>", "ggVG$", { desc = "Select all" })
+key.set("i", "<c-a>", "<Esc>ggVG$", { desc = "Select all" })
 
 -- key.set("n", "<Tab>", "a<Tab><Esc>", { noremap = true, silent = true }) -- same as <c-i>
 
@@ -50,7 +52,7 @@ key.set({ "n", "v" }, "<M-S-y>", '"+y$', { desc = "Yank to sys clipboard to end 
 key.set({ "n", "v" }, "<M-y>", "y$", { desc = "Yank to end of line" })
 key.set({ "n", "v" }, "<S-p>", '"+p"', { desc = "Paste from sys clipboard" })
 
-key.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yank" })
+key.set({ "v" }, "<leader>d", '"_d', { desc = "Delete without yank" })
 key.set("x", "<leader>p", '"_dP', { desc = "Paste without yank" })
 key.set("x", "<leader>P", '"_d"+P', { desc = "Paste replace from sys" })
 
@@ -65,8 +67,8 @@ key.set("n", "K", "kk", { noremap = true, silent = true, desc = "Move up" })
 -- redo command with shift+u
 key.set("n", "<S-u>", "<C-r>", { desc = "Redo" })
 
-key.set("n", "\\s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor" })
--- key.set("n", "\\s", [[:set hlsearch<CR>/<C-r><C-w><CR>:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+key.set("n", "\\r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor" })
+-- key.set("n", "\\r", [[:set hlsearch<CR>/<C-r><C-w><CR>:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 --
 
@@ -215,7 +217,10 @@ local function navigate_or_create_split(direction)
    vim.cmd("wincmd " .. direction)
    if vim.api.nvim_get_current_win() == current_win and not is_ignored then
       local win_count = #vim.api.nvim_list_wins()
-      if win_count < 10 then
+
+      local max_win_count = conf.plugins.max_split_size
+
+      if win_count < max_win_count then
          if direction == "h" then
             vim.cmd("leftabove vsplit")
          elseif direction == "j" then
@@ -227,7 +232,7 @@ local function navigate_or_create_split(direction)
          end
          vim.cmd("wincmd " .. direction)
       else
-         vim.api.nvim_echo({ { "Maximum number of splits (10) reached", "WarningMsg" } }, false, {})
+         vim.api.nvim_echo({ { "Maximum number of splits (" .. tostring(max_win_count) .. ") reached", "WarningMsg" } }, false, {})
          vim.defer_fn(function()
             vim.cmd("echo ''")
          end, 1000)

@@ -53,7 +53,7 @@ return {
          return str
       end
 
-      local function current_mode()
+      local function current_mode() -- add VM mode if in visual multi mode
          local mode = require("lualine.utils.mode").get_mode()
          local vm_info = vim.fn.VMInfos()
          if vm_info and vm_info.status ~= nil then

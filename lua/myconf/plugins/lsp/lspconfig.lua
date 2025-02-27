@@ -35,16 +35,16 @@ return {
             key.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
 
             opts.desc = "see available code actions"
-            key.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
+            key.set({ "n", "v" }, "<leader>lca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
             opts.desc = "smart rename"
-            key.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
+            key.set("n", "<leader>lr", vim.lsp.buf.rename, opts) -- smart rename
 
-            -- opts.desc = "show buffer diagnostics"
-            -- key.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+            opts.desc = "show buffer diagnostics"
+            key.set("n", "<leader>lb", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
 
-            -- opts.desc = "show line diagnostics"
-            -- key.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+            opts.desc = "show line diagnostics"
+            key.set("n", "<leader>ld", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
             opts.desc = "go to previous diagnostic"
             key.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
@@ -52,11 +52,11 @@ return {
             opts.desc = "go to next diagnostic"
             key.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
-            -- opts.desc = "show documentation for what is under cursor"
-            -- key.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+            opts.desc = "show documentation for what is under cursor"
+            key.set("n", "<leader>lcd", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
             opts.desc = "restart LSP"
-            key.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+            key.set("n", "<leader>lrs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
          end,
       })
 

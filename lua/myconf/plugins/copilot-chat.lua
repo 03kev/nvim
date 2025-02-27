@@ -161,7 +161,7 @@ return {
          "<leader>cch",
          function()
             local actions = require("CopilotChat.actions")
-            require("CopilotChat.integrations.telescope").pick(actions.help_actions())
+            require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
          end,
          desc = "CopilotChat - Help actions",
       },
