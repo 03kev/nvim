@@ -31,14 +31,14 @@ set_indentation("lua", 3, 3, true)
 set_indentation("json", 2, 2, true)
 set_indentation("markdown", 4, 4, true)
 
-vim.api.nvim_create_autocmd("FileType", {
-   pattern = "markdown",
-   callback = function()
-      vim.opt_local.wrap = true
-      vim.opt_local.linebreak = true
-      vim.wo.conceallevel = 1
-   end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--    pattern = "markdown",
+--    callback = function()
+--       vim.opt_local.wrap = true
+--       vim.opt_local.linebreak = true
+--       vim.wo.conceallevel = 1
+--    end,
+-- })
 
 -- search settings
 opt.ignorecase = true

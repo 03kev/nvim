@@ -17,6 +17,7 @@ local prompts = {
 
 return {
    "CopilotC-Nvim/CopilotChat.nvim",
+   commit = "a3932a1", -- version 3.8.0
    branch = "main",
    dependencies = {
       { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
