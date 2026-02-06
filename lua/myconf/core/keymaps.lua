@@ -14,8 +14,8 @@ key.set("i", "<c-a>", "<Esc>ggVG$", { desc = "Select all" })
 -- move lines
 key.set("n", "<M-u>", ":m .+1<CR>==", { desc = "Move line down" })
 key.set("n", "<M-i>", ":m .-2<CR>==", { desc = "Move line up" })
-key.set("v", "<C-M-u>", ":m '>+1<CR>gv=gv", { desc = "Move slection down" })
-key.set("v", "<C-M-i>", ":m '<-2<CR>gv=gv", { desc = "Move slection up" })
+key.set("v", "<M-u>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+key.set("v", "<M-i>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
 -- window management
 key.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
