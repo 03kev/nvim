@@ -7,7 +7,7 @@ return {
       local lualine = require("lualine")
       local lazy_status = require("lazy.status") -- to configure lazy pending updates count
 
-      local m = require("myconf.theme.mode").get()
+      local m = require("configuration").ui.theme()
 
       local cfg = {
          dark = {

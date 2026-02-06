@@ -4,7 +4,7 @@ return {
    lazy = false,
 
    config = function()
-      local m = require("myconf.theme.mode").get()
+      local m = require("configuration").ui.theme()
 
       local cfg = {
          dark = {
@@ -98,4 +98,3 @@ return {
       vim.cmd.colorscheme("tokyonight")
    end,
 }
-
