@@ -1,6 +1,6 @@
 require("myconf.core") -- init.lua
 require("myconf.lazy") -- plugins
-require("myconf.theme")
+require("myconf.theme.theme")
 require("myconf.winbar")
 
 -- Change configuration variables 

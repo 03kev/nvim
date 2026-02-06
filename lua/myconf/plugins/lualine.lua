@@ -7,11 +7,32 @@ return {
       local lualine = require("lualine")
       local lazy_status = require("lazy.status") -- to configure lazy pending updates count
 
-      local black1 = "#10100F" -- "#10100D"
-      local err = "#BF6E6A" --diagnostics error color
-      local hin = "#BF9C69" --diagnostics hint color
-      local white = "#EFECDB"
-      local grey1 = "#8D8C78"
+      local m = require("myconf.theme.mode").get()
+
+      local cfg = {
+         dark = {
+            black1 = "#10100F", -- "#10100D"
+            err = "#BF6E6A", --diagnostics error color
+            hin = "#BF9C69", --diagnostics hint color
+            white = "#EFECDB",
+            grey1 = "#8D8C78",
+         },
+
+         light = {
+            black1 = "#f7f7f1", -- "#10100D"
+            err = "#BF6E6A", --diagnostics error color
+            hin = "#BF9C69", --diagnostics hint color
+            white = "#11110a",
+            grey1 = "#606040",
+         },
+      }
+
+      local c = cfg[m] or cfg.dark
+      local black1 = c.black1
+      local err = c.err
+      local hin = c.hin
+      local white = c.white
+      local grey1 = c.grey1
 
       local my_lualine_theme = {
          normal = {

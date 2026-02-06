@@ -107,7 +107,7 @@ function ReloadConfig(flag)
    local modules_to_reload = {
       "myconf.core",
       "myconf.lazy",
-      "myconf.theme",
+      "myconf.theme.theme",
    }
    for _, module in ipairs(modules_to_reload) do
       package.loaded[module] = nil
