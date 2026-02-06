@@ -119,3 +119,51 @@ function ReloadConfig(flag)
 end
 -- Create a command to call the ReloadConfig function with an optional flag
 vim.api.nvim_command("command! -nargs=? ReloadConfig lua ReloadConfig(<f-args>)")
+
+--
+
+-- Function to export the current file to PDF using Pandoc
+vim.api.nvim_create_user_command("PandocExport", function()
+   vim.cmd("write")
+   local in_f = vim.fn.expand("%:p")
+   local out_f = vim.fn.expand("%:r") .. ".pdf"
+   local cmd =
+      string.format("mypandoc %s --highlight-style=tango -o %s", vim.fn.shellescape(in_f), vim.fn.shellescape(out_f))
+   -- esegui e cattura output
+   local result = vim.fn.system(cmd)
+   if vim.v.shell_error ~= 0 then
+      -- errore: stampalo in rosso
+      vim.api.nvim_echo({
+         { "❌ Errore durante l’esportazione:\n", "ErrorMsg" },
+         { result, "ErrorMsg" },
+      }, true, {})
+   else
+      -- successo
+      vim.api.nvim_echo({
+         { "✅ Esportato → ", "Directory" },
+         { out_f, "Directory" },
+      }, true, {})
+   end
+end, {})
+
+vim.keymap.set("n", "<leader>xp", ":PandocExport<CR>", { noremap = true, silent = true })
+
+vim.api.nvim_create_user_command("PandocOpen", function()
+   local out_f = vim.fn.expand("%:r") .. ".pdf"
+   if vim.fn.filereadable(out_f) == 0 then
+      vim.api.nvim_echo({ { "❌ Non trovo " .. out_f, "ErrorMsg" } }, true, {})
+      return
+   end
+   local opener
+   if vim.fn.has("macunix") == 1 then
+      opener = "open"
+   elseif vim.fn.has("win32") + vim.fn.has("win64") > 0 then
+      opener = 'start ""'
+   else
+      opener = "xdg-open"
+   end
+   vim.fn.jobstart(opener .. " " .. vim.fn.shellescape(out_f), { detach = true })
+end, {})
+
+vim.keymap.set("n", "<leader>xo", ":PandocOpen<CR>", { noremap = true, silent = true })
+
