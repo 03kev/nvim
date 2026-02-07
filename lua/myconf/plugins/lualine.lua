@@ -8,22 +8,24 @@ return {
       local lazy_status = require("lazy.status") -- to configure lazy pending updates count
 
       local m = require("configuration").ui.theme()
+      local palettes = require("myconf.theme.palette")
+      local p = palettes[m]
 
       local cfg = {
          dark = {
-            black1 = "#10100F", -- "#10100D"
-            err = "#BF6E6A", --diagnostics error color
-            hin = "#BF9C69", --diagnostics hint color
-            white = "#EFECDB",
-            grey1 = "#8D8C78",
+            black1 = p.black1,
+            err = p.red1, --diagnostics error color
+            hin = p.orange1, --diagnostics hint color
+            white = p.white1,
+            grey1 = p.grey2,
          },
 
          light = {
-            black1 = "#f7f7f1", -- "#10100D"
-            err = "#BF6E6A", --diagnostics error color
-            hin = "#BF9C69", --diagnostics hint color
-            white = "#11110a",
-            grey1 = "#606040",
+            black1 = p.black1, -- "#10100D"
+            err = p.red1, --diagnostics error color
+            hin = p.orange1, --diagnostics hint color
+            white = p.white1,
+            grey1 = p.grey1,
          },
       }
 

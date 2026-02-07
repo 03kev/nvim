@@ -5,38 +5,38 @@ return {
 
    config = function()
       local m = require("configuration").ui.theme()
+      local palettes = require("myconf.theme.palette")
+      local p = palettes[m]
 
       local cfg = {
          dark = {
             transparent = false,
-            black1 = "#10100F",
-            bg_high = "#1D1D19",
-            white = "#EFECDB",
-            grey1 = "#8D8C78",
-            comment = "#996645",
-            green = "#88BF39",
-            orange1 = "#BF7F26",
-            blue1 = "#124EED",
-            dark1 = "#6D601B",
-            test1 = "#00A0FF",
-            test2 = "#9900FF",
+            black1 = p.black1,
+            bg_high = p.line,
+            white = p.white1,
+            grey1 = p.grey2,
+            comment = p.comment,
+            green = p.green1,
+            orange1 = p.orange1,
+            blue1 = p.blue1,
+            test1 = p.test1,
+            test2 = p.test2,
             style = "night",
          },
 
          light = {
             transparent = false,
-            black1 = "#f7f7f1",
-            bg_high = "#e4e4d1",
-            white = "#11110a",
-            grey1 = "#8D8C78",
-            comment = "#996645",
-            green = "#88BF39",
-            orange1 = "#BF7F26",
-            blue1 = "#124EED",
-            dark1 = "#6D601B",
-            test1 = "#00A0FF",
-            test2 = "#9900FF",
-            style = "day", -- se vuoi più “nativo”: "day"
+            black1 = p.black1,
+            bg_high = p.line,
+            white = p.white1,
+            grey1 = p.grey1,
+            comment = p.comment,
+            green = p.green1,
+            orange1 = p.orange1,
+            blue1 = p.blue1,
+            test1 = p.test1,
+            test2 = p.test2,
+            style = "day",
          },
       }
 
@@ -85,13 +85,8 @@ return {
             colors.blue7 = c.grey1
             colors.red = c.orange1
             colors.red1 = c.orange1
-            colors.dark3 = c.dark1
-            colors.dark5 = c.dark1
 
             colors.blue0 = c.test1
-            --colors.orange = c.dark1 -- digits
-            --colors.green2 = c.dark1
-            --colors.teal = c.dark1
          end,
       })
 

@@ -141,15 +141,18 @@ local function apply_theme()
    cmd(("highlight TelescopeResultsTitle guifg=%s gui=bold"):format(c.telescope.border))
    cmd(("highlight TelescopePreviewTitle guifg=%s gui=bold"):format(c.telescope.border))
    cmd(("highlight TelescopeSelection guifg=%s guibg=%s"):format(c.telescope.selection_fg, c.telescope.selection_bg))
-   cmd(("highlight TelescopeMatching guifg=%s guibg=%s"):format(c.telescope.selection_fg, c.telescope.matching_bg))
+   cmd(("highlight TelescopeMatching guifg=%s guibg=%s"):format(c.telescope.matching_fg, c.telescope.matching_bg))
+
+   -- fzf --
+
 
    -- indent-blankline --
    if m == "dark" then
       hl(0, "Indentlinecolor", { fg = bright(c.grey1, 0.5) }) -- indent line color highlight
       hl(0, "Indentscopelinecolor", { fg = c.grey1 }) -- indent scope line color highlight
    else
-      hl(0, "Indentlinecolor", { fg = bright(c.grey1, 2.2) }) -- indent line color highlight
-      hl(0, "Indentscopelinecolor", { fg = bright(c.grey1, 1.7) }) -- indent scope line color highlight
+      hl(0, "Indentlinecolor", { fg = bright(c.grey1, 1.3) }) -- indent line color highlight
+      hl(0, "Indentscopelinecolor", { fg = c.grey1 }) -- indent scope line color highlight
    end
 
    -- diagnostic --
@@ -179,16 +182,16 @@ local function apply_theme()
    hl(0, "GitSignsUntracked", { fg = info })
 
    -- lazygit --
-   hl(0, "LazyGitFloat", { fg = c.grey2 })
+   hl(0, "LazyGitFloat", { fg = c.white1 })
    hl(0, "LazyGitBorder", { fg = c.grey3 })
 
-   -- light-only: Flash + CopilotSuggestion (per restare identico ai tuoi file)
+   -- light-only: Flash + CopilotSuggestion
    if m == "light" then
       hl(0, "FlashLabel", { fg = c.black1, bg = c.blue1, bold = true }) -- Highlight for labels
       hl(0, "FlashCurrent", { fg = c.black1, bg = c.purewhite }) -- Highlight for the current match
       hl(0, "FlashBackdrop", { fg = bright(c.grey3, 1.1), bg = "NONE" }) -- Highlight for the backdrop
 
-      hl(0, "CopilotSuggestion", { fg = bright(c.grey1, 1.6) }) -- Cambia il colore dei suggerimenti di Copilot
+      hl(0, "CopilotSuggestion", { fg = bright(c.grey1, 0.9) }) -- Cambia il colore dei suggerimenti di Copilot
    end
 
    -- other --
