@@ -32,9 +32,9 @@ local function apply_theme()
    hl(0, "Comment", { fg = c.comment, italic = true })
 
    if m == "dark" then
-      hl(0, "YankHighlight", { bg = bright(c.visual, 1.5), fg = c.white1 })
+      hl(0, "YankHighlight", { bg = bright(c.visual, 1.25), fg = c.white1 })
    else
-      hl(0, "YankHighlight", { bg = bright(c.grey2, 1), fg = c.white1 })
+      hl(0, "YankHighlight", { bg = bright(c.visual, 0.92), fg = c.white1 })
    end
 
    hl(0, "Substitute", { fg = c.black1, bg = c.purewhite })
@@ -142,8 +142,6 @@ local function apply_theme()
    cmd(("highlight TelescopePreviewTitle guifg=%s gui=bold"):format(c.telescope.border))
    cmd(("highlight TelescopeSelection guifg=%s guibg=%s"):format(c.telescope.selection_fg, c.telescope.selection_bg))
    cmd(("highlight TelescopeMatching guifg=%s guibg=%s"):format(c.telescope.matching_fg, c.telescope.matching_bg))
-
-   -- fzf --
 
 
    -- indent-blankline --

@@ -2,7 +2,7 @@
 
 local conf = require("configuration")
 
-if conf.ui and conf.ui.enable_winbar == false then
+if conf.ui and conf.ui.winbar.enabled == false then
    return {}
 end
 

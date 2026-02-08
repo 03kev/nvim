@@ -1,13 +1,22 @@
 local conf = {}
 
 conf.ui = {
-   enable_smooth_scrolling = true,
-   enable_winbar = true,
+   smooth_scrolling = { enabled = true },
+
+   winbar = { enabled = true },
+
+   backdrop = {
+      enabled = true,
+      blend = 97,
+      zindex_ref = 50,
+      filetypes = { "TelescopePrompt", "lazygit", "fzf" },
+   },
 }
 
 conf.plugins = {
-   enable_copilot_chat = true,
-   max_split_size = 10,
+   copilot_chat = { enabled = true },
+
+   splits = { max_size = 10 },
 }
 
 function conf.ui.theme()
@@ -15,7 +24,6 @@ function conf.ui.theme()
    if m == "light" or m == "dark" then
       return m
    end
-
    return "dark"
 end
 

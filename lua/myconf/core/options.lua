@@ -34,8 +34,8 @@ set_indentation("markdown", 4, 4, true)
 vim.api.nvim_create_autocmd("FileType", {
    pattern = { "markdown", "text" },
    callback = function()
-      opt.wrap = true
-      opt.linebreak = true
+      vim.opt_local.wrap = true
+      vim.opt_local.linebreak = true
       vim.wo.colorcolumn = "120"
       -- vim.wo.conceallevel = 1
    end,

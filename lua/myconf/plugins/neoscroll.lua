@@ -1,6 +1,6 @@
 local settings = require("configuration")
 
-if settings.ui.enable_smooth_scrolling then
+if settings.ui.smooth_scrolling.enabled then
    return {
       "karb94/neoscroll.nvim",
       config = function()

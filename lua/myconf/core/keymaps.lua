@@ -218,7 +218,7 @@ local function navigate_or_create_split(direction)
    if vim.api.nvim_get_current_win() == current_win and not is_ignored then
       local win_count = #vim.api.nvim_list_wins()
 
-      local max_win_count = conf.plugins.max_split_size
+      local max_win_count = conf.plugins.splits.max_size
 
       if win_count < max_win_count then
          if direction == "h" then

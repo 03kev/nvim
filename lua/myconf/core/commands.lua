@@ -99,23 +99,100 @@ vim.keymap.set("n", "<leader><S-t>", function()
    vim.cmd("Terminal " .. percentage)
 end, { desc = "Execute Terminal command" })
 
+local function list_config_files()
+   local config_dir = vim.fn.stdpath("config")
+   local prefix = config_dir .. "/"
+   local files = vim.fn.globpath(config_dir, "**/*", false, true)
+   local result = {}
+
+   for _, file in ipairs(files) do
+      if vim.fn.isdirectory(file) == 0 then
+         if string.sub(file, 1, #prefix) == prefix then
+            table.insert(result, string.sub(file, #prefix + 1))
+         else
+            table.insert(result, file)
+         end
+      end
+   end
+
+   table.sort(result)
+   return result
+end
+
+local function edit_config_file(path)
+   local config_dir = vim.fn.stdpath("config")
+   local target = path ~= "" and path or "init.lua"
+   if string.sub(target, 1, 1) ~= "/" then
+      target = config_dir .. "/" .. target
+   end
+   vim.cmd("edit " .. vim.fn.fnameescape(target))
+end
+
+vim.api.nvim_create_user_command("ConfigEdit", function(opts)
+   if opts.args ~= "" then
+      edit_config_file(opts.args)
+      return
+   end
+
+   local files = list_config_files()
+   if #files == 0 then
+      vim.notify("No config files found", vim.log.levels.WARN)
+      return
+   end
+
+   vim.ui.select(files, { prompt = "Edit config file:" }, function(choice)
+      if choice then
+         edit_config_file(choice)
+      end
+   end)
+end, {
+   nargs = "?",
+   desc = "Open a Neovim config file",
+   complete = function(arglead)
+      local matches = {}
+      for _, file in ipairs(list_config_files()) do
+         if string.sub(file, 1, #arglead) == arglead then
+            table.insert(matches, file)
+         end
+      end
+      return matches
+   end,
+})
+
+vim.api.nvim_create_user_command("ConfigVars", function()
+   edit_config_file("lua/configuration.lua")
+end, { desc = "Open lua/configuration.lua" })
+
+vim.keymap.set("n", "<leader>ve", "<cmd>ConfigEdit<CR>", { desc = "Edit Neovim config file" })
+vim.keymap.set("n", "<leader>vv", "<cmd>ConfigVars<CR>", { desc = "Edit configuration values" })
+vim.keymap.set("n", "<leader>vr", "<cmd>ReloadConfig w<CR>", { desc = "Write and reload config" })
+
 -- Function to reload specific parts of the Neovim configuration
 function ReloadConfig(flag)
    if flag == "w" then
       vim.cmd("write")
    end
-   local modules_to_reload = {
-      "myconf.core",
-      "myconf.lazy",
+
+   -- lazy.nvim does not support re-running setup() by re-sourcing init.
+   -- Keep reload focused on modules that are safe to refresh at runtime.
+   local modules_to_unload = {
+      "configuration",
       "myconf.theme.theme",
+      "myconf.winbar",
    }
-   for _, module in ipairs(modules_to_reload) do
+
+   for _, module in ipairs(modules_to_unload) do
       package.loaded[module] = nil
    end
-   for _, module in ipairs(modules_to_reload) do
-      require(module)
-   end
-   print("Configuration reloaded!")
+
+   require("configuration")
+   require("myconf.theme.theme")
+   pcall(require, "myconf.winbar")
+
+   vim.notify(
+      "Config ricaricata (safe reload). Per plugin spec/core profondi usa :Lazy sync o riavvia Neovim.",
+      vim.log.levels.INFO
+   )
 end
 -- Create a command to call the ReloadConfig function with an optional flag
 vim.api.nvim_command("command! -nargs=? ReloadConfig lua ReloadConfig(<f-args>)")
@@ -166,4 +243,3 @@ vim.api.nvim_create_user_command("PandocOpen", function()
 end, {})
 
 vim.keymap.set("n", "<leader>xo", ":PandocOpen<CR>", { noremap = true, silent = true })
-

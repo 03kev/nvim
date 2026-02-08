@@ -15,11 +15,25 @@ return {
                true,
             },
          },
+
+         winopts = {
+            backdrop = false,
+         },
       })
 
       vim.keymap.set("n", "<leader>zf", require("fzf-lua").files, { desc = "Fzf Files", noremap = true, silent = true })
-      vim.keymap.set("n", "<leader>zs", require("fzf-lua").live_grep, { desc = "Fzf Live Grep", noremap = true, silent = true })
-      vim.keymap.set("n", "<leader>zb", require("fzf-lua").builtin, { desc = "Fzf Builtin", noremap = true, silent = true })
+      vim.keymap.set(
+         "n",
+         "<leader>zs",
+         require("fzf-lua").live_grep,
+         { desc = "Fzf Live Grep", noremap = true, silent = true }
+      )
+      vim.keymap.set(
+         "n",
+         "<leader>zb",
+         require("fzf-lua").builtin,
+         { desc = "Fzf Builtin", noremap = true, silent = true }
+      )
 
       -- double escape to exit fzf
       vim.api.nvim_create_autocmd("FileType", {
