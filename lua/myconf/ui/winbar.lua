@@ -1,4 +1,4 @@
--- lua/myconf/winbar.lua
+-- lua/myconf/ui/winbar.lua
 
 local conf = require("configuration")
 

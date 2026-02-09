@@ -2,6 +2,7 @@ local conf = {}
 
 conf.ui = {
    smooth_scrolling = { enabled = true },
+   scrolloff = { percentage = 15 },
 
    winbar = { enabled = true },
 
