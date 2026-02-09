@@ -62,10 +62,10 @@ M.filename = function()
    local target = (relative_path and relative_path ~= "") and relative_path or filename
 
    if isempty(file_icon) then
-    return " " .. "%#WinbarColor#" .. target .. "%*"
-  else
-    return " " .. "%#WinbarColor#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. target .. "%*"
-  end
+      return " " .. "%#WinbarColor#" .. target .. "%*"
+   else
+      return " " .. "%#WinbarColor#" .. file_icon .. "%*" .. " " .. "%#WinbarColor#" .. target .. "%*"
+   end
 end
 
 M.gps = function()
@@ -194,4 +194,3 @@ vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "WinE
 })
 
 return M
-

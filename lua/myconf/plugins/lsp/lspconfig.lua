@@ -150,7 +150,7 @@ return {
       })
 
       local diagnostics_active = true -- toggle diagnostics
-      function _G.toggle_diagnostics()
+      local function toggle_diagnostics()
          diagnostics_active = not diagnostics_active
          if diagnostics_active then
             vim.diagnostic.show()
@@ -159,11 +159,6 @@ return {
          end
       end
 
-      vim.api.nvim_set_keymap(
-         "n",
-         "<leader>td",
-         ":lua toggle_diagnostics()<CR>",
-         { desc = "toggle diagnostics", noremap = true, silent = true }
-      )
+      vim.keymap.set("n", "<leader>td", toggle_diagnostics, { desc = "toggle diagnostics", noremap = true, silent = true })
    end,
 }

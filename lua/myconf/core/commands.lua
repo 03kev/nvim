@@ -1,24 +1,39 @@
+local function shell_join(args)
+   if not args or #args == 0 then
+      return ""
+   end
+   local escaped = vim.tbl_map(vim.fn.shellescape, args)
+   return table.concat(escaped, " ")
+end
+
 -- `Open` command
 vim.api.nvim_create_user_command("Open", function(opts)
-   vim.fn.system("zsh -c 'source ~/.zshrc; op " .. opts.args .. "'")
+   local op_args = shell_join(opts.fargs)
+   local script = "source ~/.zshrc; op"
+   if op_args ~= "" then
+      script = script .. " " .. op_args
+   end
+   vim.system({ "zsh", "-lc", script }):wait()
 end, { nargs = "*", complete = "file" })
 
 -- `Finder` to reveal the current file in Finder
-vim.api.nvim_create_user_command("Finder", function()
-   local bufname = vim.api.nvim_buf_get_name(0)
-   local filePath
-   if string.find(bufname, "NvimTree_") then
-      filePath = vim.fn.getcwd()
-   else
-      filePath = vim.fn.expand("%:p")
+vim.api.nvim_create_user_command("Finder", function(opts)
+   local file_path = opts.args
+   if file_path == "" then
+      local bufname = vim.api.nvim_buf_get_name(0)
+      if string.find(bufname, "NvimTree_") then
+         file_path = vim.fn.getcwd()
+      else
+         file_path = vim.fn.expand("%:p")
+      end
    end
-   os.execute("open -R " .. vim.fn.shellescape(filePath))
-end, {})
+   vim.system({ "open", "-R", file_path }):wait()
+end, { nargs = "?", complete = "file" })
 
 -- `Code` command to open files or directories in Visual Studio Code
 vim.api.nvim_create_user_command("Code", function(opts)
-   local escapedArgs = vim.fn.shellescape(opts.args)
-   vim.fn.system("code " .. escapedArgs)
+   local cmd = vim.list_extend({ "code" }, opts.fargs)
+   vim.system(cmd):wait()
 end, { nargs = "*", complete = "file" })
 
 -- `Cwd` command to change the working directory to the directory of the current file
@@ -40,8 +55,8 @@ end, {})
 
 -- `Z` command to use zoxide for changing directories
 vim.api.nvim_create_user_command("Z", function(opts)
-   local path = vim.fn.system("/opt/homebrew/bin/zoxide query " .. vim.fn.shellescape(opts.args))
-   path = string.gsub(path, "\n$", "")
+   local result = vim.system({ "/opt/homebrew/bin/zoxide", "query", opts.args }, { text = true }):wait()
+   local path = string.gsub(result.stdout or "", "\n$", "")
    if string.sub(path, 1, 7) == "zoxide:" then
       print(path)
    else
@@ -66,13 +81,17 @@ vim.api.nvim_create_user_command("Terminal", function(opts)
          split_percentage = 100
       end
 
+      vim.cmd("split")
       local win_height = vim.api.nvim_win_get_height(0)
       local split_size = math.floor(win_height * (split_percentage / 100))
-      vim.cmd("split | resize " .. split_size .. ' | terminal zsh -c "cd \\"' .. file_dir .. '\\" && zsh"')
+      vim.cmd("resize " .. split_size)
    else
       -- Default behavior: split equally
-      vim.cmd('split | terminal zsh -c "cd \\"' .. file_dir .. '\\" && zsh"')
+      vim.cmd("split")
    end
+
+   vim.fn.termopen({ "zsh", "-i" }, { cwd = file_dir })
+   vim.cmd("startinsert")
 
    local base_name = "zsh - " .. file_dir
    local unique_name = base_name
@@ -89,7 +108,7 @@ vim.api.nvim_create_user_command("Terminal", function(opts)
          end
       end
    end
-   vim.cmd("file " .. unique_name)
+   vim.cmd("file " .. vim.fn.fnameescape(unique_name))
 end, { nargs = "?" })
 
 -- Keymap to execute the Terminal command with an optional percentage argument
@@ -168,7 +187,7 @@ vim.keymap.set("n", "<leader>vv", "<cmd>ConfigVars<CR>", { desc = "Edit configur
 vim.keymap.set("n", "<leader>vr", "<cmd>ReloadConfig w<CR>", { desc = "Write and reload config" })
 
 -- Function to reload specific parts of the Neovim configuration
-function ReloadConfig(flag)
+local function reload_config(flag)
    if flag == "w" then
       vim.cmd("write")
    end
@@ -194,8 +213,10 @@ function ReloadConfig(flag)
       vim.log.levels.INFO
    )
 end
--- Create a command to call the ReloadConfig function with an optional flag
-vim.api.nvim_command("command! -nargs=? ReloadConfig lua ReloadConfig(<f-args>)")
+-- Create a command to call the reload function with an optional flag
+vim.api.nvim_create_user_command("ReloadConfig", function(opts)
+   reload_config(opts.args)
+end, { nargs = "?" })
 
 --
 
@@ -204,15 +225,17 @@ vim.api.nvim_create_user_command("PandocExport", function()
    vim.cmd("write")
    local in_f = vim.fn.expand("%:p")
    local out_f = vim.fn.expand("%:r") .. ".pdf"
-   local cmd =
-      string.format("mypandoc %s --highlight-style=tango -o %s", vim.fn.shellescape(in_f), vim.fn.shellescape(out_f))
    -- esegui e cattura output
-   local result = vim.fn.system(cmd)
-   if vim.v.shell_error ~= 0 then
+   local result = vim.system({ "mypandoc", in_f, "--highlight-style=tango", "-o", out_f }, { text = true }):wait()
+   if result.code ~= 0 then
+      local err = result.stderr or ""
+      if err == "" then
+         err = result.stdout or ""
+      end
       -- errore: stampalo in rosso
       vim.api.nvim_echo({
          { "❌ Errore durante l’esportazione:\n", "ErrorMsg" },
-         { result, "ErrorMsg" },
+         { err, "ErrorMsg" },
       }, true, {})
    else
       -- successo
@@ -233,13 +256,13 @@ vim.api.nvim_create_user_command("PandocOpen", function()
    end
    local opener
    if vim.fn.has("macunix") == 1 then
-      opener = "open"
+      opener = { "open", out_f }
    elseif vim.fn.has("win32") + vim.fn.has("win64") > 0 then
-      opener = 'start ""'
+      opener = { "cmd.exe", "/c", "start", "", out_f }
    else
-      opener = "xdg-open"
+      opener = { "xdg-open", out_f }
    end
-   vim.fn.jobstart(opener .. " " .. vim.fn.shellescape(out_f), { detach = true })
+   vim.fn.jobstart(opener, { detach = true })
 end, {})
 
 vim.keymap.set("n", "<leader>xo", ":PandocOpen<CR>", { noremap = true, silent = true })

@@ -50,7 +50,7 @@ key.set("n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>"
 key.set({ "n", "v" }, "Y", '"+y', { desc = "Yank to sys clipboard" })
 key.set({ "n", "v" }, "<M-S-y>", '"+y$', { desc = "Yank to sys clipboard to end of line" })
 key.set({ "n", "v" }, "<M-y>", "y$", { desc = "Yank to end of line" })
-key.set({ "n", "v" }, "<S-p>", '"+p"', { desc = "Paste from sys clipboard" })
+key.set({ "n", "v" }, "<S-p>", '"+p', { desc = "Paste from sys clipboard" })
 
 key.set({ "v" }, "<leader>d", '"_d', { desc = "Delete without yank" })
 key.set("x", "<leader>p", '"_dP', { desc = "Paste without yank" })

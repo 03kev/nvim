@@ -1,8 +1,8 @@
 return {
    {
       "SmiteshP/nvim-navic",
-      requires = "neovim/nvim-lspconfig",
+      dependencies = { "neovim/nvim-lspconfig" },
    },
-   "kyazdani42/nvim-web-devicons",
-   "onsails/lspkind-nvim",
+   "nvim-tree/nvim-web-devicons",
+   "onsails/lspkind.nvim",
 }
