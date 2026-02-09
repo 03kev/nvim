@@ -25,9 +25,13 @@ return {
 
       cmp.setup({
          window = {
-            completion = cmp.config.window.bordered(),
+            completion = cmp.config.window.bordered({
+               border = "rounded",
+               winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+            }),
             documentation = cmp.config.window.bordered({
-               -- winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+               border = "rounded",
+               winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
             }),
          },
          completion = {
@@ -57,9 +61,17 @@ return {
 
          -- configure lspkind for vs-code like pictograms in completion menu
          formatting = {
+            fields = { "abbr", "kind", "menu" },
             format = lspkind.cmp_format({
+               mode = "symbol_text",
                maxwidth = 50,
                ellipsis_char = "...",
+               menu = {
+                  nvim_lsp = "[LSP]",
+                  luasnip = "[SNP]",
+                  buffer = "[BUF]",
+                  path = "[PATH]",
+               },
             }),
          },
       })

@@ -20,6 +20,7 @@ return {
       })
 
       mason_lspconfig.setup({
+         automatic_enable = false,
          ensure_installed = {
             "html",
             "cssls",

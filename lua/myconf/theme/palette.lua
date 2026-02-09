@@ -55,7 +55,7 @@ return {
       purewhite = "#000000",
       grey0 = "#84837d",
       grey1 = "#979787",
-      grey2 = "#62623f",
+      grey2 = "#6b6b45",
       grey3 = "#a4a475",
 
       green1 = "#6d8a0f",

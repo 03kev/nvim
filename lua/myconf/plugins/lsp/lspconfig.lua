@@ -8,10 +8,7 @@ return {
    },
 
    config = function()
-      local lspconfig = require("lspconfig")
-      local mason_lspconfig = require("mason-lspconfig")
       local cmp_nvim_lsp = require("cmp_nvim_lsp")
-      local util = require("lspconfig.util")
       local key = vim.keymap
 
       vim.api.nvim_create_autocmd("LspAttach", {
@@ -61,122 +58,93 @@ return {
       })
 
       local capabilities = cmp_nvim_lsp.default_capabilities() -- used to enable autocompletion (assign to every lsp server config)
-      -- diag symbols in the gutter   
-      -- NB some icons does not change here
-      local signs = { Error = "✖ ", Warn = "󱈸", Hint = "󱐋", Info = "" }
-      for type, icon in pairs(signs) do
-         local hl = "DiagnosticSign" .. type
-         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-      end
+      local diagnostic_signs = {
+         [vim.diagnostic.severity.ERROR] = "✖ ",
+         [vim.diagnostic.severity.WARN] = "󱈸",
+         [vim.diagnostic.severity.HINT] = "󱐋",
+         [vim.diagnostic.severity.INFO] = "",
+      }
 
-      mason_lspconfig.setup_handlers({ -- default handler for installed servers
-         function(server_name)
-            lspconfig[server_name].setup({
-               capabilities = capabilities,
-            })
-         end,
-         ["svelte"] = function() -- configure svelte server
-            lspconfig["svelte"].setup({
-               capabilities = capabilities,
-               on_attach = function(client, bufnr)
-                  vim.api.nvim_create_autocmd("BufWritePost", {
-                     pattern = { "*.js", "*.ts" },
-                     callback = function(ctx)
-                        client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match }) -- Here use ctx.match instead of ctx.file
-                     end,
-                  })
-               end,
-            })
-         end,
-         ["graphql"] = function() -- configure graphql language server
-            lspconfig["graphql"].setup({
-               capabilities = capabilities,
-               filetypes = {
-                  "graphql",
-                  "gql",
-                  "svelte",
-                  "typescriptreact",
-                  "javascriptreact",
-               },
-            })
-         end,
-         ["emmet_ls"] = function() -- configure emmet language server
-            lspconfig["emmet_ls"].setup({
-               capabilities = capabilities,
-               filetypes = {
-                  "html",
-                  "typescriptreact",
-                  "javascriptreact",
-                  "css",
-                  "sass",
-                  "scss",
-                  "less",
-                  "svelte",
-               },
-            })
-         end,
-         ["gopls"] = function() -- configure gopls
-            lspconfig["gopls"].setup({
-               capabilities = capabilities,
-               cmd = { "gopls" },
-               filetypes = {
-                  "go",
-                  "gomod",
-                  "gowork",
-                  "gotmpl",
-               },
-               root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-            })
-         end,
-         ["clangd"] = function()
-            lspconfig["clangd"].setup({
-               capabilities = capabilities,
-               filetypes = {
-                  "c",
-                  "cpp",
-                  "c++",
-               },
-               settings = {
-                  clangd = {
-                     format = {
-                        enable = true,
-                        style = "file",
-                     },
+      local servers = {
+         "html",
+         "cssls",
+         "svelte",
+         "lua_ls",
+         "graphql",
+         "emmet_ls",
+         "prismals",
+         "pyright",
+         "gopls",
+         "jdtls",
+         "clangd",
+      }
+
+      local server_overrides = {
+         svelte = {
+            on_attach = function(client)
+               vim.api.nvim_create_autocmd("BufWritePost", {
+                  pattern = { "*.js", "*.ts" },
+                  callback = function(ctx)
+                     client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
+                  end,
+               })
+            end,
+         },
+         graphql = {
+            filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
+         },
+         emmet_ls = {
+            filetypes = {
+               "html",
+               "typescriptreact",
+               "javascriptreact",
+               "css",
+               "sass",
+               "scss",
+               "less",
+               "svelte",
+            },
+         },
+         gopls = {
+            cmd = { "gopls" },
+            filetypes = { "go", "gomod", "gowork", "gotmpl" },
+            root_markers = { "go.work", "go.mod", ".git" },
+         },
+         clangd = {
+            filetypes = { "c", "cpp", "c++" },
+            settings = {
+               clangd = {
+                  format = {
+                     enable = true,
+                     style = "file",
                   },
                },
-            })
-         end,
-         ["lua_ls"] = function()
-            lspconfig["lua_ls"].setup({ -- configure lua server (with special settings)
-               capabilities = capabilities,
-               settings = {
-                  Lua = {
-                     diagnostics = { -- make the language server recognize "vim" global
-                        globals = { "vim" },
-                     },
-                     completion = {
-                        callSnippet = "Replace",
-                     },
-                  },
+            },
+         },
+         lua_ls = {
+            settings = {
+               Lua = {
+                  diagnostics = { globals = { "vim" } },
+                  completion = { callSnippet = "Replace" },
                },
-            })
-         end,
-         ["jdtls"] = function()
-            lspconfig["jdtls"].setup({
-               capabilities = capabilities,
-               file_types = {
-                  "java",
-               },
-               root_dir = util.root_pattern(".git", "build.gradle", "settings.gradle"),
-               -- settings = {},
-            })
-         end,
-      })
+            },
+         },
+         jdtls = {
+            filetypes = { "java" },
+            root_markers = { ".git", "build.gradle", "settings.gradle" },
+         },
+      }
+
+      for _, server_name in ipairs(servers) do
+         local config = vim.tbl_deep_extend("force", { capabilities = capabilities }, server_overrides[server_name] or {})
+         vim.lsp.config(server_name, config)
+         vim.lsp.enable(server_name)
+      end
 
       -- diagnostics managing
       vim.diagnostic.config({
          virtual_text = true, -- keep inline diagnostics
-         signs = true, -- keep signs in the gutter
+         signs = { text = diagnostic_signs }, -- keep signs in the gutter
          underline = false, -- keep underlines
          update_in_insert = false, -- don't show diagnostics in insert mode
       })

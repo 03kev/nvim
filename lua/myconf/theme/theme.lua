@@ -43,7 +43,12 @@ local function apply_theme()
       hl(0, "ColorColumn", { bg = bright(c.black1, 0.97) }) -- color column
    end
 
-   hl(0, "Search", { fg = c.white1, bg = c.grey2 }) -- search
+   if m == "dark" then
+      hl(0, "Search", { fg = c.white1, bg = c.grey2 }) -- search
+   else
+      hl(0, "Search", { fg = c.white1, bg = bright(c.grey3, 1.23) }) -- search
+   end
+
    hl(0, "IncSearch", { fg = c.black1, bg = c.purewhite }) -- incremental current search result
    cmd([[highlight link CurSearch IncSearch]]) -- current search
 
@@ -51,7 +56,7 @@ local function apply_theme()
    if m == "dark" then
       hl(0, "HlSearchLens", { fg = c.white1, bg = bright(c.grey2, 0.3) }) -- search lens
    else
-      hl(0, "HlSearchLens", { fg = c.pitchblack, bg = c.grey2 }) -- search lens
+      hl(0, "HlSearchLens", { fg = c.pitchblack, bg = bright(c.grey3, 1) }) -- search lens
    end
    cmd([[highlight link HlSearchNear CurSearch]]) -- this ovverrides the default current search
    cmd([[highlight link HlSearchLensNear CurSearch]]) -- current search lens
@@ -78,12 +83,19 @@ local function apply_theme()
    hl(0, "FloatFooter", { fg = c.grey2 })
 
    -- popup menu
-   hl(0, "Pmenu", { fg = c.white1, bg = c.line })
-   hl(0, "PmenuSbar", { bg = c.line })
+   local cmp_match_blue = (m == "dark") and bright(c.blue1, 1.2) or c.blue1
+
+   hl(0, "Pmenu", { fg = c.white1, bg = "NONE" })
+   hl(0, "PmenuSbar", { bg = "NONE" })
    hl(0, "PmenuSel", { fg = c.white1, bg = c.blue1 })
-   hl(0, "PmenuKind", { fg = c.white1, bg = c.line })
-   hl(0, "PmenuKindSel", { fg = c.black1, bg = c.grey1 })
-   hl(0, "PmenuExtra", { fg = c.white1, bg = c.line })
+   hl(0, "PmenuKind", { fg = c.white1, bg = "NONE" })
+   hl(0, "PmenuKindSel", { fg = c.white1, bg = c.blue1 })
+   hl(0, "PmenuExtra", { fg = c.white1, bg = "NONE" })
+   hl(0, "CmpItemAbbr", { fg = c.white1, bg = "NONE" })
+   hl(0, "CmpItemAbbrMatch", { fg = cmp_match_blue, bold = true })
+   hl(0, "CmpItemAbbrMatchFuzzy", { fg = cmp_match_blue, italic = true })
+   hl(0, "CmpItemKind", { fg = c.orange1, bg = "NONE" })
+   hl(0, "CmpItemMenu", { fg = c.comment, bg = "NONE", italic = true })
 
    vim.opt.guicursor = {
       "n-v-c-sm:block-Cursor/lCursor",
@@ -142,7 +154,6 @@ local function apply_theme()
    cmd(("highlight TelescopePreviewTitle guifg=%s gui=bold"):format(c.telescope.border))
    cmd(("highlight TelescopeSelection guifg=%s guibg=%s"):format(c.telescope.selection_fg, c.telescope.selection_bg))
    cmd(("highlight TelescopeMatching guifg=%s guibg=%s"):format(c.telescope.matching_fg, c.telescope.matching_bg))
-
 
    -- indent-blankline --
    if m == "dark" then
