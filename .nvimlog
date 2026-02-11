@@ -2,3 +2,5 @@ WRN 2026-02-09T11:30:55.315 ?.63817    server_start:199: Failed to start server:
 WRN 2026-02-09T11:30:55.465 ?.63817    server_start:199: Failed to start server: operation not permitted: /var/folders/41/t9xt_zts3711q439f0g8617m0000gn/T/nvim.kevinmuka/G2voCz/fzf-lua.1770633055.63817.1
 WRN 2026-02-09T19:25:23.525 ?.26830    server_start:199: Failed to start server: operation not permitted: /var/folders/41/t9xt_zts3711q439f0g8617m0000gn/T/nvim.kevinmuka/ynziod/nvim.26830.0
 WRN 2026-02-09T19:25:23.669 ?.26830    server_start:199: Failed to start server: operation not permitted: /var/folders/41/t9xt_zts3711q439f0g8617m0000gn/T/nvim.kevinmuka/ynziod/fzf-lua.1770661523.26830.1
+WRN 2026-02-10T13:33:04.636 ?.63259    server_start:199: Failed to start server: operation not permitted: /var/folders/41/t9xt_zts3711q439f0g8617m0000gn/T/nvim.kevinmuka/slDBI1/nvim.63259.0
+WRN 2026-02-11T10:09:55.656 ?.22535    server_start:199: Failed to start server: operation not permitted: /var/folders/41/t9xt_zts3711q439f0g8617m0000gn/T/nvim.kevinmuka/wHFMFD/nvim.22535.0

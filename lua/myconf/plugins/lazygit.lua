@@ -16,8 +16,9 @@ return {
    keys = {
       { "<leader>lg", "<cmd>LazyGit<cr>", desc = "Open lazy git" },
    },
-      opts = {
-      backdrop = 0.8, -- Adjust transparency level as needed
-   },
+   init = function()
+      -- lazygit.nvim reads global vars (no Lua setup function)
+      vim.g.lazygit_floating_window_winblend = 0
+   end,
 
 }

@@ -101,6 +101,7 @@ local function apply_theme()
       "n-v-c-sm:block-Cursor/lCursor",
       "i-ci-ve:ver25-CursorInsert",
       "r-cr-o:hor20",
+      "t:ver25-CursorInsert",
    }
    hl(0, "Cursor", { fg = "NONE", bg = c.cursor }) -- cursor
    hl(0, "lCursor", { fg = "NONE", bg = c.cursor }) -- line cursor

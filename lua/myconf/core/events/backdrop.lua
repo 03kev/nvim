@@ -64,7 +64,10 @@ function M.setup()
    end
 
    if enabled then
+      local group = vim.api.nvim_create_augroup("CoreBackdrop", { clear = true })
+
       vim.api.nvim_create_autocmd("FileType", {
+         group = group,
          pattern = filetypes,
          callback = function(ctx)
             attach_backdrop(ctx.buf, zindex_ref)

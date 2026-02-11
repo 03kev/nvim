@@ -1,19 +1,17 @@
 local M = {}
 
 function M.setup()
-   local core = require("myconf.core.api")
-   local autocmd = core.autocmd
-
-   autocmd.create("TextYankPost", {
+   local yank_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+   vim.api.nvim_create_autocmd("TextYankPost", {
       desc = "Highlight yanked text",
-      group = autocmd.group("YankHighlight", { clear = true }),
+      group = yank_group,
       callback = function()
          vim.highlight.on_yank({ timeout = 250, higroup = "YankHighlight" })
       end,
    })
 
-   local md_group = autocmd.group("MarkdownBrConceal", { clear = true })
-   autocmd.create("FileType", {
+   local md_group = vim.api.nvim_create_augroup("MarkdownBrConceal", { clear = true })
+   vim.api.nvim_create_autocmd("FileType", {
       group = md_group,
       pattern = "markdown",
       callback = function()

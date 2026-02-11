@@ -10,7 +10,7 @@ conf.ui = {
       enabled = true,
       blend = 97,
       zindex_ref = 50,
-      filetypes = { "TelescopePrompt", "lazygit", "fzf" },
+      filetypes = { "TelescopePrompt", "lazygit", "fzf", "codexfloat" },
    },
 }
 

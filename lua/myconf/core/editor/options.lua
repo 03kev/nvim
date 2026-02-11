@@ -5,8 +5,6 @@ function M.setup()
 
    local conf = require("configuration")
    local opt = vim.opt
-   local core = require("myconf.core.api")
-   local autocmd = core.autocmd
 
    vim.o.laststatus = 3
 
@@ -21,8 +19,10 @@ function M.setup()
    opt.autoindent = true
    opt.wrap = false
 
+   local indentation_group = vim.api.nvim_create_augroup("CoreIndentation", { clear = true })
    local function set_indentation(filetype, tabstop, shiftwidth, expandtab)
-      autocmd.create("FileType", {
+      vim.api.nvim_create_autocmd("FileType", {
+         group = indentation_group,
          pattern = filetype,
          callback = function()
             vim.bo.tabstop = tabstop
@@ -36,7 +36,9 @@ function M.setup()
    set_indentation("json", 2, 2, true)
    set_indentation("markdown", 4, 4, true)
 
-   autocmd.create("FileType", {
+   local wrap_group = vim.api.nvim_create_augroup("CoreWrapText", { clear = true })
+   vim.api.nvim_create_autocmd("FileType", {
+      group = wrap_group,
       pattern = { "markdown", "text" },
       callback = function()
          vim.opt_local.wrap = true
@@ -84,7 +86,9 @@ function M.setup()
    local scrolloff_percentage = tonumber((((conf.ui or {}).scrolloff or {}).percentage)) or 15
    set_scrolloff_percentage(scrolloff_percentage)
 
-   autocmd.create("VimResized", {
+   local scrolloff_group = vim.api.nvim_create_augroup("CoreScrolloffResize", { clear = true })
+   vim.api.nvim_create_autocmd("VimResized", {
+      group = scrolloff_group,
       callback = function()
          set_scrolloff_percentage(scrolloff_percentage)
       end,
