@@ -32,6 +32,7 @@ return {
             "pyright",
             "gopls",
             "jdtls",
+            "texlab",
          },
       })
 
@@ -44,6 +45,7 @@ return {
             "pylint",
             "eslint_d",
             "clang-format",
+            "latexindent",
          },
       })
    end,

@@ -24,6 +24,7 @@ return {
          },
          -- ensure these language parsers are installed
          ensure_installed = {
+            "bibtex",
             "json",
             "javascript",
             "typescript",
@@ -48,10 +49,10 @@ return {
          incremental_selection = {
             enable = true,
             keymaps = {
-               init_selection = "<C-space>",
-               node_incremental = "<C-space>",
-               scope_incremental = false,
-               node_decremental = "<bs>",
+               init_selection = "<CR>",
+               node_incremental = "<CR>",
+               scope_incremental = "<S-CR>",
+               node_decremental = "<BS>",
             },
          },
       })

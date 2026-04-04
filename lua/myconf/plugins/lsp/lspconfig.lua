@@ -77,6 +77,7 @@ return {
          "gopls",
          "jdtls",
          "clangd",
+         "texlab",
       }
 
       local server_overrides = {
@@ -133,10 +134,41 @@ return {
             filetypes = { "java" },
             root_markers = { ".git", "build.gradle", "settings.gradle" },
          },
+         texlab = {
+            filetypes = { "tex", "bib" },
+            settings = {
+               texlab = {
+                  build = {
+                     executable = "latexmk",
+                     args = {
+                        "-pdf",
+                        "-interaction=nonstopmode",
+                        "-synctex=1",
+                        "-file-line-error",
+                        "-outdir=build",
+                        "%f",
+                     },
+                     onSave = false,
+                     forwardSearchAfter = false,
+                  },
+                  forwardSearch = {
+                     executable = "/Applications/Skim.app/Contents/SharedSupport/displayline",
+                     args = { "%l", "%p", "%f" },
+                  },
+                  chktex = {
+                     onOpenAndSave = true,
+                     onEdit = false,
+                  },
+                  diagnosticsDelay = 300,
+                  latexFormatter = "latexindent",
+               },
+            },
+         },
       }
 
       for _, server_name in ipairs(servers) do
-         local config = vim.tbl_deep_extend("force", { capabilities = capabilities }, server_overrides[server_name] or {})
+         local config =
+            vim.tbl_deep_extend("force", { capabilities = capabilities }, server_overrides[server_name] or {})
          vim.lsp.config(server_name, config)
          vim.lsp.enable(server_name)
       end
@@ -159,6 +191,11 @@ return {
          end
       end
 
-      vim.keymap.set("n", "<leader>td", toggle_diagnostics, { desc = "toggle diagnostics", noremap = true, silent = true })
+      vim.keymap.set(
+         "n",
+         "<leader>td",
+         toggle_diagnostics,
+         { desc = "toggle diagnostics", noremap = true, silent = true }
+      )
    end,
 }
