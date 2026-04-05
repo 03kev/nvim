@@ -175,20 +175,16 @@ return {
 
       -- diagnostics managing
       vim.diagnostic.config({
-         virtual_text = true, -- keep inline diagnostics
-         signs = { text = diagnostic_signs }, -- keep signs in the gutter
-         underline = false, -- keep underlines
-         update_in_insert = false, -- don't show diagnostics in insert mode
+         virtual_text = true,
+         signs = { text = diagnostic_signs },
+         underline = false,
+         update_in_insert = false,
       })
 
-      local diagnostics_active = true -- toggle diagnostics
       local function toggle_diagnostics()
-         diagnostics_active = not diagnostics_active
-         if diagnostics_active then
-            vim.diagnostic.show()
-         else
-            vim.diagnostic.hide()
-         end
+         local bufnr = vim.api.nvim_get_current_buf()
+         local enabled = vim.diagnostic.is_enabled({ bufnr = bufnr })
+         vim.diagnostic.enable(not enabled, { bufnr = bufnr })
       end
 
       vim.keymap.set(

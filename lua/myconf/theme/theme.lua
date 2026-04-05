@@ -40,7 +40,7 @@ local function apply_theme()
    hl(0, "Substitute", { fg = c.black1, bg = c.purewhite })
 
    if m == "light" then
-      hl(0, "ColorColumn", { bg = bright(c.black1, 0.97) }) -- color column
+      hl(0, "ColorColumn", { bg = bright(c.black1, 0.94) }) -- color column
    end
 
    if m == "dark" then

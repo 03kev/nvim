@@ -8,7 +8,8 @@ return {
 
       vim.g.vimtex_compiler_method = "latexmk"
       vim.g.vimtex_compiler_latexmk = {
-         out_dir = "build",
+         aux_dir = "build",
+         out_dir = "",
          callback = 1,
          continuous = 1,
          executable = "latexmk",

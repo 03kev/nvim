@@ -34,16 +34,19 @@ function M.setup()
 
    set_indentation("lua", 3, 3, true)
    set_indentation("json", 2, 2, true)
+   set_indentation("tex", 2, 2, true)
    set_indentation("markdown", 4, 4, true)
 
    local wrap_group = vim.api.nvim_create_augroup("CoreWrapText", { clear = true })
    vim.api.nvim_create_autocmd("FileType", {
       group = wrap_group,
-      pattern = { "markdown", "text" },
+      pattern = { "markdown", "text", "tex" },
       callback = function()
          vim.opt_local.wrap = true
          vim.opt_local.linebreak = true
-         vim.wo.colorcolumn = "120"
+         vim.opt_local.colorcolumn = "120"
+         vim.opt_local.textwidth = 119
+         vim.opt_local.formatoptions:append("t")
       end,
    })
 
@@ -83,7 +86,7 @@ function M.setup()
       vim.opt.scrolloff = scrolloff_value
    end
 
-   local scrolloff_percentage = tonumber((((conf.ui or {}).scrolloff or {}).percentage)) or 15
+   local scrolloff_percentage = tonumber(((conf.ui or {}).scrolloff or {}).percentage) or 15
    set_scrolloff_percentage(scrolloff_percentage)
 
    local scrolloff_group = vim.api.nvim_create_augroup("CoreScrolloffResize", { clear = true })

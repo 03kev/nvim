@@ -3,6 +3,8 @@ return {
    event = { "BufReadPre", "BufNewFile" },
    config = function()
       local conform = require("conform")
+      local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+      local latexindent_config = vim.fn.expand("~/.config/latexindent/config.yaml")
 
       conform.setup({
          formatters_by_ft = {
@@ -20,21 +22,30 @@ return {
             liquid = { "prettier" },
             lua = { "stylua" },
             python = { "isort", "black" },
-            java = { "clang-format", options = {} },
+            java = { "clang-format" },
+            tex = { "latexindent" },
          },
 
-         -- format_on_save = {
-         --   lsp_fallback = false,
-         --   async = false,
-         --   timeout_ms = 1000,
-         -- },
+         formatters = {
+            latexindent = {
+               inherit = false,
+               command = mason_bin .. "/latexindent",
+               args = {
+                  "-m",
+                  "-l=" .. latexindent_config,
+                  "-g=/dev/null",
+                  "-",
+               },
+               stdin = true,
+            },
+         },
       })
 
       vim.keymap.set({ "n", "v" }, "<leader>fi", function()
          conform.format({
             lsp_fallback = true,
             async = false,
-            timeout_ms = 1000,
+            timeout_ms = 10000,
          })
       end, { desc = "Format file or range (in visual mode)" })
    end,
