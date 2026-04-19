@@ -20,7 +20,6 @@ return {
    commit = "a3932a1", -- version 3.8.0
    branch = "main",
    dependencies = {
-      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
       { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
    },
 

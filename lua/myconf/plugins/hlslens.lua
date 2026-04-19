@@ -1,5 +1,5 @@
 return {
-   "03kev/nvim-hlslens", -- fork of kevinhwang91/nvim-hlslens
+   "kevinhwang91/nvim-hlslens",
    config = function()
       local hlslens = require("hlslens")
 

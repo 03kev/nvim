@@ -1,5 +1,11 @@
 return {
-   "github/copilot.vim",
+   "03kev/copilot.lua",
+   cmd = "Copilot",
+   event = "InsertEnter",
+
+   dependencies = {
+      "copilotlsp-nvim/copilot-lsp",
+   },
 
    config = function()
       require("copilot").setup({
@@ -14,22 +20,24 @@ return {
                open = "<M-CR>",
             },
             layout = {
-               position = "bottom", -- | top | left | right
+               position = "bottom",
                ratio = 0.4,
             },
          },
          suggestion = {
             enabled = true,
-            auto_trigger = false,
+            auto_trigger = true,
             hide_during_completion = true,
             debounce = 75,
+            trigger_on_accept = true,
             keymap = {
-               accept = "<M-l>",
+               accept = "<Tab>",
                accept_word = false,
                accept_line = false,
                next = "<M-]>",
                prev = "<M-[>",
                dismiss = "<C-]>",
+               toggle_auto_trigger = false,
             },
          },
          filetypes = {
@@ -43,25 +51,11 @@ return {
             cvs = false,
             ["."] = false,
          },
-         copilot_node_command = "node", -- Node.js version must be > 18.x
+         copilot_node_command = "node",
          server_opts_overrides = {},
       })
 
-      -- accept copilot suggestions with <Tab> in copilot-chat buffer
-      vim.api.nvim_create_autocmd("BufEnter", {
-         pattern = "copilot-chat",
-         callback = function()
-            vim.api.nvim_buf_set_keymap(0, "i", "<Tab>", 'copilot#Accept("\\<CR>")', {
-               expr = true,
-               noremap = true,
-               silent = true,
-               replace_keycodes = false,
-            })
-         end,
-      })
-
-      -- Toggle Copilot inline suggestions with <leader>ci
-      vim.api.nvim_set_keymap("n", "<leader>ci", ":Copilot toggle<CR>", {
+      vim.keymap.set("n", "<leader>ci", "<cmd>Copilot toggle<CR>", {
          desc = "Toggle Copilot inline suggestions",
          noremap = true,
          silent = true,

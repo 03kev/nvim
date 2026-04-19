@@ -37,6 +37,7 @@ function M.setup()
    set_indentation("tex", 2, 2, true)
    set_indentation("markdown", 4, 4, true)
 
+   -- wrap settings for text-like filetypes
    local wrap_group = vim.api.nvim_create_augroup("CoreWrapText", { clear = true })
    vim.api.nvim_create_autocmd("FileType", {
       group = wrap_group,

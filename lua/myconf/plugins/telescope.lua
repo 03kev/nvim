@@ -230,5 +230,19 @@ return {
          "<cmd>lua require('telescope.builtin').live_grep({search_dirs={vim.fn.expand('%:p')}})<CR>",
          { desc = "Find string in current file" }
       )
+
+      -- LaTeX picker
+      local latex_picker = require("myconf.plugins.telescope.latex")
+      vim.api.nvim_create_autocmd("FileType", {
+         pattern = "tex",
+         callback = function(ev)
+            vim.keymap.set("n", "\\lf", latex_picker.latex_picker, {
+               buffer = ev.buf,
+               desc = "LaTeX picker",
+               noremap = true,
+               silent = true,
+            })
+         end,
+      })
    end,
 }
