@@ -39,7 +39,11 @@ function M.setup()
             end
             vim.cmd("wincmd " .. direction)
          else
-            vim.api.nvim_echo({ { "Maximum number of splits (" .. tostring(max_win_count) .. ") reached", "WarningMsg" } }, false, {})
+            vim.api.nvim_echo(
+               { { "Maximum number of splits (" .. tostring(max_win_count) .. ") reached", "WarningMsg" } },
+               false,
+               {}
+            )
             vim.defer_fn(function()
                vim.cmd("echo ''")
             end, 1000)

@@ -76,6 +76,7 @@ return {
          inputs = {
             HslRgbInput,
          },
+         alpha_show = "never",
       })
 
       vim.api.nvim_set_keymap("n", "<leader>cp", ":CccPick<CR>", { noremap = true, silent = true, desc = "Pick color" })
@@ -85,13 +86,12 @@ return {
          ":CccHighlighterToggle<CR>",
          { noremap = true, silent = true, desc = "Toggle color highlighter" }
       )
-      --[[ vim.api.nvim_set_keymap(
+      vim.api.nvim_set_keymap(
          "n",
          "<leader>cn",
          ":CccConvert<CR>",
          { noremap = true, silent = true, desc = "Convert color" }
-      ) ]]
-
+      )
       vim.api.nvim_create_user_command("CccHighlighterToggleTwice", function()
          vim.cmd("CccHighlighterToggle")
          vim.cmd("CccHighlighterToggle")
