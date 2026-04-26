@@ -7,6 +7,7 @@ local mode = require("configuration").ui.theme()
 
 local color_utils = require("myconf.theme.color_utils")
 local bright = color_utils.adjust_brightness
+local runtime_theme = require("myconf.core.utils.theme")
 
 local function pal()
    return palettes[mode]
@@ -15,6 +16,8 @@ end
 local function apply_theme()
    local m = mode
    local c = pal()
+
+   runtime_theme.sync_process_env()
 
    vim.o.background = (m == "light") and "light" or "dark"
 

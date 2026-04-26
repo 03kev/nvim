@@ -3,6 +3,7 @@ local M = {}
 function M.setup()
    local core = require("myconf.core.api")
    local path = core.path
+   local theme = core.theme
 
    -- `Terminal` command to open a terminal in the directory of the current file using `zsh`
    pcall(vim.api.nvim_del_user_command, "Terminal")
@@ -24,7 +25,10 @@ function M.setup()
          vim.cmd("rightbelow new")
       end
 
-      vim.fn.termopen(vim.o.shell, { cwd = file_dir })
+      vim.fn.termopen(vim.o.shell, {
+         cwd = file_dir,
+         env = theme.job_env(),
+      })
       vim.cmd("startinsert")
 
       local base_name = "zsh - " .. file_dir

@@ -199,6 +199,7 @@ local function set_buffer_keys(bufnr)
 end
 
 local function open_codex(layout, opts)
+   local theme = require("myconf.core.api").theme
    local toggle_mode = opts and opts.toggle
 
    if vim.fn.executable("codex") == 0 then
@@ -246,6 +247,7 @@ local function open_codex(layout, opts)
    vim.bo[state.buf].bufhidden = "hide"
    state.job = vim.fn.termopen({ "codex" }, {
       cwd = cwd,
+      env = theme.job_env(),
       on_exit = function()
          state.job = nil
       end,
@@ -306,4 +308,3 @@ function M.setup()
 end
 
 return M
-
