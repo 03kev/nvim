@@ -151,10 +151,6 @@ return {
                      onSave = false,
                      forwardSearchAfter = false,
                   },
-                  forwardSearch = {
-                     executable = "/Applications/Skim.app/Contents/SharedSupport/displayline",
-                     args = { "%l", "%p", "%f" },
-                  },
                   chktex = {
                      onOpenAndSave = true,
                      onEdit = false,

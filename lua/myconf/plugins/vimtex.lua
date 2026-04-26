@@ -2,10 +2,13 @@ return {
    "lervag/vimtex",
    ft = { "tex" },
    init = function()
-      vim.g.tex_flavor = "latex"
+      local conf = require("configuration")
+      local sioyek = (conf.external or {}).sioyek or vim.env.NVIM_SIOYEK_BIN
+         or "/Applications/Sioyek.app/Contents/MacOS/sioyek"
 
+      vim.g.tex_flavor = "latex"
       vim.g.vimtex_view_method = "sioyek"
-      vim.g.vimtex_view_sioyek_exe = "/Applications/Sioyek.app/Contents/MacOS/sioyek"
+      vim.g.vimtex_view_sioyek_exe = sioyek
 
       vim.g.vimtex_compiler_method = "latexmk"
       vim.g.vimtex_compiler_latexmk = {
