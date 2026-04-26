@@ -2,6 +2,7 @@ local M = {}
 
 function M.setup()
    local core = require("myconf.core.api")
+   local conf = require("configuration")
    local path = core.path
    local shell = core.shell
 
@@ -15,7 +16,7 @@ function M.setup()
       shell.zsh_login(script)
    end, { nargs = "*", complete = "file" })
 
-   -- `Finder` to reveal the current file in Finder
+   -- `Finder` to reveal the current file in the OS file manager
    vim.api.nvim_create_user_command("Finder", function(opts)
       local file_path = opts.args
       if file_path == "" then
@@ -53,7 +54,13 @@ function M.setup()
 
    -- `Z` command to use zoxide for changing directories
    vim.api.nvim_create_user_command("Z", function(opts)
-      local result = shell.system({ "/opt/homebrew/bin/zoxide", "query", opts.args }, { text = true })
+      local zoxide_bin = (conf.external or {}).zoxide
+      if not zoxide_bin then
+         vim.notify("`zoxide` non trovato. Configura `conf.external.zoxide` o il PATH.", vim.log.levels.ERROR)
+         return
+      end
+
+      local result = shell.system({ zoxide_bin, "query", opts.args }, { text = true })
       local z_path = string.gsub(result.stdout or "", "\n$", "")
       if string.sub(z_path, 1, 7) == "zoxide:" then
          print(z_path)

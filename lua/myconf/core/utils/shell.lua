@@ -20,8 +20,35 @@ function M.zsh_login(script)
    return M.system({ "zsh", "-lc", script })
 end
 
+function M.reveal_path(path)
+   if not path or path == "" then
+      return nil
+   end
+
+   local target = vim.fn.fnamemodify(path, ":p")
+
+   if vim.fn.has("macunix") == 1 then
+      return M.jobstart({ "open", "-R", target }, { detach = true })
+   end
+
+   if vim.fn.has("win32") + vim.fn.has("win64") > 0 then
+      if vim.fn.isdirectory(target) == 1 then
+         return M.jobstart({ "explorer.exe", target }, { detach = true })
+      end
+
+      return M.jobstart({ "explorer.exe", "/select," .. target }, { detach = true })
+   end
+
+   local dir = target
+   if vim.fn.isdirectory(target) == 0 then
+      dir = vim.fs.dirname(target) or vim.fn.fnamemodify(target, ":p:h")
+   end
+
+   return M.jobstart({ "xdg-open", dir }, { detach = true })
+end
+
 function M.open_in_finder(path)
-   return M.system({ "open", "-R", path })
+   return M.reveal_path(path)
 end
 
 function M.open_external(path)

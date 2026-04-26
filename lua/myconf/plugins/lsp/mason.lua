@@ -32,6 +32,7 @@ return {
             "pyright",
             "gopls",
             "jdtls",
+            "clangd",
             "texlab",
          },
       })

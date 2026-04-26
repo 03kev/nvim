@@ -3,6 +3,7 @@ return {
    -- dependencies = "nvim-tree/nvim-web-devicons",
    config = function()
       local nvimtree = require("nvim-tree")
+      local shell = require("myconf.core.api").shell
       local key = vim.keymap
 
       vim.g.loaded_netrw = 1
@@ -21,10 +22,10 @@ return {
          end
          api.config.mappings.default_on_attach(bufnr)
 
-         local function reveal_in_finder()
+         local function reveal_in_file_manager()
             local node = api.tree.get_node_under_cursor()
             if node and node.absolute_path then
-               os.execute("open -R " .. vim.fn.shellescape(node.absolute_path))
+               shell.reveal_path(node.absolute_path)
             end
          end
 
@@ -35,7 +36,7 @@ return {
          key.set("n", "h", api.node.navigate.parent_close, opts("Close Directory"))
          key.set("n", "l", api.node.open.edit, opts("Open"))
          key.set("n", "o", api.node.run.system, opts("Open with default app"))
-         key.set("n", "O", reveal_in_finder, opts("Reveal in Finder"))
+         key.set("n", "O", reveal_in_file_manager, opts("Reveal in file manager"))
       end
 
       nvimtree.setup({
