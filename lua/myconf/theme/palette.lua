@@ -1,8 +1,10 @@
+local base = dofile(os.getenv("HOME") .. "/.config/theme/colors.lua")
+
 return {
    dark = {
-      black1 = "#1d1d1b",
+      black1 = base.dark.bg,
       pitchblack = "#000000",
-      white1 = "#eeead8",
+      white1 = base.dark.soft_fg,
       white2 = "#dcdcdc",
       purewhite = "#FFFFFF",
       grey1 = "#545454",
@@ -48,9 +50,9 @@ return {
    },
 
    light = {
-      black1 = "#f1efe3",
+      black1 = base.light.soft_bg,
       pitchblack = "#ffffff",
-      white1 = "#11110a",
+      white1 = base.light.fg,
       white2 = "#222211",
       purewhite = "#000000",
       grey0 = "#84837d",
