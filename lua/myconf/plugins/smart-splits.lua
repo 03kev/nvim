@@ -61,6 +61,7 @@ return {
 
       -- wezterm multiplexing
       local function open_wezterm_pane(direction)
+         local theme = require("myconf.core.api").theme
          local dir_map = {
             h = "Left",
             j = "Down",
@@ -75,13 +76,28 @@ return {
          }
          local wezterm_dir = dir_map[direction]
          local cwd = vim.fn.expand("%:p:h")
+         local shell = vim.env.SHELL or "/bin/zsh"
+         local env = theme.job_env()
 
-         local pane_id = vim.fn.system(string.format("wezterm cli get-pane-direction %s", wezterm_dir))
+         local pane_id = vim.fn.system({ "wezterm", "cli", "get-pane-direction", wezterm_dir })
 
          if pane_id and pane_id:match("%d+") then
-            vim.fn.system(string.format("wezterm cli activate-pane-direction %s", wezterm_dir))
+            vim.fn.system({ "wezterm", "cli", "activate-pane-direction", wezterm_dir })
          else
-            vim.fn.system(string.format("wezterm cli split-pane %s --cwd '%s'", flag_map[direction], cwd))
+            vim.fn.system({
+               "wezterm",
+               "cli",
+               "split-pane",
+               flag_map[direction],
+               "--cwd",
+               cwd,
+               "--",
+               "env",
+               "ZSH_THEME_MODE=" .. env.ZSH_THEME_MODE,
+               "NVIM_THEME=" .. env.NVIM_THEME,
+               shell,
+               "-l",
+            })
          end
       end
 
