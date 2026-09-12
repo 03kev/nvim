@@ -112,6 +112,7 @@ local winbar_filetype_exclude = {
    "DressingSelect",
    "neotest-summary",
    "toggleterm",
+   "yazi",
 }
 
 local winbar_buftype_exclude = {
@@ -164,12 +165,12 @@ local function update_winbar()
    end
 
    if vim.tbl_contains(winbar_filetype_exclude, vim.bo.filetype) then
-      vim.opt_local.winbar = nil
+      vim.opt_local.winbar = ""
       return
    end
 
    if vim.tbl_contains(winbar_buftype_exclude, vim.bo.buftype) then
-      vim.opt_local.winbar = nil
+      vim.opt_local.winbar = ""
       return
    end
 
